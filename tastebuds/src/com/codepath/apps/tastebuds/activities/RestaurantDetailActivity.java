@@ -23,12 +23,15 @@ import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 
 public class RestaurantDetailActivity extends FragmentActivity {
+	
+	String placeId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_detail);
-		setupTabs();
+		placeId = getIntent().getStringExtra("place_id");
+		setupTabs();	
 	}
 
 	@Override
@@ -42,24 +45,28 @@ public class RestaurantDetailActivity extends FragmentActivity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 
+		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+		Bundle args = new Bundle();
+		args.putString("placeId", placeId);
+		
 		Tab tab1 = actionBar
 			.newTab()
 			.setText("Details")
 			.setTag("RestaurantDetailFragment")
 			.setTabListener(
 				new FragmentTabListener<RestaurantDetailFragment>(R.id.ctRestaurantsLists, this, "first",
-								RestaurantDetailFragment.class));
+								RestaurantDetailFragment.class, args));
 
 		actionBar.addTab(tab1);
 		actionBar.selectTab(tab1);
-
+		
 		Tab tab2 = actionBar
 			.newTab()
 			.setText("Dishes")
 			.setTag("DishListFragment")
 			.setTabListener(
 			    new FragmentTabListener<DishListFragment>(R.id.ctRestaurantsLists, this, "second",
-								DishListFragment.class));
+								DishListFragment.class, args));
 
 		actionBar.addTab(tab2);
 
@@ -69,7 +76,7 @@ public class RestaurantDetailActivity extends FragmentActivity {
 				.setTag("RestaurantReviewListFragment")
 				.setTabListener(
 					new FragmentTabListener<RestaurantReviewListFragment>(R.id.ctRestaurantsLists, this, "third",
-									RestaurantReviewListFragment.class));
+									RestaurantReviewListFragment.class, args));
 		actionBar.addTab(tab3);
 	}
 

@@ -8,10 +8,12 @@ import org.json.JSONObject;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -45,8 +48,20 @@ public class RestaurantListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
 		lvRestaurants.setAdapter(restaurantAdapter);
-		return v;
-		
+		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {  
+			   public void onItemClick(AdapterView parentView, View childView, int position, long id) 
+			   {  
+				   showRestaurantDetail(position);
+			   } 
+			});		
+		return v;		
+	}
+	
+	public void showRestaurantDetail(int position) {
+		Log.d("Debug", "P: " + position);
+		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
+		i.putExtra("place_id", restaurants.get(position).getPlace_id());
+		startActivity(i);
 	}
 	
 	private void restaurantsFromGooglePlacesApi() {

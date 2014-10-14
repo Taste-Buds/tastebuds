@@ -166,7 +166,8 @@ public class TastebudsLoginActivity extends Activity {
 		  }).executeAsync();
 		}
 	private void goToHomeActivity(){
-		Intent i = new Intent(TastebudsLoginActivity.this, RestaurantDetailActivity.class);
+		//Intent i = new Intent(TastebudsLoginActivity.this, RestaurantDetailActivity.class);
+		Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 		startActivity(i);
 		Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 	}
