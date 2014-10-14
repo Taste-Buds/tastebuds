@@ -101,6 +101,7 @@ public class TastebudsLoginActivity extends Activity {
 				TastebudsLoginActivity.this.progressDialog.dismiss();
 				if(user != null){
 					session = Session.getActiveSession();
+					
 					getFacebookIdInBackground();
 					Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 					startActivity(i);
@@ -137,7 +138,7 @@ public class TastebudsLoginActivity extends Activity {
 			   // Construct a ParseUser query that will find friends whose
 	                // facebook IDs are contained in the current user's friend list.
 	                ParseQuery friendQuery = ParseQuery.getUserQuery();
-	                friendQuery.whereContainedIn("fbId", friendsList);
+	                friendQuery.whereContainedIn("objectId", friendsList);
 
 	                // findObjects will return a list of ParseUsers
 	                // that are friends with the current user
@@ -152,22 +153,23 @@ public class TastebudsLoginActivity extends Activity {
 			}).executeAsync();
 	}
 	private static void getFacebookIdInBackground() {
-		
+
 		Request.newMeRequest(session, new Request.GraphUserCallback(){
-		    @Override
-		    public void onCompleted(GraphUser user, Response response) {
-		      if (user != null) {
-		        ParseUser.getCurrentUser().put("fbId", user.getId());
-		        getFacebookFriends();
-		        ParseUser.getCurrentUser().saveInBackground();
-		        
-		      }
-		    }
-		  }).executeAsync();
-		}
+			@Override
+			public void onCompleted(GraphUser user, Response response) {
+				if (user != null) {
+					ParseUser.getCurrentUser().put("username", user.getName());
+					ParseUser.getCurrentUser().put("objectId", user.getId());
+					ParseUser.getCurrentUser().put("location", user.getLocation().getName());
+					getFacebookFriends();
+					ParseUser.getCurrentUser().saveInBackground();
+
+				}
+			}
+		}).executeAsync();
+	}
 	private void goToHomeActivity(){
-		//Intent i = new Intent(TastebudsLoginActivity.this, RestaurantDetailActivity.class);
-		Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
+		Intent i = new Intent(TastebudsLoginActivity.this, RestaurantDetailActivity.class);
 		startActivity(i);
 		Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 	}
