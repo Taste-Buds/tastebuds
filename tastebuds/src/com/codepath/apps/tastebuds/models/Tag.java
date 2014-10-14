@@ -1,0 +1,54 @@
+package com.codepath.apps.tastebuds.models;
+
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+
+@ParseClassName("Tags")
+public class Tag extends ParseObject {
+	//Fields:
+	//private long googlePlacesId;
+	//private long reviewId;
+	//private String tag;
+	
+	public Tag(long googlePlacesId, String tag) {
+		super();
+		setGooglePlacesId(googlePlacesId);
+		setTag(tag);
+	}
+
+	public Tag() {
+		super();
+	}
+
+	public static ParseQuery<Tag> getQuery() {
+		return ParseQuery.getQuery(Tag.class);
+	}
+
+	public long getGooglePlacesId() {
+		return getLong("googlePlacesId");
+	}
+
+	public void setGooglePlacesId(long googlePlacesId) {
+		put("googlePlacesId", googlePlacesId);
+	}
+
+	public String getTag() {
+		return getString("tag");
+	}
+
+	public void setTag(String tag) {
+		put("tag", tag);
+	}
+
+	public ParseUser getUser() {
+		return getParseUser("owner");
+	}
+
+	public void setUser(ParseUser user) {
+		put("owner", user);
+	}
+
+}
