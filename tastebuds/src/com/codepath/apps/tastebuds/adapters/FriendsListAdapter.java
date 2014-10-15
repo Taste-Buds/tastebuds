@@ -6,6 +6,7 @@ import java.util.List;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -33,7 +34,9 @@ public class FriendsListAdapter extends ArrayAdapter<Object> {
 		}
 		tvFriendName = (TextView) v.findViewById(R.id.tvFriendName);
 		tvFriendName.setText(friend.getUsername());
-		
+		ivFriendProfImg = (ImageView) v.findViewById(R.id.ivProfileImg);
+		String profImgURL = friend.getString("profileImgURL");
+		Picasso.with(getContext()).load(profImgURL).resize(40, 40).centerCrop().into(ivFriendProfImg);
 		return v;
 	}
 }
