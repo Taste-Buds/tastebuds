@@ -3,6 +3,7 @@ package com.codepath.apps.tastebuds.activities;
 import java.util.ArrayList;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.fragments.FriendsListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantListFragment;
@@ -66,10 +67,10 @@ public class HomeActivity extends FragmentActivity {
 			.newTab()
 			.setText("Friends")
 			.setIcon(R.drawable.ic_launcher)
-			.setTag("RestaurantMapListFragment")
+			.setTag("FriendsListFragment")
 			.setTabListener(
-			    new FragmentTabListener<RestaurantMapListFragment>(R.id.ctRestaurantsLists, this, "second",
-								RestaurantMapListFragment.class));
+			    new FragmentTabListener<FriendsListFragment>(R.id.ctRestaurantsLists, this, "second",
+								FriendsListFragment.class));
 
 		actionBar.addTab(tab2);
 	}
