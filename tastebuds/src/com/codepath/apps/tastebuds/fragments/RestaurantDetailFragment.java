@@ -75,11 +75,12 @@ public class RestaurantDetailFragment extends Fragment {
 	public void updateDetailFragmentView() {
 		tvGoogleRating.setText(Double.toString(restaurant.getGoogle_rating()));	
 		switch (restaurant.getPrice_level()) {
-			case 0: tvPrice.setText("");
-			case 1: tvPrice.setText("$");
-			case 2: tvPrice.setText("$$");
-			case 3: tvPrice.setText("$$$");
-			case 4: tvPrice.setText("$$$$");
+			case 0: tvPrice.setText(""); break;
+			case 1: tvPrice.setText("$"); break;
+			case 2: tvPrice.setText("$$"); break;
+			case 3: tvPrice.setText("$$$"); break;
+			case 4: tvPrice.setText("$$$$"); break;
+			default: tvPrice.setText("");
 		}
 		tvPhone.setText(restaurant.getPhone());
 		tvAddress.setText(restaurant.getAddress());
