@@ -32,11 +32,11 @@ public class Dish extends ParseObject {
 	}
 
 	public String getName() {
-		return getString("name");
+		return getString("text");
 	}
 
 	public void setName(String name) {
-		put("name", name);
+		put("text", name);
 	}
 
 	public long getGooglePlacesId() {

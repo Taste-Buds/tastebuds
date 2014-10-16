@@ -14,12 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class RestaurantReviewListFragment extends Fragment {
 
 	private ParseQueryAdapter<RestaurantReview> adapter;
+	private ReviewListListener listener;
+
+    public interface ReviewListListener {
+    	void onReviewSelected(String reviewId, String restaurantName);
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,19 +35,21 @@ public class RestaurantReviewListFragment extends Fragment {
 				new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
 			public ParseQuery<RestaurantReview> create() {
 				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery();
-				query.include("name");
+				query.include("comment");
 				query.orderByDescending("createdAt");
 				return query;
 			}
 		};
 
 		adapter = new ParseQueryAdapter<RestaurantReview>(getActivity(), factory) {
-			public View getItemView(Dish dish, View view, ViewGroup parent) {
+			@Override
+			public View getItemView(RestaurantReview review, View view,
+					ViewGroup parent) {
 				if (view == null) {
-					view = view.inflate(getContext(), R.layout.restaurant_list_item, null);
+					view = View.inflate(getContext(), R.layout.restaurant_list_item, null);
 				}
-				TextView tvDish = (TextView) view.findViewById(R.id.lvRestaurants);
-				tvDish.setText(dish.getName());
+				TextView tvDish = (TextView) view.findViewById(R.id.tvRestaurantName);
+				tvDish.setText(review.getText());
 				return view;
 			}
 		};

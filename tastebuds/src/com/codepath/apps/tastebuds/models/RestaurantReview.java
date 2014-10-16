@@ -58,7 +58,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	}
 
 	public String getText() {
-		return getString("text");
+		return getString("comment");
 	}
 
 	public void setText(String text) {

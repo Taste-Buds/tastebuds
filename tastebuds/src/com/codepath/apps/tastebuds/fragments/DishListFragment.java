@@ -26,7 +26,7 @@ public class DishListFragment extends Fragment {
 		ParseQueryAdapter.QueryFactory<Dish> factory = new ParseQueryAdapter.QueryFactory<Dish>() {
 			public ParseQuery<Dish> create() {
 				ParseQuery<Dish> query = Dish.getQuery();
-				query.include("name");
+				query.include("text");
 				query.orderByDescending("createdAt");
 				return query;
 			}
@@ -34,9 +34,9 @@ public class DishListFragment extends Fragment {
 		adapter = new ParseQueryAdapter<Dish>(getActivity(), factory) {
 			public View getItemView(Dish dish, View view, ViewGroup parent) {
 				if (view == null) {
-					view = view.inflate(getContext(), R.layout.restaurant_list_item, null);
+					view = View.inflate(getContext(), R.layout.restaurant_list_item, null);
 				}
-				TextView tvDish = (TextView) view.findViewById(R.id.lvRestaurants);
+				TextView tvDish = (TextView) view.findViewById(R.id.tvRestaurantName);
 				tvDish.setText(dish.getName());
 				return view;
 			}
