@@ -36,12 +36,6 @@ public class HomeActivity extends FragmentActivity {
 		setContentView(R.layout.activity_home);
 		Log.d("Debug", "Home Activity OnCreate");
 		user = ParseUser.getCurrentUser();
-		if (user == null) {
-			user = new ParseUser();
-			user.setUsername("efgh12345");
-			user.setPassword("secret12345");
-			user.setEmail("efgh12345@mail.com");
-		}
 		setupTabs();
 		
 	}

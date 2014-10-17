@@ -36,8 +36,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(ParseUser owner) {
-	    return ParseQuery.getQuery(RestaurantReview.class)
-	    		.w;
+	    return ParseQuery.getQuery(RestaurantReview.class);
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId, List<ParseUser> owner) {
