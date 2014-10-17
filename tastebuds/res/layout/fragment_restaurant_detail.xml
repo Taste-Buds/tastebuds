@@ -26,34 +26,34 @@
         android:id="@+id/tvGoogleRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_alignBaseline="@+id/tvReviewTime"
+        android:layout_alignBottom="@+id/tvReviewTime"
+        android:layout_toRightOf="@+id/tvReviewTime"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvReviewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/tvReviewTime"
+        android:layout_below="@+id/tvReviewTime"
         android:text="Price:" />
 
     <TextView
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
+        android:layout_alignBaseline="@+id/tvReviewUsername"
+        android:layout_alignBottom="@+id/tvReviewUsername"
+        android:layout_toRightOf="@+id/tvReviewUsername"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tvOpenNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/tvReviewUsername"
+        android:layout_below="@+id/tvReviewUsername"
         android:text="Open/Closed" />
 
     <TextView

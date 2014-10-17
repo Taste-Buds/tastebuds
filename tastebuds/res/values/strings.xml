@@ -21,5 +21,9 @@
     <string name="title_activity_restaurant_detail">RestaurantDetailActivity</string>
     <string name="action_review_">AddReview</string>
     <string name="action_review_compose">AddReview</string>
+    <string name="review_user_desc">Review User</string>
+    <string name="review_text">Review1</string>
+    <string name="user_name_text">Username</string>
+    <string name="time_hint">time</string>
 
 </resources>

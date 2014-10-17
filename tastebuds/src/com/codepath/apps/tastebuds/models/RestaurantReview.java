@@ -29,6 +29,18 @@ public class RestaurantReview extends ParseObject implements Review {
 	    return ParseQuery.getQuery(RestaurantReview.class);
 	}
 
+	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
+	    return ParseQuery.getQuery(RestaurantReview.class);
+	}
+
+	public static ParseQuery<RestaurantReview> getQuery(ParseUser owner) {
+	    return ParseQuery.getQuery(RestaurantReview.class);
+	}
+
+	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId, ParseUser owner) {
+	    return ParseQuery.getQuery(RestaurantReview.class);
+	}
+
 	public long getGooglePlacesId() {
 		return getLong("googlePlacesId");
 	}
@@ -40,7 +52,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	public ParseUser getUser() {
 		return getParseUser("owner");
 	}
-
+	
 	public void setUser(ParseUser user) {
 		put("owner", user);
 	}
