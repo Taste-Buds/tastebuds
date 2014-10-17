@@ -125,7 +125,7 @@ public class TastebudsLoginActivity extends Activity {
 						friendsList.add(user.getId());
 					}
 					// Also add the friends from user's friends array field
-					List<String> tableFriendsId =(ArrayList<String>) ParseUser.getCurrentUser().get("friends");
+					List<String> tableFriendsId = (ArrayList<String>) ParseUser.getCurrentUser().get("friends");
 					for (String id: tableFriendsId){
 						friendsList.add(id);
 					}
