@@ -1,5 +1,7 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.List;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -34,10 +36,11 @@ public class RestaurantReview extends ParseObject implements Review {
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(ParseUser owner) {
-	    return ParseQuery.getQuery(RestaurantReview.class);
+	    return ParseQuery.getQuery(RestaurantReview.class)
+	    		.w;
 	}
 
-	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId, ParseUser owner) {
+	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId, List<ParseUser> owner) {
 	    return ParseQuery.getQuery(RestaurantReview.class);
 	}
 
