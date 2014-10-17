@@ -45,10 +45,16 @@ public class RestaurantReview extends ParseObject implements Review {
 
 	public static ParseQuery<RestaurantReview> getQuery(String googlePlacesId,
 			List<ParseObject> owners) {
-	    return ParseQuery.getQuery(RestaurantReview.class)
-	    		.whereContainedIn("owner", owners)
-	    		.whereEqualTo("placesId", googlePlacesId)
+	    ParseQuery<RestaurantReview> query = ParseQuery.getQuery(
+	    		RestaurantReview.class)
 	    		.orderByDescending("createdAt");
+	    if (owners != null) {
+	    	query.whereContainedIn("owner", owners);
+	    }
+	    if (googlePlacesId != null) {
+	    	query.whereEqualTo("placesId", googlePlacesId);
+	    }
+	    return query;
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(List<Long> googlePlacesIds,

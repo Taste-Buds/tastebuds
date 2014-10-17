@@ -1,22 +1,6 @@
 package com.codepath.apps.tastebuds.fragments;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.codepath.apps.tastebuds.GooglePlacesApiClient;
-import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
-import com.codepath.apps.tastebuds.activities.UserProfileActivity;
-import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
-import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
-import com.codepath.apps.tastebuds.models.Restaurant;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.activities.UserProfileActivity;
+import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
+import com.parse.ParseUser;
 
 
 public class FriendsListFragment extends Fragment {

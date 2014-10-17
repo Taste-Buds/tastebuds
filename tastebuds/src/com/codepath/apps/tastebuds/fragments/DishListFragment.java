@@ -1,8 +1,13 @@
 package com.codepath.apps.tastebuds.fragments;
 
+import java.util.List;
+
+import com.codepath.apps.tastebuds.adapters.DishListAdapter;
 import com.codepath.apps.tastebuds.models.Dish;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,38 +22,27 @@ import com.codepath.apps.tastebuds.R;
 
 public class DishListFragment extends Fragment {
 
-	private ParseQueryAdapter<Dish> adapter;
+	private DishListAdapter adapter;
+	private ListView lvDishes;
+	private String googlePlacesId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		ParseQueryAdapter.QueryFactory<Dish> factory = new ParseQueryAdapter.QueryFactory<Dish>() {
-			public ParseQuery<Dish> create() {
-				ParseQuery<Dish> query = Dish.getQuery();
-				query.include("text");
-				query.orderByDescending("createdAt");
-				return query;
-			}
-		};
-		adapter = new ParseQueryAdapter<Dish>(getActivity(), factory) {
-			public View getItemView(Dish dish, View view, ViewGroup parent) {
-				if (view == null) {
-					view = View.inflate(getContext(), R.layout.restaurant_list_item, null);
-				}
-				TextView tvDish = (TextView) view.findViewById(R.id.tvRestaurantName);
-				tvDish.setText(dish.getName());
-				return view;
-			}
-		};
+		googlePlacesId = "monrez";
+        List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
+		adapter = new DishListAdapter(getActivity(), googlePlacesId, friends);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_dish_list, container);
-		ListView lvDishes = (ListView) view.findViewById(R.id.lvDishes);
+		super.onCreateView(inflater, container, savedInstanceState);
+		View view = inflater.inflate(R.layout.fragment_dish_list, container, false);
+		lvDishes = (ListView) view.findViewById(R.id.lvDishes);
 		lvDishes.setAdapter(adapter);
-		return super.onCreateView(inflater, container, savedInstanceState);
+		adapter.notifyDataSetChanged();
+		return view;
 	}
 }

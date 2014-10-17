@@ -1,12 +1,12 @@
 package com.codepath.apps.tastebuds.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-@ParseClassName("Dishes")
+@ParseClassName("Dish")
 public class Dish extends ParseObject {
 
 	// Fields
@@ -17,11 +17,7 @@ public class Dish extends ParseObject {
 		super();
 	}
 
-	public Dish(String theClassName) {
-		super(theClassName);
-	}
-
-	public Dish(String name, long googlePlacesId) {
+	public Dish(String name, String googlePlacesId) {
 		super();
 		setName(name);
 		setGooglePlacesId(googlePlacesId);
@@ -29,6 +25,23 @@ public class Dish extends ParseObject {
 
 	public static ParseQuery<Dish> getQuery() {
 		return ParseQuery.getQuery(Dish.class);
+	}
+
+	public static ParseQuery<Dish> getQuery(ParseObject user) {
+		return ParseQuery.getQuery(Dish.class)
+				.whereEqualTo("owner", user);
+	}
+
+	public static ParseQuery<Dish> getQuery(String placesId) {
+		return ParseQuery.getQuery(Dish.class)
+				.whereEqualTo("placesId", placesId);
+	}
+
+	public static ParseQuery<Dish> getQuery(String placesId,
+			List<ParseObject> friends) {
+		return ParseQuery.getQuery(Dish.class);
+//				/.whereEqualTo("placesId", placesId);
+				//.whereContainedIn("owner", friends);
 	}
 
 	public String getName() {
@@ -39,10 +52,10 @@ public class Dish extends ParseObject {
 		put("text", name);
 	}
 
-	public long getGooglePlacesId() {
-		return getLong("googlePlacesId");
+	public String getGooglePlacesId() {
+		return getString("placesId");
 	}
-	public void setGooglePlacesId(long googlePlacesId) {
-		put("googlePlacesId", googlePlacesId);
+	public void setGooglePlacesId(String googlePlacesId) {
+		put("placesId", googlePlacesId);
 	}
 }

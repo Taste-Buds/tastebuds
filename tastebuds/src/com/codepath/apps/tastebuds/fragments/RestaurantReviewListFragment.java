@@ -29,30 +29,20 @@ public class RestaurantReviewListFragment extends Fragment {
     	void onReviewSelected(String reviewId, String restaurantName);
     }
 
-    /*static RestaurantReviewListFragment newInstance(String userId, long googlePlacesId) {
-    	RestaurantReviewListFragment fragment = new RestaurantReviewListFragment();
-        Bundle args = new Bundle();
-        args.putString("user_id", userId);
-        args.putLong("google_places_id", googlePlacesId);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //String userId =  getArguments().getString("user");
         googlePlacesId = "monrez"; //getArguments().getString("placeId");
+        List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
+		adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_user_restaurant_review_list, container, false);
 		lvReviews = (ListView) view.findViewById(R.id.lvUserReviews);
-
-        List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
-		adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends);
 		lvReviews.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 
@@ -63,7 +53,6 @@ public class RestaurantReviewListFragment extends Fragment {
 				RestaurantReview review = adapter.getItem(position);
 			}
 		});*/
-		//super.onCreateView(inflater, container, savedInstanceState);
 		return view;
 	}
 }
