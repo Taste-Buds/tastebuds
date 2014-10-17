@@ -32,16 +32,31 @@ public class RestaurantReview extends ParseObject implements Review {
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
-	    return ParseQuery.getQuery(RestaurantReview.class);
+	    return ParseQuery.getQuery(RestaurantReview.class)
+	    		.whereEqualTo("googlePlacesId", googlePlacesId)
+	    		.orderByDescending("createdAt");
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(ParseUser owner) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
-	    		.w;
+	    		.whereEqualTo("owner", owner)
+	    		.orderByDescending("createdAt");
 	}
 
-	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId, List<ParseUser> owner) {
-	    return ParseQuery.getQuery(RestaurantReview.class);
+	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId,
+			List<ParseUser> owners) {
+	    return ParseQuery.getQuery(RestaurantReview.class)
+	    		.whereContainedIn("owner", owners)
+	    		.whereEqualTo("googlePlacesId", googlePlacesId)
+	    		.orderByDescending("createdAt");
+	}
+
+	public static ParseQuery<RestaurantReview> getQuery(List<Long> googlePlacesIds,
+			List<ParseUser> owners) {
+	    return ParseQuery.getQuery(RestaurantReview.class)
+	    		.whereContainedIn("owner", owners)
+	    		.whereContainedIn("googlePlacesId", googlePlacesIds)
+	    		.orderByDescending("createdAt");
 	}
 
 	public long getGooglePlacesId() {
