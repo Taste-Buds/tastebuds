@@ -11,14 +11,15 @@ import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
 
-	public ReviewListAdapter(Context context, final long googlePlacesId,
-			final List<ParseUser> friends) {
+	public ReviewListAdapter(Context context, final String googlePlacesId,
+			final List<ParseObject> friends) {
 		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
 			public ParseQuery<RestaurantReview> create() {
 				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(

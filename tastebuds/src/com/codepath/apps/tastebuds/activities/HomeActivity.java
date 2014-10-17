@@ -77,7 +77,7 @@ public class HomeActivity extends FragmentActivity {
 	    }
 	    ft.addToBackStack(null);
 		RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance(
-				"Shree Datta", 12345678);
+				"Shree Datta", "czswrtv");
 		dialog.show(ft, "compose");
 		dialog.listener = new RestaurantReviewDialogListener() {
 			@Override

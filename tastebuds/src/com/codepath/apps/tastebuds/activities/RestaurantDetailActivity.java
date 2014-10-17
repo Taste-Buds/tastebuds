@@ -48,7 +48,6 @@ public class RestaurantDetailActivity extends FragmentActivity {
 		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
-		
 		Tab tab1 = actionBar
 			.newTab()
 			.setText("Details")
@@ -89,7 +88,7 @@ public class RestaurantDetailActivity extends FragmentActivity {
 	    }
 	    ft.addToBackStack(null);
 	    if (getActionBar().getSelectedTab().getTag() != "DishListFragment") {
-			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance("Shree Datta", 1234567);
+			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance("Shree Datta", "czswrt");
 			dialog.show(ft, "compose");
 			dialog.listener = new RestaurantReviewDialogListener() {
 				@Override

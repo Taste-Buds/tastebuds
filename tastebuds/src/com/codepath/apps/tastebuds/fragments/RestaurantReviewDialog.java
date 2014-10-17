@@ -32,14 +32,14 @@ public class RestaurantReviewDialog extends DialogFragment {
 	private Button btnTaste;
 	private ImageButton btnCancel;
 	private String restaurantName;
-	private long restaurantId;
+	private String restaurantId;
 	public RestaurantReviewDialogListener listener;
 
     public static RestaurantReviewDialog newInstance(String restaurantName,
-    		long restaurantId) {
+    		String restaurantId) {
     	RestaurantReviewDialog dialog = new RestaurantReviewDialog();
         Bundle args = new Bundle();
-        args.putLong("restaurant_id", restaurantId);
+        args.putString("restaurant_id", restaurantId);
         args.putString("restaurant_name", restaurantName);
         dialog.setArguments(args);
         return dialog;
@@ -54,7 +54,7 @@ public class RestaurantReviewDialog extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_compose, container);
         restaurantName = getArguments().getString("restaurant_name");
-        restaurantId = getArguments().getLong("restaurant_id");
+        restaurantId = getArguments().getString("restaurant_id");
 
         tvRestaurantName = (TextView) view.findViewById(R.id.tvRestaurantNameCompose);
         tvRestaurantName.setText(restaurantName);

@@ -20,7 +20,7 @@ public class RestaurantReview extends ParseObject implements Review {
 		super();
 	}
 
-	public RestaurantReview(long googlePlacesId, int rating, String text) {
+	public RestaurantReview(String googlePlacesId, int rating, String text) {
 		super();
 		setGooglePlacesId(googlePlacesId);
 		setRating(rating);
@@ -33,39 +33,38 @@ public class RestaurantReview extends ParseObject implements Review {
 
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
-	    		.whereEqualTo("googlePlacesId", googlePlacesId)
+	    		.whereEqualTo("placesId", googlePlacesId)
 	    		.orderByDescending("createdAt");
 	}
 
-	public static ParseQuery<RestaurantReview> getQuery(ParseUser owner) {
-
+	public static ParseQuery<RestaurantReview> getQuery(ParseObject owner) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("owner", owner)
 	    		.orderByDescending("createdAt");
 	}
 
-	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId,
-			List<ParseUser> owners) {
+	public static ParseQuery<RestaurantReview> getQuery(String googlePlacesId,
+			List<ParseObject> owners) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
-	    		//.whereContainedIn("owner", owners)
-	    		//.whereEqualTo("googlePlacesId", googlePlacesId)
+	    		.whereContainedIn("owner", owners)
+	    		.whereEqualTo("placesId", googlePlacesId)
 	    		.orderByDescending("createdAt");
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(List<Long> googlePlacesIds,
-			List<ParseUser> owners) {
+			List<ParseObject> owners) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereContainedIn("owner", owners)
-	    		.whereContainedIn("googlePlacesId", googlePlacesIds)
+	    		.whereContainedIn("placesId", googlePlacesIds)
 	    		.orderByDescending("createdAt");
 	}
 
-	public long getGooglePlacesId() {
-		return getLong("googlePlacesId");
+	public String getGooglePlacesId() {
+		return getString("placesId");
 	}
 
-	public void setGooglePlacesId(long googlePlacesId) {
-		put("googlePlacesId", googlePlacesId);
+	public void setGooglePlacesId(String googlePlacesId) {
+		put("placesId", googlePlacesId);
 	}
 
 	public ParseUser getUser() {
