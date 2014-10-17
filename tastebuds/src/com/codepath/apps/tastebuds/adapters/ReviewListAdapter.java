@@ -28,6 +28,15 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
 		});
 	}
 
+	public ReviewListAdapter(Context context,final ParseUser user) {
+		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
+			public ParseQuery<RestaurantReview> create() {
+				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(
+						user);
+				return query;
+			}
+		});
+	}
 	@Override
 	public View getItemView(RestaurantReview review, View view, ViewGroup parent) {
 		if (view == null) {

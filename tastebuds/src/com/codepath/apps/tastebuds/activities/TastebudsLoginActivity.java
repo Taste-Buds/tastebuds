@@ -54,23 +54,29 @@ public class TastebudsLoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_login);
+		session = Session.getActiveSession();
+		if (session !=null && session.isOpened()) {
+			Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
+			goToHomeActivity();
+		}else{
+			setContentView(R.layout.activity_login);
 
-		loginButton = (Button) findViewById(R.id.loginButton);
-		loginButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onLoginButtonClicked();
+			loginButton = (Button) findViewById(R.id.loginButton);
+			loginButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						onLoginButtonClicked();
+					}
+			});
+
+			// Check if there is a currently logged in user
+			// and they are linked to a Facebook account.
+			ParseUser currentUser = ParseUser.getCurrentUser();
+
+			if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
+				// Go to the user info activity
+				//	showUserDetailsActivity();
 			}
-		});
-
-		// Check if there is a currently logged in user
-		// and they are linked to a Facebook account.
-		ParseUser currentUser = ParseUser.getCurrentUser();
-
-		if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-			// Go to the user info activity
-			//	showUserDetailsActivity();
 		}
 	}
 

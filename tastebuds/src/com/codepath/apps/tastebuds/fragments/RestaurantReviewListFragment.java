@@ -50,8 +50,8 @@ public class RestaurantReviewListFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_restaurant_review_list, container, false);
-		lvReviews = (ListView) view.findViewById(R.id.lvReviews);
+		View view = inflater.inflate(R.layout.fragment_user_restaurant_review_list, container, false);
+		lvReviews = (ListView) view.findViewById(R.id.lvUserReviews);
 
         List<Object> friendsId = (List<Object>) ParseUser.getCurrentUser().getList("userFriends");
         ParseQuery<ParseUser> friendsQuery = ParseUser.getQuery()

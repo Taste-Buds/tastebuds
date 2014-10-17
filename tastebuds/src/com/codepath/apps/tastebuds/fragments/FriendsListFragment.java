@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
+import com.codepath.apps.tastebuds.activities.UserProfileActivity;
 import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
 import com.codepath.apps.tastebuds.models.Restaurant;
@@ -54,12 +55,17 @@ public class FriendsListFragment extends Fragment {
 		lvFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {  
 			   public void onItemClick(AdapterView parentView, View childView, int position, long id) 
 			   {  
-				   // Add logic to open friends detail actiivty
+				   showUserDetail(position);
 			   } 
 			});		
 		return v;		
 	}
 	
-
+	public void showUserDetail(int position) {
+		Log.d("Debug", "P: " + position);
+		Intent i = new Intent(getActivity(), UserProfileActivity.class);
+		i.putExtra("user_id", ((ParseUser)friends.get(position)).getString("fbId"));
+		startActivity(i);
+	}
 
 }

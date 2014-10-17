@@ -25,5 +25,5 @@
     <string name="review_text">Review1</string>
     <string name="user_name_text">Username</string>
     <string name="time_hint">time</string>
-
+	<string name ="title_activity_user_detail">User Details</string>
 </resources>
