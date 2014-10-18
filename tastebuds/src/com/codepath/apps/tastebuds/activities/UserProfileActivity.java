@@ -8,6 +8,7 @@ import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantMapListFragment;
+import com.codepath.apps.tastebuds.fragments.UserDishReviewsListFragment;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.Restaurant;
@@ -64,16 +65,16 @@ public class UserProfileActivity extends FragmentActivity {
 		actionBar.addTab(tab1);
 		actionBar.selectTab(tab1);
 
-//		Tab tab2 = actionBar
-//			.newTab()
-//			.setText("User Dish Reviews")
-//			.setIcon(R.drawable.ic_launcher)
-//			.setTag("UserDishReviewsListFragment")
-//			.setTabListener(
-//			    new FragmentTabListener<UserDishReviewsListFragment>(R.id.flProfile, this, "second",
-//			    		UserDishReviewsListFragment.class));
-//
-//		actionBar.addTab(tab2);
+		Tab tab2 = actionBar
+			.newTab()
+			.setText("User Dish Reviews")
+			.setIcon(R.drawable.ic_launcher)
+			.setTag("UserDishReviewsListFragment")
+			.setTabListener(
+			    new FragmentTabListener<UserDishReviewsListFragment>(R.id.flProfile, this, "second",
+			    		UserDishReviewsListFragment.class, args));
+
+		actionBar.addTab(tab2);
 	}
 
 //	public void onReview(View view) {

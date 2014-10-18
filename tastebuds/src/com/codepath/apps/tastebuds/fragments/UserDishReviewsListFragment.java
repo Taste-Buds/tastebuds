@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.adapters.DishListAdapter;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;
@@ -22,7 +23,7 @@ import com.parse.ParseUser;
 
 public class UserDishReviewsListFragment extends Fragment {
 
-	private ReviewListAdapter adapter;
+	private DishListAdapter adapter;
 	private ReviewListListener listener;
 	private ListView lvUserDishReviews;
 	private String userId;
@@ -49,7 +50,7 @@ public class UserDishReviewsListFragment extends Fragment {
 
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-						adapter = new ReviewListAdapter(getActivity(),  users.get(0));
+						adapter = new DishListAdapter(getActivity(),  users.get(0));
 						lvUserDishReviews.setAdapter(adapter);
 						adapter.notifyDataSetChanged();
 					

@@ -10,36 +10,35 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class DishReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
+public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 
 	public DishReviewListAdapter(Context context, final String googlePlacesId,
 			final List<ParseObject> friends) {
-		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
-			public ParseQuery<RestaurantReview> create() {
-				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(
-						googlePlacesId, friends);
+		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
+			public ParseQuery<DishReview> create() {
+				ParseQuery<DishReview> query = DishReview.getQuery(googlePlacesId, friends);
 				return query;
 			}
 		});
 	}
 
 	public DishReviewListAdapter(Context context,final ParseUser user) {
-		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
-			public ParseQuery<RestaurantReview> create() {
-				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(
-						user);
+		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
+			public ParseQuery<DishReview> create() {
+				ParseQuery<DishReview> query = DishReview.getQuery(user);
 				return query;
 			}
 		});
 	}
 	@Override
-	public View getItemView(RestaurantReview review, View view, ViewGroup parent) {
+	public View getItemView(DishReview review, View view, ViewGroup parent) {
 		if (view == null) {
 			view = View.inflate(getContext(), R.layout.review_list_item, null);
 		}

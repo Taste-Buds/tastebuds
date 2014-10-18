@@ -1,5 +1,7 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.List;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -25,6 +27,19 @@ public class DishReview extends ParseObject implements Review {
 		setRating(rating);
 		setText(text);
 	}
+	public static ParseQuery<DishReview> getQuery(String googlePlacesId,
+			List<ParseObject> owners) {
+	    ParseQuery<DishReview> query = ParseQuery.getQuery(
+	    		DishReview.class)
+	    		.orderByDescending("createdAt");
+	    if (owners != null) {
+	    	query.whereContainedIn("owner", owners);
+	    }
+	    if (googlePlacesId != null) {
+	    	query.whereEqualTo("placesId", googlePlacesId);
+	    }
+	    return query;
+	}
 
 	public static ParseQuery<DishReview> getQuery() {
 	    return ParseQuery.getQuery(DishReview.class);
@@ -38,6 +53,12 @@ public class DishReview extends ParseObject implements Review {
 		put("googlePlacesId", googlePlacesId);
 	}
 
+	public static ParseQuery<DishReview> getQuery(ParseObject owner) {
+	    return ParseQuery.getQuery(DishReview.class)
+	    		.whereEqualTo("owner", owner)
+	    		.orderByDescending("createdAt");
+	}
+	
 	public ParseUser getUser() {
 		return getParseUser("owner");
 	}
