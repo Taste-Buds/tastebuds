@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 
@@ -121,40 +122,48 @@ public class TastebudsLoginActivity extends Activity {
 		}
 	}
 	private static void getFacebookFriends(){
-		Request.newMyFriendsRequest(session, new Request.GraphUserListCallback() {
+		try {
+			Request.newMyFriendsRequest(session, new Request.GraphUserListCallback() {
 
-			@Override
-			public void onCompleted(List<GraphUser> users, Response response) {
-				if (users != null) {
-					List<String> friendsList = new ArrayList<String>();
-					for (GraphUser user : users) {
-						friendsList.add(user.getId());
-					}
-					// Also add the friends from user's friends array field
-					List<String> tableFriendsId = (ArrayList<String>) ParseUser.getCurrentUser().get("friends");
-					for (String id: tableFriendsId){
-						friendsList.add(id);
-					}
+				@Override
+				public void onCompleted(List<GraphUser> users, Response response) {
+					if (users != null) {
+						List<String> friendsList = new ArrayList<String>();
+						for (GraphUser user : users) {
+							friendsList.add(user.getId());
+						}
+						// Also add the friends from user's friends array field
+						List<String> tableFriendsId = (ArrayList<String>) ParseUser.getCurrentUser().get("friends");
+						for (String id: tableFriendsId){
+							friendsList.add(id);
+						}
 
-					// Construct a ParseUser query that will find friends whose
-					// facebook IDs are contained in the current user's friend list.
-					ParseQuery friendQuery = ParseQuery.getUserQuery();
-					friendQuery.whereContainedIn("fbId", friendsList);
+						// Construct a ParseUser query that will find friends whose
+						// facebook IDs are contained in the current user's friend list.
+						ParseQuery friendQuery = ParseQuery.getUserQuery();
+						friendQuery.whereContainedIn("fbId", friendsList);
 
-					// findObjects will return a list of ParseUsers
-					// that are friends with the current user
-					try {
+						// findObjects will return a list of ParseUsers
+						// that are friends with the current user
+						try {
 
-						List<ParseObject> friendUsers = friendQuery.find();
-						ParseUser.getCurrentUser().addAll("userFriends", friendUsers);
+							List<ParseObject> friendUsers = friendQuery.find();
+							ParseUser.getCurrentUser().addAll("userFriends", friendUsers);
 
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		}).executeAsync();
+			}).executeAsync().get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private static void getFacebookIdInBackground() {
 
@@ -173,6 +182,7 @@ public class TastebudsLoginActivity extends Activity {
 		}).executeAsync();
 	}
 	private void goToHomeActivity(){
+		
 		getFacebookFriends();
 		Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 		startActivity(i);
