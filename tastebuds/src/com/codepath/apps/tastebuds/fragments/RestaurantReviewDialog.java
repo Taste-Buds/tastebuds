@@ -36,11 +36,10 @@ public class RestaurantReviewDialog extends DialogFragment {
 	private String restaurantId;
 	public RestaurantReviewDialogListener listener;
 
-    public static RestaurantReviewDialog newInstance(String restaurantName,
-    		String restaurantId) {
+    public static RestaurantReviewDialog newInstance(String reviewId, String restaurantName) {
     	RestaurantReviewDialog dialog = new RestaurantReviewDialog();
         Bundle args = new Bundle();
-        args.putString("restaurant_id", restaurantId);
+        args.putString("revied_id", reviewId);
         args.putString("restaurant_name", restaurantName);
         dialog.setArguments(args);
         return dialog;

@@ -56,6 +56,7 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
         tvTags = (TextView) view.findViewById(R.id.tvComposeTags);
         etTags = (EditText) view.findViewById(R.id.etComposeTags);
         etReview = (EditText) view.findViewById(R.id.etComposeReview);
+        etReview.setEnabled(false);
 
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
 
@@ -66,8 +67,8 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
 	        etReview.setText(review.getText());
 	        etReview.setEnabled(false);
 	        rbRating.setRating(review.getRating());
+	        rbRating.setEnabled(false);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

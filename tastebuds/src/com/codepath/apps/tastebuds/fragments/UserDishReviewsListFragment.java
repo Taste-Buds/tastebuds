@@ -48,19 +48,14 @@ public class UserDishReviewsListFragment extends Fragment {
 		lvUserDishReviews = (ListView) view.findViewById(R.id.lvUserDishReviews);
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
-
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-						adapter = new DishReviewListAdapter(getActivity(),  users.get(0));
-						lvUserDishReviews.setAdapter(adapter);
-						adapter.notifyDataSetChanged();
+					adapter = new DishReviewListAdapter(getActivity(),  users.get(0));
+					lvUserDishReviews.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
 					
 				}
-
 			});
-		
-
-
 		return view;
 	}
 }

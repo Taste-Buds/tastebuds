@@ -5,27 +5,34 @@ import java.util.List;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
+public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
+	implements OnItemClickListener {
 
+	private RestaurantReviewListListener listener;
 	public ReviewListAdapter(Context context, final String googlePlacesId,
-			final List<ParseObject> friends) {
+			final List<ParseObject> friends, RestaurantReviewListListener listener) {
 		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
 			public ParseQuery<RestaurantReview> create() {
 				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(googlePlacesId, friends);
 				return query;
 			}
 		});
+		this.listener = listener;
 	}
 
 	public ReviewListAdapter(Context context,final ParseUser user) {
@@ -52,7 +59,16 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
 		username.setText("abcdefgh"); //review.getUser().getUsername());
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
+		rating.setEnabled(false);
 		return view;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		RestaurantReview review = getItem(position);
+		listener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+		Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
 	}
 
 	/*@Override

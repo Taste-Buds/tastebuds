@@ -14,14 +14,18 @@ import com.codepath.apps.tastebuds.fragments.DishListFragment;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantDetailFragment;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog.RestaurantReviewDetailDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 
-public class RestaurantDetailActivity extends FragmentActivity {
+public class RestaurantDetailActivity extends FragmentActivity 
+	implements RestaurantReviewListListener {
 	
 	String placeId;
 
@@ -47,6 +51,7 @@ public class RestaurantDetailActivity extends FragmentActivity {
 		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
+		args.putString("restaurantName", "");
 		Tab tab1 = actionBar
 			.newTab()
 			.setText("Details")
@@ -87,7 +92,8 @@ public class RestaurantDetailActivity extends FragmentActivity {
 	    }
 	    ft.addToBackStack(null);
 	    if (getActionBar().getSelectedTab().getTag() != "DishListFragment") {
-			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance("Shree Datta", "czswrt");
+			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance(
+					"Shree Datta", "czswrt");
 			dialog.show(ft, "compose");
 			dialog.listener = new RestaurantReviewDialogListener() {
 				@Override
@@ -109,5 +115,22 @@ public class RestaurantDetailActivity extends FragmentActivity {
 				}
 			};
 	    }
+	}
+
+	@Override
+	public void onReviewSelected(String reviewId, String restaurantName) {
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+	    if (prev != null) {
+	        ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+		RestaurantReviewDetailDialog dialog = RestaurantReviewDetailDialog.newInstance(reviewId,
+				restaurantName);
+		dialog.show(ft, "detail");
+		dialog.listener = new RestaurantReviewDetailDialogListener() {
+			@Override
+			public void onFinishReviewComposeDialog(RestaurantReview review) {}
+		};
 	}
 }
