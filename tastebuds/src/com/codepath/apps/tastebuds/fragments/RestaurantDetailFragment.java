@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 public class RestaurantDetailFragment extends Fragment {
@@ -26,6 +28,7 @@ public class RestaurantDetailFragment extends Fragment {
 	private TextView tvPhone;
 	private TextView tvAddress;
 	private TextView tvOpenNow;
+	private WebView wvGoogleMap;
 	public Restaurant restaurant;
 	
 	@Override
@@ -44,7 +47,7 @@ public class RestaurantDetailFragment extends Fragment {
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 		tvOpenNow = (TextView) v.findViewById(R.id.tvOpenNow);
-		
+		wvGoogleMap = (WebView) v.findViewById(R.id.wvGoogleMap);
 		return v;		
 	}
 	
@@ -89,7 +92,23 @@ public class RestaurantDetailFragment extends Fragment {
 		} else {
 			tvOpenNow.setText("Closed");
 		}
+		wvGoogleMap.getSettings().setLoadsImagesAutomatically(true);
+		//wvGoogleMap.getSettings().setJavaScriptEnabled(true);
+		wvGoogleMap.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+	      // Configure the client to use when opening URLs
+		//wvGoogleMap.setWebViewClient(new MyBrowser());
+	      // Load the initial URL
+		wvGoogleMap.loadUrl(restaurant.getWeb_map()); // 
 	}
+	
+	   // Manages the behavior when URLs are loaded
+	   private class MyBrowser extends WebViewClient {
+	      @Override
+	      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+	         view.loadUrl(url);
+	         return true;
+	      }
+	   }
 	
 	
 }
