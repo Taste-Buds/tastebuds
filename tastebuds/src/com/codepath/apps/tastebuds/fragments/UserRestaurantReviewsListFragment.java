@@ -35,36 +35,29 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userId = getArguments().getString("userId");
+        userId = getArguments().getString("user_id");
+ 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_restaurant_review_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_user_restaurant_review_list, container, false);
 		lvUserReviews = (ListView) view.findViewById(R.id.lvUserReviews);
-		
-		
-	        ParseQuery<ParseUser> userQuery = ParseUser.getQuery()
-	        		.whereContains("fbId", userId);
+	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
-			
-					
 
 				@Override
-				public void done(List<ParseUser> users, ParseException e) {
-					adapter = new ReviewListAdapter(getActivity(),  users.get(0));
-					lvUserReviews.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
-				}
+				public void done(List<ParseUser> users, ParseException arg1) {
+						adapter = new ReviewListAdapter(getActivity(),  users.get(0));
+						lvUserReviews.setAdapter(adapter);
+						adapter.notifyDataSetChanged();
 					
-				
+				}
 
 			});
 		
-		adapter = new ReviewListAdapter(getActivity(), user);
-		lvUserReviews.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
+
 
 		return view;
 	}

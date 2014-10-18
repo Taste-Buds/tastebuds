@@ -37,7 +37,7 @@ public class UserProfileActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_user_profile);
-		userId = getIntent().getStringExtra("userId");
+		userId = getIntent().getStringExtra("user_id");
 		if(userId == null){
 			user = ParseUser.getCurrentUser();
 			userId = (String) user.get("fbId");
@@ -51,10 +51,10 @@ public class UserProfileActivity extends FragmentActivity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 		Bundle args = new Bundle();
-		args.putString("userId", userId);
+		args.putString("user_id", userId);
 		Tab tab1 = actionBar
 			.newTab()
-			.setText("Restaurant Reviews")
+			.setText("User Restaurant Reviews")
 			.setIcon(R.drawable.ic_launcher)
 			.setTag("UserRestaurantReviewsListFragment")
 			.setTabListener(
@@ -63,7 +63,7 @@ public class UserProfileActivity extends FragmentActivity {
 
 		actionBar.addTab(tab1);
 		actionBar.selectTab(tab1);
-//
+
 //		Tab tab2 = actionBar
 //			.newTab()
 //			.setText("Dish Reviews")
