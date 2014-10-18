@@ -26,4 +26,5 @@
     <string name="user_name_text">Username</string>
     <string name="time_hint">time</string>
 	<string name ="title_activity_user_detail">User Details</string>
+	<string name="action_logout_setting">Logout</string>
 </resources>
