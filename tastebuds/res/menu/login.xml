@@ -7,5 +7,12 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:onClick="onLogoutAction"/>
+ 
+  <item
+        android:id="@string/action_profile_button"
+        android:icon="@drawable/com_facebook_profile_picture_blank_portrait"
+        android:orderInCategory="50"
+        android:showAsAction="always"
+        android:onClick="onProfileClick"/>
 
 </menu>

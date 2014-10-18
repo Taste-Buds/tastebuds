@@ -27,4 +27,5 @@
     <string name="time_hint">time</string>
 	<string name ="title_activity_user_detail">User Details</string>
 	<string name="action_logout_setting">Logout</string>
+	<string name= "action_profile_button">User Profile</string>
 </resources>

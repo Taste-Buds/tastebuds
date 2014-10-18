@@ -67,6 +67,12 @@ public class HomeActivity extends FragmentActivity {
 
 		}
 	}
+	
+	public void onProfileClick(MenuItem mi){
+		Intent i = new Intent(this, UserProfileActivity.class);
+		i.putExtra("user_id", ParseUser.getCurrentUser().getString("fbId"));
+		startActivity(i);
+	}
 	private void setupTabs() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
