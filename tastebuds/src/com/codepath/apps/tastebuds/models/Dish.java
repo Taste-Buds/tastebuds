@@ -1,30 +1,31 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-@ParseClassName("Dish")
-public class Dish extends ParseObject {
+//@ParseClassName("Dish")
+public class Dish { //extends ParseObject {
 
 	// Fields
-	//private String name;
-	//private long googlePlacesId;
+	private String name;
+	private String googlePlacesId;
+	private List<DishReview> reviews;
 
-	public Dish() {
-		super();
+	//public Dish() {
+	//	super();
+//	}
+
+	public Dish(String name, String googlePlacesId, List<DishReview> reviews) {
+//		super();
+		//setName(name);
+		//setGooglePlacesId(googlePlacesId);
+		this.name = name;
+		this.googlePlacesId =  googlePlacesId;
+		this.setReviews(reviews);
 	}
 
-	public Dish(String name, String googlePlacesId) {
-		super();
-		setName(name);
-		setGooglePlacesId(googlePlacesId);
-	}
-
-	public static ParseQuery<Dish> getQuery() {
+	/*public static ParseQuery<Dish> getQuery() {
 		return ParseQuery.getQuery(Dish.class);
 	}
 
@@ -51,20 +52,37 @@ public class Dish extends ParseObject {
 
 	public void setUser(ParseUser user) {
 		put("owner", user);
+	}*/
+
+	public Dish() {
+		reviews = new ArrayList<DishReview>();
 	}
 
 	public String getName() {
-		return getString("name");
+		return name;
 	}
 
 	public void setName(String name) {
-		put("name", name);
+		this.name = name;
 	}
 
 	public String getGooglePlacesId() {
-		return getString("placesId");
+		return this.googlePlacesId;
 	}
 	public void setGooglePlacesId(String googlePlacesId) {
-		put("placesId", googlePlacesId);
+		this.googlePlacesId = googlePlacesId;
 	}
+
+	public List<DishReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<DishReview> reviews) {
+		this.reviews = reviews;
+	}
+
+	public void addReview(DishReview review) {
+		this.reviews.add(review);
+	}
+
 }

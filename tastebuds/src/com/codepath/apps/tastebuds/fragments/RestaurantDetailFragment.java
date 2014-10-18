@@ -98,7 +98,7 @@ public class RestaurantDetailFragment extends Fragment {
 	      // Configure the client to use when opening URLs
 		//wvGoogleMap.setWebViewClient(new MyBrowser());
 	      // Load the initial URL
-		wvGoogleMap.loadUrl(restaurant.getWeb_map()); // 
+//		wvGoogleMap.loadUrl(restaurant.getWeb_map()); // 
 	}
 	
 	   // Manages the behavior when URLs are loaded

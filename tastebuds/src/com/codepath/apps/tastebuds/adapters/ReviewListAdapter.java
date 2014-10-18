@@ -49,7 +49,7 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview> {
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 
-		username.setText("abcdefgh");//review.getUser().getUsername());
+		username.setText("abcdefgh"); //review.getUser().getUsername());
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		return view;

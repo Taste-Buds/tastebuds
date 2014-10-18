@@ -50,7 +50,7 @@ public class UserDishReviewsListFragment extends Fragment {
 
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-						adapter = new DishListAdapter(getActivity(),  users.get(0));
+						//adapter = new DishListAdapter(getActivity(),  users.get(0));
 						lvUserDishReviews.setAdapter(adapter);
 						adapter.notifyDataSetChanged();
 					

@@ -1,9 +1,14 @@
 package com.codepath.apps.tastebuds.fragments;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.codepath.apps.tastebuds.adapters.DishListAdapter;
 import com.codepath.apps.tastebuds.models.Dish;
+import com.codepath.apps.tastebuds.models.DishReview;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -24,6 +29,7 @@ public class DishListFragment extends Fragment {
 
 	private DishListAdapter adapter;
 	private ListView lvDishes;
+	private List<Dish> dishes;
 	private String googlePlacesId;
 
 	@Override
@@ -32,7 +38,26 @@ public class DishListFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		googlePlacesId = "monrez";
         List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
-		adapter = new DishListAdapter(getActivity(), googlePlacesId, friends);
+        ParseQuery<DishReview> query = DishReview.getQuery(googlePlacesId, friends);
+        dishes = new ArrayList<Dish>();
+		HashMap<String, Dish> reviewMap = new HashMap<String, Dish>();
+		try {
+			List<DishReview>  dishReviews = query.find();
+			for (DishReview review : dishReviews) {
+				String dishName = review.getDishName();
+				if (!reviewMap.containsKey(dishName)) {
+					Dish dish = new Dish();
+					dish.setName(dishName);
+					dish.setGooglePlacesId(googlePlacesId);
+					reviewMap.put(dishName, dish);
+				}
+				reviewMap.get(dishName).addReview(review);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		dishes.addAll(reviewMap.values());
+		adapter = new DishListAdapter(getActivity(), dishes);
 	}
 
 	@Override

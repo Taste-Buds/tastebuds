@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.DishListFragment;
@@ -19,10 +18,8 @@ import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
-import com.codepath.apps.tastebuds.models.Dish;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
-import com.parse.ParseUser;
 
 public class RestaurantDetailActivity extends FragmentActivity {
 	
@@ -107,9 +104,6 @@ public class RestaurantDetailActivity extends FragmentActivity {
 				@Override
 				public void onFinishReviewComposeDialog(DishReview review) {
 					if (review != null) {
-						Dish dish = new Dish("Papdi chat", review.getGooglePlacesId());
-						dish.setUser(ParseUser.getCurrentUser());
-						dish.saveInBackground();
 						review.saveInBackground();
 					}
 				}

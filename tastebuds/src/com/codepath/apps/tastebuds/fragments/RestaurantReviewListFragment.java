@@ -32,7 +32,7 @@ public class RestaurantReviewListFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        googlePlacesId = "monrez"; //getArguments().getString("placeId");
+        googlePlacesId = getArguments().getString("placeId");
         List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
 		adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends);
 	}
