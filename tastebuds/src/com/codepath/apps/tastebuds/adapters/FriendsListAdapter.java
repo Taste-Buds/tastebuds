@@ -24,7 +24,7 @@ public class FriendsListAdapter extends ArrayAdapter<Object> {
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ParseUser friend = (ParseUser)getItem(position);	
+		ParseUser friend = (ParseUser)getItem(position);
 		View v;
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());

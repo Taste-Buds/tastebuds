@@ -41,13 +41,13 @@ public class FriendsListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_friends_list, container, false);
 		lvFriends = (ListView) v.findViewById(R.id.lvFriends);
 		lvFriends.setAdapter(friendsListAdapter);
-		lvFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {  
+		lvFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			   public void onItemClick(AdapterView parentView, View childView, int position, long id) 
-			   {  
+			   {
 				   showUserDetail(position);
-			   } 
-			});		
-		return v;		
+			   }
+			});
+		return v;
 	}
 	
 	public void showUserDetail(int position) {
