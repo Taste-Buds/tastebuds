@@ -57,7 +57,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	    return query;
 	}
 
-	public static ParseQuery<RestaurantReview> getQuery(List<Long> googlePlacesIds,
+	public static ParseQuery<RestaurantReview> getQuery(List<String> googlePlacesIds,
 			List<ParseObject> owners) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereContainedIn("owner", owners)

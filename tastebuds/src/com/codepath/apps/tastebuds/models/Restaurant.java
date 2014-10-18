@@ -19,8 +19,26 @@ public class Restaurant {
 	private String website;			// website
 	private boolean open_now; 		// opening_hours:open_now
 	private String web_map;			// URI for Restaurant Map on Google
+	private int numOfReviews;		// Number of Friend Reviews
+	private long friendRating;		// average Rating by Friends
 	
 	
+	public int getNumOfReviews() {
+		return numOfReviews;
+	}
+
+	public void setNumOfReviews(int numOfReviews) {
+		this.numOfReviews = numOfReviews;
+	}
+
+	public long getFriendRating() {
+		return friendRating;
+	}
+
+	public void setFriendRating(long friendRating) {
+		this.friendRating = friendRating;
+	}
+
 	public String getWeb_map() {
 		return web_map;
 	}

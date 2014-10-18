@@ -30,6 +30,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		}
 		TextView tvRestaurantName = (TextView) v.findViewById(R.id.tvRestaurantName);
 		tvRestaurantName.setText(restaurant.getName());
+		TextView tvFriendRating = (TextView) v.findViewById(R.id.tvFriendRating);
+		String friendRatingString = Long.toString(restaurant.getFriendRating());
+		tvFriendRating.setText(friendRatingString);
 		
 		return v;
 	}

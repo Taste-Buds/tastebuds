@@ -1,6 +1,7 @@
 package com.codepath.apps.tastebuds.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +12,14 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
 import com.codepath.apps.tastebuds.models.Restaurant;
+import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.codepath.apps.tastebuds.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.parse.FindCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.ParseException;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,16 +36,21 @@ import android.widget.ListView;
 
 public class RestaurantListFragment extends Fragment {
 
-	ArrayList<Restaurant> restaurants;
+	List<Restaurant> restaurants;
+	List<String> placeIds;
 	ArrayAdapter<Restaurant> restaurantAdapter;
 	ListView lvRestaurants;
+	List<ParseObject> friends;
+	List<RestaurantReview> reviews;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		restaurants = new ArrayList<Restaurant>();
 		restaurantAdapter = new RestaurantAdapter(getActivity(), restaurants);
-		restaurantsFromGooglePlacesApi();
+		placeIds = new ArrayList<String>();
+		friendsFromFacebook();
+		restaurantsFromGooglePlacesApi();	
 		
 	}
 	
@@ -57,11 +70,12 @@ public class RestaurantListFragment extends Fragment {
 		return v;		
 	}
 	
-	public void showRestaurantDetail(int position) {
-		Log.d("Debug", "P: " + position);
-		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
-		i.putExtra("place_id", restaurants.get(position).getPlace_id());
-		startActivity(i);
+	private void friendsFromFacebook() {
+		// Get array of friends from Facebook API
+		Log.d("Debug", "Start Friends Query");
+		friends = ParseUser.getCurrentUser().getList("userFriends");
+		Log.d("Debug", "Friends Query Complete");
+
 	}
 	
 	private void restaurantsFromGooglePlacesApi() {
@@ -80,12 +94,20 @@ public class RestaurantListFragment extends Fragment {
         			//Log.d("Debug", "Places:" + placesApiResultsJson.toString());
         			restaurants.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
         			//adapterplacesApiResultsJson.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
-        			Restaurant first = restaurants.get(0);
-        			Log.d("Debug", "Name: " + first.getName());
+        			//Restaurant first = restaurants.get(0);
+        			//Log.d("Debug", "PlaceId: " + first.getPlace_id());
+        			
+        			for(int i=0; i<restaurants.size(); i++) {
+        				Restaurant restaurant = restaurants.get(i);
+        				String placeId = restaurant.getPlace_id();
+        				placeIds.add(placeId);
+        			}     			       			
+        			restaurantReviewsWithGoogleAndFacebookData();       			
+        			
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-        		restaurantAdapter.notifyDataSetChanged();
+            	restaurantAdapter.notifyDataSetChanged();
         	}
 			@Override
     		public void onFailure(Throwable e, JSONObject errorResponse) {
@@ -95,6 +117,60 @@ public class RestaurantListFragment extends Fragment {
 		});
 		
 		
+	}
+	
+	private void restaurantReviewsWithGoogleAndFacebookData() {
+		if (placeIds == null) {Log.d("Debug", "PlaceIds Null");}
+		if (friends == null) {Log.d("Debug", "Friends Null");}
+		
+		Log.d("Debug", "Getting Reviews");
+		ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(placeIds, friends);
+		query.findInBackground(new FindCallback<RestaurantReview>() {
+			@Override
+			  public void done(List<RestaurantReview> results, ParseException e) {
+				    // results has the list of user reviews from Parse
+				  	reviews = results;
+				  	parseReviews();
+				  }
+			});
+	}
+	
+	private void parseReviews() {
+		Log.d("Debug", "Parsing Reviews");
+		for(int i=0; i<placeIds.size();i++) {
+			String placeId = placeIds.get(i);
+			Restaurant restaurant = restaurants.get(i);
+			int numberOfReviews = 0;
+			int sumOfRatings = 0;
+			for(int j=0; j<reviews.size();j++) {
+				RestaurantReview review = reviews.get(j);
+				String placeIdReview = review.getGooglePlacesId();
+				if (placeId.equals(placeIdReview)) {
+					int rating = review.getRating();
+					numberOfReviews++;
+					sumOfRatings = sumOfRatings + rating;
+				}
+				//Log.d("Debug", "Rating: " + Integer.toString(rating));
+			}
+			long friendRating = 0;
+			if (numberOfReviews > 0) {
+				friendRating = sumOfRatings/numberOfReviews;
+			}
+			else {
+				friendRating = 0;
+				numberOfReviews = 0;
+			}
+			restaurant.setFriendRating(friendRating);
+			restaurant.setNumOfReviews(numberOfReviews);		
+		}
+		restaurantAdapter.notifyDataSetChanged();
+	}
+	
+	public void showRestaurantDetail(int position) {
+		Log.d("Debug", "P: " + position);
+		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
+		i.putExtra("place_id", restaurants.get(position).getPlace_id());
+		startActivity(i);
 	}
 
 }
