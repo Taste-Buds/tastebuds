@@ -32,12 +32,12 @@ public class DishReview extends ParseObject implements Review {
 	    ParseQuery<DishReview> query = ParseQuery.getQuery(
 	    		DishReview.class)
 	    		.orderByDescending("createdAt");
-	    if (owners != null) {
+	    /*if (owners != null) {
 	    	query.whereContainedIn("owner", owners);
 	    }
 	    if (googlePlacesId != null) {
 	    	query.whereEqualTo("placesId", googlePlacesId);
-	    }
+	    }*/
 	    return query;
 	}
 
@@ -85,5 +85,13 @@ public class DishReview extends ParseObject implements Review {
 
 	public void setText(String text) {
 		put("comment", text);
+	}
+
+	public String getDishName() {
+		return getString("dishName");
+	}
+
+	public void setDishName(String name) {
+		put("dishName", name);
 	}
 }

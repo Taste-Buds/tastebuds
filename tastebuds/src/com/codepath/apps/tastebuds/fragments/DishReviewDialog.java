@@ -103,6 +103,7 @@ public class DishReviewDialog extends DialogFragment {
         		review.setRating(rbRating.getRating());
         		review.setGooglePlacesId(restaurantId);
         		review.setUser(ParseUser.getCurrentUser());
+        		review.setDishName(etDish.getText().toString());
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

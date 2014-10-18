@@ -7,20 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.codepath.apps.tastebuds.GooglePlacesApiClient;
-import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
-import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
-import com.codepath.apps.tastebuds.models.Restaurant;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
-import com.codepath.apps.tastebuds.models.User;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.parse.FindCallback;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.ParseException;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +19,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.codepath.apps.tastebuds.GooglePlacesApiClient;
+import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
+import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
+import com.codepath.apps.tastebuds.models.Restaurant;
+import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
 
 public class RestaurantListFragment extends Fragment {
 
@@ -42,7 +41,7 @@ public class RestaurantListFragment extends Fragment {
 	ListView lvRestaurants;
 	List<ParseObject> friends;
 	List<RestaurantReview> reviews;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class RestaurantListFragment extends Fragment {
 		restaurantsFromGooglePlacesApi();	
 		
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,25 +60,23 @@ public class RestaurantListFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
 		lvRestaurants.setAdapter(restaurantAdapter);
-		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {  
-			   public void onItemClick(AdapterView parentView, View childView, int position, long id) 
-			   {  
+		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			   public void onItemClick(AdapterView parentView, View childView, int position, long id) {
 				   showRestaurantDetail(position);
 			   } 
-			});		
-		return v;		
+			});
+		return v;
 	}
-	
+
 	private void friendsFromFacebook() {
 		// Get array of friends from Facebook API
 		Log.d("Debug", "Start Friends Query");
 		friends = ParseUser.getCurrentUser().getList("userFriends");
 		Log.d("Debug", "Friends Query Complete");
-
 	}
-	
+
 	private void restaurantsFromGooglePlacesApi() {
-		
+
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
 		double latitude = 37.764046;
@@ -118,7 +115,7 @@ public class RestaurantListFragment extends Fragment {
 		
 		
 	}
-	
+
 	private void restaurantReviewsWithGoogleAndFacebookData() {
 		if (placeIds == null) {Log.d("Debug", "PlaceIds Null");}
 		if (friends == null) {Log.d("Debug", "Friends Null");}

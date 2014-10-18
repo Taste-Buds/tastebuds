@@ -2,24 +2,6 @@ package com.codepath.apps.tastebuds.activities;
 
 import java.util.ArrayList;
 
-import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
-import com.codepath.apps.tastebuds.fragments.FriendsListFragment;
-import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
-import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
-import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
-import com.codepath.apps.tastebuds.fragments.RestaurantListFragment;
-import com.codepath.apps.tastebuds.fragments.RestaurantMapListFragment;
-import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
-import com.codepath.apps.tastebuds.models.Dish;
-import com.codepath.apps.tastebuds.models.DishReview;
-import com.codepath.apps.tastebuds.models.Restaurant;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
-import com.facebook.Session;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
@@ -32,6 +14,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.fragments.FriendsListFragment;
+import com.codepath.apps.tastebuds.fragments.RestaurantListFragment;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
+import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
+import com.codepath.apps.tastebuds.models.Restaurant;
+import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.facebook.Session;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class HomeActivity extends FragmentActivity {
 

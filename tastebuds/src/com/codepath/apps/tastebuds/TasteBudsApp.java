@@ -1,27 +1,13 @@
 package com.codepath.apps.tastebuds;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.activeandroid.util.Log;
-import com.codepath.apps.tastebuds.models.Tag;
-
-import com.codepath.apps.tastebuds.models.Tag;
-import android.content.Context;
-
-import com.codepath.apps.tastebuds.models.Dish;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.codepath.apps.tastebuds.models.Tag;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 /*
  * This is the Android application itself and is used to configure various settings
@@ -44,7 +30,7 @@ public class TasteBudsApp extends com.activeandroid.app.Application {
 		super.onCreate();
 		ParseObject.registerSubclass(DishReview.class);
 		ParseObject.registerSubclass(RestaurantReview.class);
-		ParseObject.registerSubclass(Dish.class);
+		//ParseObject.registerSubclass(Dish.class);
 		ParseObject.registerSubclass(Tag.class);
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 		ParseFacebookUtils.initialize("280855298792275");
