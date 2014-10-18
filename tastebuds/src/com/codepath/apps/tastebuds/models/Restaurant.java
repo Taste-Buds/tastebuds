@@ -18,8 +18,13 @@ public class Restaurant {
 	private int price_level;		// price_level
 	private String website;			// website
 	private boolean open_now; 		// opening_hours:open_now
+	private String web_map;			// URI for Restaurant Map on Google
 	
 	
+	public String getWeb_map() {
+		return web_map;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -85,6 +90,7 @@ public class Restaurant {
 			restaurant.google_rating = Double.parseDouble(jsonObject.getString("rating"));	// rating
 			restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));		// price_level
 			restaurant.website = jsonObject.getString("website");		// website
+			restaurant.web_map = jsonObject.getString("url");		// web_map
 			restaurant.open_now = Boolean.parseBoolean(jsonObject.getJSONObject("opening_hours").getString("open_now"));		// opening_hours:open_now
 			
 		} catch (JSONException e) {
