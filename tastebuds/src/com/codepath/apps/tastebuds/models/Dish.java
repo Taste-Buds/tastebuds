@@ -5,6 +5,7 @@ import java.util.List;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 @ParseClassName("Dish")
 public class Dish extends ParseObject {
@@ -44,12 +45,20 @@ public class Dish extends ParseObject {
 				//.whereContainedIn("owner", friends);
 	}
 
+	public ParseUser getUser() {
+		return getParseUser("owner");
+	}
+
+	public void setUser(ParseUser user) {
+		put("owner", user);
+	}
+
 	public String getName() {
-		return getString("text");
+		return getString("name");
 	}
 
 	public void setName(String name) {
-		put("text", name);
+		put("name", name);
 	}
 
 	public String getGooglePlacesId() {

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseUser;
 
 public class DishReviewDialog extends DialogFragment {
 
@@ -35,14 +36,14 @@ public class DishReviewDialog extends DialogFragment {
 	private Button btnTaste;
 	private ImageButton btnCancel;
 	private String restaurantName;
-	private long restaurantId;
+	private String restaurantId;
 	public DishReviewDialogListener listener;
 
     public static DishReviewDialog newInstance(String restaurantName,
-    		long restaurantId) {
+    		String restaurantId) {
     	DishReviewDialog dialog = new DishReviewDialog();
         Bundle args = new Bundle();
-        args.putLong("restaurant_id", restaurantId);
+        args.putString("restaurant_id", restaurantId);
         args.putString("restaurant_name", restaurantName);
         dialog.setArguments(args);
         return dialog;
@@ -57,7 +58,7 @@ public class DishReviewDialog extends DialogFragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dish_review_compose, container);
         restaurantName = getArguments().getString("restaurant_name");
-        restaurantId = getArguments().getLong("restaurant_id");
+        restaurantId = getArguments().getString("restaurant_id");
         etDish = (EditText) view.findViewById(R.id.etDishName);
         tvRestaurantName = (TextView) view.findViewById(R.id.tvRestaurantNameCompose);
         tvRestaurantName.setText(restaurantName);
@@ -101,6 +102,7 @@ public class DishReviewDialog extends DialogFragment {
         		review.setText(etReview.getText().toString());
         		review.setRating(rbRating.getRating());
         		review.setGooglePlacesId(restaurantId);
+        		review.setUser(ParseUser.getCurrentUser());
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

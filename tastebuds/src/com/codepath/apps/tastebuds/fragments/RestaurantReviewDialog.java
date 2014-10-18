@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseUser;
 
 public class RestaurantReviewDialog extends DialogFragment {
 
@@ -98,6 +99,7 @@ public class RestaurantReviewDialog extends DialogFragment {
         		review.setText(etReview.getText().toString());
         		review.setRating(rbRating.getRating());
         		review.setGooglePlacesId(restaurantId);
+        		review.setUser(ParseUser.getCurrentUser());
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

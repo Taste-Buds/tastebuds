@@ -19,8 +19,10 @@ import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
+import com.codepath.apps.tastebuds.models.Dish;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseUser;
 
 public class RestaurantDetailActivity extends FragmentActivity {
 	
@@ -94,19 +96,21 @@ public class RestaurantDetailActivity extends FragmentActivity {
 				@Override
 				public void onFinishReviewComposeDialog(RestaurantReview review) {
 					if (review != null) {
-						Toast.makeText(RestaurantDetailActivity.this, "Review Saved", Toast.LENGTH_LONG).show();
+						review.saveInBackground();
 					}
 				}
 			};
 	    } else {
-			DishReviewDialog dialog = DishReviewDialog.newInstance("Shree Datta", 1234567);
+			DishReviewDialog dialog = DishReviewDialog.newInstance("Shree Datta", "cztwerx");
 			dialog.show(ft, "compose");
 			dialog.listener = new DishReviewDialogListener() {
 				@Override
 				public void onFinishReviewComposeDialog(DishReview review) {
-					// TODO Auto-generated method stub
 					if (review != null) {
-						Toast.makeText(RestaurantDetailActivity.this, "Review Saved", Toast.LENGTH_LONG).show();
+						Dish dish = new Dish("Papdi chat", review.getGooglePlacesId());
+						dish.setUser(ParseUser.getCurrentUser());
+						dish.saveInBackground();
+						review.saveInBackground();
 					}
 				}
 			};

@@ -19,7 +19,7 @@ public class DishReview extends ParseObject implements Review {
 		super();
 	}
 
-	public DishReview(long googlePlacesId, int rating, String text) {
+	public DishReview(String googlePlacesId, int rating, String text) {
 		super();
 		setGooglePlacesId(googlePlacesId);
 		setRating(rating);
@@ -30,11 +30,11 @@ public class DishReview extends ParseObject implements Review {
 	    return ParseQuery.getQuery(DishReview.class);
 	}
 
-	public long getGooglePlacesId() {
-		return getLong("googlePlacesId");
+	public String getGooglePlacesId() {
+		return getString("googlePlacesId");
 	}
 
-	public void setGooglePlacesId(long googlePlacesId) {
+	public void setGooglePlacesId(String googlePlacesId) {
 		put("googlePlacesId", googlePlacesId);
 	}
 
