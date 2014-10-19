@@ -32,6 +32,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
 
@@ -40,12 +41,15 @@ public class RestaurantListFragment extends Fragment {
 	
 	List<Restaurant> restaurants;
 	List<String> placeIds;
+	List<String> newPlaceIds;
 	ArrayAdapter<Restaurant> restaurantAdapter;
 	ListView lvRestaurants;
 	List<ParseObject> friends;
 	List<RestaurantReview> reviews;
 	Location mCurrentLocation;
-
+	int pageToken;
+	int parsingPageToken;
+	String nextPageToken;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,12 @@ public class RestaurantListFragment extends Fragment {
 		restaurants = new ArrayList<Restaurant>();
 		restaurantAdapter = new RestaurantAdapter(getActivity(), restaurants);
 		placeIds = new ArrayList<String>();
+		newPlaceIds = new ArrayList<String>();
 		friendsFromFacebook();
-		restaurantsFromGooglePlacesApi();
+		pageToken = 1;
+		parsingPageToken = 1;
+		nextPageToken = "None";
+		restaurantsFromGooglePlacesApi(nextPageToken);
 		
 	}
 
@@ -70,18 +78,31 @@ public class RestaurantListFragment extends Fragment {
 			   public void onItemClick(AdapterView parentView, View childView, int position, long id) {
 				   showRestaurantDetail(position);
 			   } 
-			});
+			});		
+        lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
+	    @Override
+	    public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+	    		//Log.d("Debug", "pageToken:" + Integer.toString(pageToken));
+	    		//Log.d("Debug", "Page:" + Integer.toString(page));
+	    		//Log.d("Debug", "TotalItemCount:" + Integer.toString(totalItemsCount));
+	    		restaurantsFromGooglePlacesApi(nextPageToken);
+	    		
+                // or customLoadMoreDataFromApi(totalItemsCount); 
+	    }
+        });        
 		return v;
 	}
 
 	private void friendsFromFacebook() {
 		// Get array of friends from Facebook API
-		Log.d("Debug", "Start Friends Query");
+		//Log.d("Debug", "Start Friends Query");
 		friends = ParseUser.getCurrentUser().getList("userFriends");
-		Log.d("Debug", "Friends Query Complete");
+		//Log.d("Debug", "Friends Query Complete");
 	}
 
-	private void restaurantsFromGooglePlacesApi() {
+	private void restaurantsFromGooglePlacesApi(String nextPageToken) {
 		
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
@@ -91,29 +112,40 @@ public class RestaurantListFragment extends Fragment {
 		double latitude = mCurrentLocation.getLatitude();
 		double longitude = mCurrentLocation.getLongitude();	
 		
-		placesApi.getRestaurantListfromGooglePlaces(latitude, longitude, new JsonHttpResponseHandler() {
+		placesApi.getRestaurantListfromGooglePlaces(nextPageToken, latitude, longitude, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
         		JSONArray placesApiResultsJson = null;
         		try {
         			placesApiResultsJson = response.getJSONArray("results");
+        			String newNextPageToken = response.getString("next_page_token");
+        			updateNextPageToken(newNextPageToken);
+        			//Log.d("Debug", "Next Page Token" + newNextPageToken);
+        			List<Restaurant> newRestaurants = Restaurant.fromJSONArray(placesApiResultsJson);
         			//Log.d("Debug", "Places:" + placesApiResultsJson.toString());
-        			restaurants.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
+        			//restaurants.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
         			//adapterplacesApiResultsJson.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
-        			//Restaurant first = restaurants.get(0);
-        			//Log.d("Debug", "PlaceId: " + first.getPlace_id());
+        			Restaurant first = newRestaurants.get(0);
+        			Log.d("Debug", "Name: " + first.getName());
+        			//ArrayList<String> newPlaceIds = new ArrayList<String>();
         			
-        			for(int i=0; i<restaurants.size(); i++) {
-        				Restaurant restaurant = restaurants.get(i);
-        				String placeId = restaurant.getPlace_id();
-        				placeIds.add(placeId);
-        			}     			       			
-        			restaurantReviewsWithGoogleAndFacebookData();       			
+        			newPlaceIds.clear();
+        			for(int i=0; i<newRestaurants.size(); i++) {
+        				Restaurant restaurant = newRestaurants.get(i);
+        				String placeId = restaurant.getPlace_id();    				
+        				newPlaceIds.add(placeId);
+        			}
+        			placeIds.addAll(newPlaceIds);
+        			
+        			
+        			restaurants.addAll(newRestaurants);
+        			//restaurantReviewsWithGoogleAndFacebookData(newRestaurants);       			
         			
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
             	restaurantAdapter.notifyDataSetChanged();
+            	
         	}
 			@Override
     		public void onFailure(Throwable e, JSONObject errorResponse) {
@@ -121,35 +153,45 @@ public class RestaurantListFragment extends Fragment {
     		}
 			
 		});
-		
-		
+		pageToken++;	
+	}
+	
+	private void updateNextPageToken (String newNextPageToken) {
+		setNextPageToken(newNextPageToken);
+	}
+	
+	private void setNextPageToken (String nextPageToken) {
+		this.nextPageToken = nextPageToken;
 	}
 
-	private void restaurantReviewsWithGoogleAndFacebookData() {
-		if (placeIds == null) {Log.d("Debug", "PlaceIds Null");}
-		if (friends == null) {Log.d("Debug", "Friends Null");}
+	private void restaurantReviewsWithGoogleAndFacebookData(List<Restaurant> newRestaurants) {
+		//if (placeIds == null) {Log.d("Debug", "PlaceIds Null");}
+		//if (friends == null) {Log.d("Debug", "Friends Null");}
 		
 		Log.d("Debug", "Getting Reviews");
-		ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(placeIds, friends);
+		ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(newPlaceIds, friends);
 		query.findInBackground(new FindCallback<RestaurantReview>() {
 			@Override
 			  public void done(List<RestaurantReview> results, ParseException e) {
 				    // results has the list of user reviews from Parse
-				  	reviews = results;
-				  	parseReviews();
+					List<RestaurantReview> newReviews = new ArrayList<RestaurantReview>();
+				  	//reviews = results;
+				  	newReviews = results;
+				  	parseReviews(newReviews);
 				  }
 			});
 	}
 	
-	private void parseReviews() {
+	private void parseReviews(List<RestaurantReview> newReviews) {
 		Log.d("Debug", "Parsing Reviews");
-		for(int i=0; i<placeIds.size();i++) {
-			String placeId = placeIds.get(i);
-			Restaurant restaurant = restaurants.get(i);
+		for(int i=0; i<newPlaceIds.size();i++) {
+			String placeId = newPlaceIds.get(i);
+			int restaurantArrayPosition = (parsingPageToken*20)+i;
+			Restaurant restaurant = restaurants.get(restaurantArrayPosition);
 			int numberOfReviews = 0;
 			int sumOfRatings = 0;
-			for(int j=0; j<reviews.size();j++) {
-				RestaurantReview review = reviews.get(j);
+			for(int j=0; j<newReviews.size();j++) {
+				RestaurantReview review = newReviews.get(j);
 				String placeIdReview = review.getGooglePlacesId();
 				if (placeId.equals(placeIdReview)) {
 					int rating = review.getRating();
@@ -169,6 +211,7 @@ public class RestaurantListFragment extends Fragment {
 			restaurant.setFriendRating(friendRating);
 			restaurant.setNumOfReviews(numberOfReviews);		
 		}
+		parsingPageToken++;
 		restaurantAdapter.notifyDataSetChanged();
 	}
 	
