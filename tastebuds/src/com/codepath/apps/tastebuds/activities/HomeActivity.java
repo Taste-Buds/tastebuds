@@ -41,7 +41,7 @@ public class HomeActivity extends FragmentActivity implements
 
 	private ParseUser user;
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
-	Location mCurrentLocation;
+	public Location mCurrentLocation;
 	LocationClient mLocationClient;
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
@@ -178,10 +178,25 @@ public class HomeActivity extends FragmentActivity implements
         // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         Log.d("Debug", "onConnected");
-        mCurrentLocation = mLocationClient.getLastLocation();
-        Log.d("Debug", "Location" + mCurrentLocation.toString());
+        mCurrentLocation = getLocation(mLocationClient);
+      //  mCurrentLocation = mLocationClient.getLastLocation();
+       // Log.d("Debug", "Location" + mCurrentLocation.toString());
 		setupTabs(mCurrentLocation);
 
+    }
+    
+    public Location getLocation(LocationClient locationClient){
+
+        if(locationClient.getLastLocation() == null){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return getLocation(locationClient);
+        }else{
+            return locationClient.getLastLocation();
+        }
     }
     /*
      * Called by Location Services if the connection to the
