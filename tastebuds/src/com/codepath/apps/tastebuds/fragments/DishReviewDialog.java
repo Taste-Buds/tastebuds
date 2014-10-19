@@ -1,5 +1,8 @@
 package com.codepath.apps.tastebuds.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,6 +26,10 @@ import android.widget.TextView;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.codepath.apps.tastebuds.models.Tag;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class DishReviewDialog extends DialogFragment {
@@ -28,16 +37,18 @@ public class DishReviewDialog extends DialogFragment {
 	private TextView tvRestaurantName;
 	private TextView tvDish;
 	private TextView tvTags;
-	private TextView etTags;
+	private AutoCompleteTextView etTags;
 	private TextView etWords;
 	private EditText etReview;
-	private EditText etDish;
+	private AutoCompleteTextView etDish;
 	private RatingBar rbRating;
 	private Button btnTaste;
 	private ImageButton btnCancel;
 	private String restaurantName;
 	private String restaurantId;
 	public DishReviewDialogListener listener;
+	private ArrayList<String> tagStrings;
+	private ArrayList<String> dishStrings;
 
     public static DishReviewDialog newInstance(String restaurantName,
     		String restaurantId) {
@@ -59,11 +70,11 @@ public class DishReviewDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_dish_review_compose, container);
         restaurantName = getArguments().getString("restaurant_name");
         restaurantId = getArguments().getString("restaurant_id");
-        etDish = (EditText) view.findViewById(R.id.etDishName);
+        etDish = (AutoCompleteTextView) view.findViewById(R.id.etDishName);
         tvRestaurantName = (TextView) view.findViewById(R.id.tvRestaurantNameCompose);
         tvRestaurantName.setText(restaurantName);
         tvTags = (TextView) view.findViewById(R.id.tvComposeTags);
-        etTags = (EditText) view.findViewById(R.id.etComposeTags);
+        etTags = (AutoCompleteTextView) view.findViewById(R.id.etComposeTags);
         etReview = (EditText) view.findViewById(R.id.etComposeReview);
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
 
@@ -92,8 +103,35 @@ public class DishReviewDialog extends DialogFragment {
 			public void afterTextChanged(Editable s) {
 			}
 		};
-
 		etReview.addTextChangedListener(txwatcher);
+
+		tagStrings = new ArrayList<String>();
+		ParseQuery<Tag> query = Tag.getQuery();
+		query.findInBackground(new FindCallback<Tag>() {
+			@Override
+			public void done(List<Tag> tags, ParseException e) {
+				for (Tag tag : tags) {
+					tagStrings.add(tag.getTag());
+				}
+				ArrayAdapter<String> tagsAdapter = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.simple_list_item_1, tagStrings);
+				etTags.setAdapter(tagsAdapter);
+			}
+		});
+
+		dishStrings = new ArrayList<String>();
+		ParseQuery<DishReview> dishQuery = DishReview.getQuery();
+		dishQuery.findInBackground(new FindCallback<DishReview>() {
+			@Override
+			public void done(List<DishReview> reviews, ParseException e) {
+				for (DishReview review : reviews) {
+					dishStrings.add(review.getDishName());
+				}
+				ArrayAdapter<String> dishesAdapter = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.simple_list_item_1, dishStrings);
+				etDish.setAdapter(dishesAdapter);
+			}
+		});
 
         btnTaste.setOnClickListener(new View.OnClickListener() {
         	@Override
