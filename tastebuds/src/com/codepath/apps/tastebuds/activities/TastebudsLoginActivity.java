@@ -13,12 +13,15 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.adapters.LoginPagerAdapter;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -30,7 +33,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class TastebudsLoginActivity extends Activity {
+public class TastebudsLoginActivity extends FragmentActivity {
 	private static Session session;
 	//	@Override
 	//	protected void onResume() {
@@ -41,6 +44,8 @@ public class TastebudsLoginActivity extends Activity {
 
 	private Button loginButton;
 	private Dialog progressDialog;
+	private LoginPagerAdapter loginPagerAdapter;
+	private  ViewPager viewPager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,6 +56,11 @@ public class TastebudsLoginActivity extends Activity {
 			goToHomeActivity();
 		}else{
 			setContentView(R.layout.activity_login);
+			loginPagerAdapter =
+	                new LoginPagerAdapter(getSupportFragmentManager());
+			viewPager = (ViewPager) findViewById(R.id.pager);
+			viewPager.setAdapter(loginPagerAdapter);
+			
 
 			loginButton = (Button) findViewById(R.id.loginButton);
 			loginButton.setOnClickListener(new View.OnClickListener() {

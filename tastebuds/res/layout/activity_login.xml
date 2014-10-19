@@ -3,26 +3,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"  >
     
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:text="Login"
-        android:textSize="18sp" />
-    
 
-    
+    <android.support.v4.view.ViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="300dp" />
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:layout_marginTop="100dp"
-        android:text="Login"
-        android:onClick="onLoginButtonClicked"
-        android:textColor="#fff"
         android:layout_gravity="center_horizontal"
-        />
+        android:layout_marginTop="100dp"
+        android:onClick="onLoginButtonClicked"
+        android:text="@string/title_facebook_login"
+        android:background="@drawable/com_facebook_button_blue"
+        android:textColor="#fff"
+        android:textStyle="bold" />
     
 </LinearLayout>
