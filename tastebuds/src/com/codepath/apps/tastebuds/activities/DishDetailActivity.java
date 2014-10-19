@@ -3,11 +3,23 @@ package com.codepath.apps.tastebuds.activities;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.DishReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog;
+import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog.DishReviewDetailDialogListener;
+import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
+import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
+import com.codepath.apps.tastebuds.models.Dish;
+import com.codepath.apps.tastebuds.models.DishReview;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -29,5 +41,32 @@ public class DishDetailActivity extends Activity {
 		List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
 		adapter = new DishReviewListAdapter(this, placesId, friends, dishName);
 		lvReviews.setAdapter(adapter);
+		TextView tvDishName = (TextView) findViewById(R.id.tvDishName);
+		TextView tvDishTitle = (TextView) findViewById(R.id.tvDishTitle);
+		tvDishTitle.setText("Dish:");
+		tvDishName.setText(dishName);
+		
+		lvReviews.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				DishReview review = adapter.getItem(position);
+			    FragmentTransaction ft = getFragmentManager().beginTransaction();
+			    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+			    if (prev != null) {
+			        ft.remove(prev);
+			    }
+			    ft.addToBackStack(null);
+				DishReviewDetailDialog dialog =
+						DishReviewDetailDialog.newInstance(
+								review.getObjectId(), restaurantName);
+				dialog.show(ft, "compose");
+				dialog.listener = new DishReviewDetailDialogListener() {
+					@Override
+					public void onFinishReviewDialog(DishReview review) {}
+				};				
+			}
+		});
 	}
 }
