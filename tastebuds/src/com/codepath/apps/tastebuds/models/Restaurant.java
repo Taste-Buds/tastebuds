@@ -22,7 +22,7 @@ public class Restaurant implements Serializable {
 	private boolean open_now; 		// opening_hours:open_now
 	private String web_map;			// URI for Restaurant Map on Google
 	private int numOfReviews;		// Number of Friend Reviews
-	private long friendRating;		// average Rating by Friends
+	private float friendRating;		// average Rating by Friends
 	
 	
 	public int getNumOfReviews() {
@@ -33,11 +33,11 @@ public class Restaurant implements Serializable {
 		this.numOfReviews = numOfReviews;
 	}
 
-	public long getFriendRating() {
+	public float getFriendRating() {
 		return friendRating;
 	}
 
-	public void setFriendRating(long friendRating) {
+	public void setFriendRating(float friendRating) {
 		this.friendRating = friendRating;
 	}
 
