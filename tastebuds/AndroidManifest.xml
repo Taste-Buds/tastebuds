@@ -53,18 +53,21 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.codepath.apps.tastebuds.activities.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="com.codepath.apps.tastebuds.activities.RestaurantDetailActivity"
+            android:name=".activities.RestaurantDetailActivity"
             android:label="@string/title_activity_restaurant_detail" >
-        </activity>    
+        </activity>
         <activity
-            android:name="com.codepath.apps.tastebuds.activities.UserProfileActivity"
+            android:name=".activities.UserProfileActivity"
             android:label="@string/title_activity_user_detail" >
         </activity>
-        
+        <activity
+            android:name="com.codepath.apps.tastebuds.activities.DishDetailActivity"
+            android:label="@string/title_activity_dish_detail" >
+        </activity>
     </application>
 
 </manifest>
