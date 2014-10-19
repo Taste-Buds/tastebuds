@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -18,7 +17,6 @@ import android.widget.ListView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.DishListAdapter;
-import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.Dish;
 import com.codepath.apps.tastebuds.models.DishReview;
