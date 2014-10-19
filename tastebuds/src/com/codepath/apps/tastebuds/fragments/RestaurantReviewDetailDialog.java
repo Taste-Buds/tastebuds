@@ -63,9 +63,11 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
         ParseQuery<RestaurantReview> query = RestaurantReview.getQuery();
         RestaurantReview review;
 		try {
-			review = query.get(reviewId);
+			review = query.get(reviewId).fetchIfNeeded();
 	        etReview.setText(review.getText());
 	        etReview.setEnabled(false);
+	        etTags.setText(review.getTags());
+	        etTags.setEnabled(false);
 	        rbRating.setRating(review.getRating());
 	        rbRating.setEnabled(false);
 		} catch (ParseException e) {

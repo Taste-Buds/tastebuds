@@ -13,7 +13,7 @@ public class Tag extends ParseObject {
 	//private long reviewId;
 	//private String tag;
 	
-	public Tag(long googlePlacesId, String tag) {
+	public Tag(String googlePlacesId, String tag) {
 		super();
 		setGooglePlacesId(googlePlacesId);
 		setTag(tag);
@@ -27,11 +27,11 @@ public class Tag extends ParseObject {
 		return ParseQuery.getQuery(Tag.class);
 	}
 
-	public long getGooglePlacesId() {
-		return getLong("googlePlacesId");
+	public String getGooglePlacesId() {
+		return getString("googlePlacesId");
 	}
 
-	public void setGooglePlacesId(long googlePlacesId) {
+	public void setGooglePlacesId(String googlePlacesId) {
 		put("googlePlacesId", googlePlacesId);
 	}
 

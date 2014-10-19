@@ -36,10 +36,10 @@ public class RestaurantReviewDialog extends DialogFragment {
 	private String restaurantId;
 	public RestaurantReviewDialogListener listener;
 
-    public static RestaurantReviewDialog newInstance(String reviewId, String restaurantName) {
+    public static RestaurantReviewDialog newInstance(String restaurantName, String placesId) {
     	RestaurantReviewDialog dialog = new RestaurantReviewDialog();
         Bundle args = new Bundle();
-        args.putString("revied_id", reviewId);
+        args.putString("restaurant_id", placesId);
         args.putString("restaurant_name", restaurantName);
         dialog.setArguments(args);
         return dialog;
@@ -99,6 +99,7 @@ public class RestaurantReviewDialog extends DialogFragment {
         		review.setRating(rbRating.getRating());
         		review.setGooglePlacesId(restaurantId);
         		review.setUser(ParseUser.getCurrentUser());
+        		review.setTags(restaurantId, etTags.getText().toString());
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

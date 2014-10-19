@@ -1,5 +1,6 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.parse.ParseClassName;
@@ -111,5 +112,24 @@ public class DishReview extends ParseObject implements Review {
 
 	public void setDishName(String name) {
 		put("dishName", name);
+	}
+
+	public String getTags() {
+		List<Tag> tags = getList("tags");
+		StringBuffer buffer = new StringBuffer();
+		for (Tag tag : tags) {
+			buffer.append(tag.getTag());
+			buffer.append(" ");
+		}
+		return buffer.toString();
+	}
+
+	public void setTags(String tagString, String googlePlacesId) {
+		String[] values = tagString.replaceAll("^[,\\s]+", "").split("[,\\s]+");
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (String value : values) {
+			tags.add(new Tag(googlePlacesId, value));
+		}
+		put("tags", tags);
 	}
 }

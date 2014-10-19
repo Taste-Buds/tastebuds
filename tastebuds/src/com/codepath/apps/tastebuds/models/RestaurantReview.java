@@ -1,8 +1,10 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -99,5 +101,28 @@ public class RestaurantReview extends ParseObject implements Review {
 
 	public void setText(String text) {
 		put("comment", text);
+	}
+
+	public String getTags() {
+		List<Tag> tags = getList("tags");
+		StringBuffer buffer = new StringBuffer();
+		for (Tag tag : tags) {
+			try {
+				buffer.append(tag.fetchIfNeeded().getString("tag"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			buffer.append(" ");
+		}
+		return buffer.toString();
+	}
+
+	public void setTags(String googlePlacesId, String tagString) {
+		String[] values = tagString.replaceAll("^[,\\s]+", "").split("[,\\s]+");
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (String value : values) {
+			tags.add(new Tag(googlePlacesId, value));
+		}
+		put("tags", tags);
 	}
 }

@@ -84,7 +84,11 @@ public class RestaurantDetailActivity extends FragmentActivity
 		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
-		args.putString("restaurantName", restaurant.getName());
+		if (restaurant.getName() != null) {
+			args.putString("restaurantName", restaurant.getName());
+		} else {
+			args.putString("restaurantName", "ABCD");
+		}
 		args.putSerializable("restaurant", restaurant);
 		Tab tab1 = actionBar
 			.newTab()

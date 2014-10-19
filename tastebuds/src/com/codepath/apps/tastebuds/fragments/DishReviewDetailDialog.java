@@ -90,6 +90,8 @@ public class DishReviewDetailDialog extends DialogFragment {
 	        etWords.setEnabled(false);
 	        etDish.setText(dishName);
 	        etDish.setEnabled(false);
+	        etTags.setText(review.getTags());
+	        etTags.setEnabled(false);
 	        rbRating.setRating(review.getRating());
 	        rbRating.setEnabled(false);
 		} catch (ParseException e) {

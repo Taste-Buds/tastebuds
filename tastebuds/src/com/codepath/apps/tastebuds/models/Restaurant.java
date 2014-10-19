@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 public class Restaurant implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String place_id; 		// place_id
 	private String name; 			// name
 	private String address;			// formatted_address
@@ -106,16 +107,25 @@ public class Restaurant implements Serializable {
 			restaurant.phone = jsonObject.getString("formatted_phone_number");	// formatted_phone_number
 			//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
 			//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
-			restaurant.google_rating = Double.parseDouble(jsonObject.getString("rating"));	// rating
-			restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));		// price_level
-			restaurant.website = jsonObject.getString("website");		// website
-			restaurant.web_map = jsonObject.getString("url");		// web_map
-			restaurant.open_now = Boolean.parseBoolean(jsonObject.getJSONObject("opening_hours").getString("open_now"));		// opening_hours:open_now
-			
+			if (jsonObject.getString("rating") != null) {
+				restaurant.google_rating = Double.parseDouble(jsonObject.getString("rating"));	// rating
+			}
+			if (jsonObject.getString("price_level") != null) {
+				restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));		// price_level
+			}
+			if (jsonObject.getString("website") != null) {
+				restaurant.website = jsonObject.getString("website");		// website
+			}
+			if (jsonObject.getString("url") != null) {
+				restaurant.web_map = jsonObject.getString("url");		// web_map
+			}
+			if (jsonObject.getJSONObject("opening_hours") != null &&
+					jsonObject.getJSONObject("opening_hours").getString("open_now") != null) {
+				restaurant.open_now = Boolean.parseBoolean(jsonObject.getJSONObject("opening_hours").getString("open_now"));		// opening_hours:open_now
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-			return null;
-		}		
+		}
 		return restaurant;
 	}
 	

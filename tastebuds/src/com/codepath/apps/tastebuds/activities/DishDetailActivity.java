@@ -16,9 +16,6 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.DishReviewListAdapter;
 import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog;
 import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog.DishReviewDetailDialogListener;
-import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
-import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
-import com.codepath.apps.tastebuds.models.Dish;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -45,7 +42,7 @@ public class DishDetailActivity extends Activity {
 		TextView tvDishTitle = (TextView) findViewById(R.id.tvDishTitle);
 		tvDishTitle.setText("Dish:");
 		tvDishName.setText(dishName);
-		
+
 		lvReviews.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
