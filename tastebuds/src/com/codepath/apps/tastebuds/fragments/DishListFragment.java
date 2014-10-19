@@ -4,26 +4,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.codepath.apps.tastebuds.adapters.DishListAdapter;
-import com.codepath.apps.tastebuds.models.Dish;
-import com.codepath.apps.tastebuds.models.DishReview;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.adapters.DishListAdapter;
+import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
+import com.codepath.apps.tastebuds.models.Dish;
+import com.codepath.apps.tastebuds.models.DishReview;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class DishListFragment extends Fragment {
 
@@ -31,6 +33,11 @@ public class DishListFragment extends Fragment {
 	private ListView lvDishes;
 	private List<Dish> dishes;
 	private String googlePlacesId;
+	private DishListListener listener;
+
+    public interface DishListListener {
+    	void onDishSelected(String googlePlacesId, String dishName);
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +74,27 @@ public class DishListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_dish_list, container, false);
 		lvDishes = (ListView) view.findViewById(R.id.lvDishes);
 		lvDishes.setAdapter(adapter);
+		lvDishes.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Dish dish = adapter.getItem(position);
+				listener.onDishSelected(googlePlacesId, dish.getName());
+			}
+		});
+
 		adapter.notifyDataSetChanged();
 		return view;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof RestaurantReviewListListener) {
+			listener = (DishListListener) activity;
+		} else {
+			throw new ClassCastException(activity.toString()
+					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
+		}
 	}
 }

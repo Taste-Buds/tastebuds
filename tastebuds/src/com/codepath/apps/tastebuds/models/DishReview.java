@@ -27,6 +27,7 @@ public class DishReview extends ParseObject implements Review {
 		setRating(rating);
 		setText(text);
 	}
+
 	public static ParseQuery<DishReview> getQuery(String googlePlacesId,
 			List<ParseObject> owners) {
 	    ParseQuery<DishReview> query = ParseQuery.getQuery(
@@ -37,6 +38,23 @@ public class DishReview extends ParseObject implements Review {
 	    }
 	    if (googlePlacesId != null) {
 	    	query.whereEqualTo("placesId", googlePlacesId);
+	    }*/
+	    return query;
+	}
+
+	public static ParseQuery<DishReview> getQuery(String googlePlacesId,
+			List<ParseObject> owners, String dishName) {
+	    ParseQuery<DishReview> query = ParseQuery.getQuery(
+	    		DishReview.class)
+	    		.orderByDescending("createdAt");
+	    /*if (owners != null) {
+	    	query.whereContainedIn("owner", owners);
+	    }
+	    if (googlePlacesId != null) {
+	    	query.whereEqualTo("placesId", googlePlacesId);
+	    }
+	    if (dishName != null) {
+	    	query.whereEqualTo("dishName", dishName);
 	    }*/
 	    return query;
 	}

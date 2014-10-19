@@ -4,13 +4,16 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.DishListFragment;
+import com.codepath.apps.tastebuds.fragments.DishListFragment.DishListListener;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantDetailFragment;
@@ -25,7 +28,7 @@ import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 
 public class RestaurantDetailActivity extends FragmentActivity 
-	implements RestaurantReviewListListener {
+	implements RestaurantReviewListListener, DishListListener {
 	
 	String placeId;
 
@@ -132,5 +135,14 @@ public class RestaurantDetailActivity extends FragmentActivity
 			@Override
 			public void onFinishReviewComposeDialog(RestaurantReview review) {}
 		};
+	}
+
+	@Override
+	public void onDishSelected(String googlePlacesId, String dishName) {
+		Intent i = new Intent(RestaurantDetailActivity.this, DishDetailActivity.class);
+		i.putExtra("placesId", placeId);
+		i.putExtra("restaurant_name", "Shree Datta");
+		i.putExtra("dish_name", "Butter chicken");
+		startActivity(i);
 	}
 }

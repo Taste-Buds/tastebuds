@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.DishReview;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -29,6 +28,17 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		});
 	}
 
+	public DishReviewListAdapter(Context context, final String googlePlacesId,
+			final List<ParseObject> friends, final String dishName) {
+		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
+			public ParseQuery<DishReview> create() {
+				ParseQuery<DishReview> query = DishReview.getQuery(googlePlacesId, friends,
+						dishName);
+				return query;
+			}
+		});
+	}
+
 	public DishReviewListAdapter(Context context,final ParseUser user) {
 		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
 			public ParseQuery<DishReview> create() {
@@ -37,6 +47,7 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 			}
 		});
 	}
+
 	@Override
 	public View getItemView(DishReview review, View view, ViewGroup parent) {
 		if (view == null) {
