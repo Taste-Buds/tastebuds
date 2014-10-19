@@ -28,7 +28,12 @@ public class DishReview extends ParseObject implements Review {
 		setRating(rating);
 		setText(text);
 	}
-
+	public static ParseQuery<DishReview> getQuery(String ownerId){
+		ParseQuery<DishReview> dishQuery =  ParseQuery.getQuery(
+	    		DishReview.class).whereEqualTo("owner", ownerId);
+		return dishQuery;
+	}
+	
 	public static ParseQuery<DishReview> getQuery(String googlePlacesId,
 			List<ParseObject> owners) {
 	    ParseQuery<DishReview> query = ParseQuery.getQuery(

@@ -3,6 +3,8 @@ package com.codepath.apps.tastebuds.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.codepath.apps.tastebuds.adapters.DishReviewListAdapter;
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -32,7 +34,11 @@ public class RestaurantReview extends ParseObject implements Review {
 	public static ParseQuery<RestaurantReview> getQuery() {
 	    return ParseQuery.getQuery(RestaurantReview.class);
 	}
-
+	public static ParseQuery<RestaurantReview> getQuery(String ownerId){
+		ParseQuery<RestaurantReview> restQuery = ParseQuery.getQuery(
+	    		RestaurantReview.class).whereEqualTo("owner", ownerId);
+		return restQuery;
+	}
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
 	    return ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("placesId", googlePlacesId)
