@@ -52,6 +52,7 @@ public class DishListAdapter extends ArrayAdapter<Dish> {
 		}
 
 		ImageView userImage = (ImageView) view.findViewById(R.id.ivReviewUser);
+		
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);

@@ -11,16 +11,6 @@
       	android:layout_centerHorizontal="true"
       	android:layout_marginBottom="25dp"
       	android:text="TextView" />
-    
-    <TextView
-        android:id="@+id/tvFriendName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Google Rating:" />
 
     <TextView
         android:id="@+id/tvGoogleRating"
@@ -32,14 +22,6 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/tvReviewUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvReviewTime"
-        android:layout_below="@+id/tvReviewTime"
-        android:text="Price:" />
-
-    <TextView
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,14 +29,6 @@
         android:layout_alignBottom="@+id/tvReviewUsername"
         android:layout_toRightOf="@+id/tvReviewUsername"
         android:text="TextView" />
-
-    <TextView
-        android:id="@+id/tvOpenNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvReviewUsername"
-        android:layout_below="@+id/tvReviewUsername"
-        android:text="Open/Closed" />
 
     <TextView
         android:id="@+id/textView3"
@@ -99,5 +73,30 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textView4"
         android:layout_marginTop="19dp" />
+
+    <TextView
+        android:id="@+id/tvOpenNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvPlaceId"
+        android:layout_marginTop="28dp"
+        android:text="Open/Closed" />
+
+    <TextView
+        android:id="@+id/tvReviewUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView4"
+        android:text="Price:" />
+
+    <TextView
+        android:id="@+id/tvFriendName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvGoogleRating"
+        android:text="Google Rating:" />
 
 </RelativeLayout>

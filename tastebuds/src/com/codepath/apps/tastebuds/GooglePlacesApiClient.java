@@ -15,7 +15,7 @@ public class GooglePlacesApiClient {
 		String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
 		String location = latString+","+longString;
 		//String types = "&types=bakery|bar|cafe|convenience_store|food|grocery_or_supermarket|liquor_store|meal_delivery|meal_takeaway|restaurant";
-		String types = "restaurant";
+		String types = "restaurant|bakery|bar|cafe|food|meal_delivery| meal_takeaway";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		params.put("location", location);
