@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -118,7 +119,11 @@ public class DishReview extends ParseObject implements Review {
 		List<Tag> tags = getList("tags");
 		StringBuffer buffer = new StringBuffer();
 		for (Tag tag : tags) {
-			buffer.append(tag.getTag());
+			try {
+				buffer.append(tag.fetchIfNeeded().getString("tag"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			buffer.append(" ");
 		}
 		return buffer.toString();

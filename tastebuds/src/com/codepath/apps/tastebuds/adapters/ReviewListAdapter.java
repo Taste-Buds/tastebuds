@@ -16,6 +16,7 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -60,7 +61,12 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 
-		username.setText("abcdefgh"); //review.getUser().getUsername());
+		try {
+			username.setText(review.getUser().fetchIfNeeded().getString("username"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		rating.setEnabled(false);

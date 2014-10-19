@@ -52,12 +52,13 @@ public class DishListAdapter extends ArrayAdapter<Dish> {
 		}
 
 		ImageView userImage = (ImageView) view.findViewById(R.id.ivReviewUser);
-		
+
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 
-		username.setText("abcdefgh");//review.getUser().getUsername());
+		//username.setText(.getUser().getUsername());
+		username.setVisibility(TextView.GONE);
 		content.setText(dish.getName());
 		rating.setRating(4);
 		return view;
