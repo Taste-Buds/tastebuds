@@ -17,8 +17,8 @@
     <RatingBar
         android:id="@+id/rbTasteBudsRating"
         style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvRestaurantName"
         android:layout_alignParentRight="true"
         android:isIndicator="true" />
@@ -30,6 +30,16 @@
         android:layout_below="@+id/tvRestaurantName"
         android:layout_toRightOf="@+id/tvRestaurantName"
         android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvNumberofReviews"
+        android:layout_alignBottom="@+id/tvNumberofReviews"
+        android:layout_alignParentLeft="true"
+        android:text="Distance"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
