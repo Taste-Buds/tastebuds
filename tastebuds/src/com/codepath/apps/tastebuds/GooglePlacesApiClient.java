@@ -24,14 +24,14 @@ public class GooglePlacesApiClient {
 		params.put("location", location);
 		params.put("rankby", "distance");
 		params.put("types", types);
-		Log.d("Debug", "No Page Token Query");
 		} else {
 			params.put("pagetoken", nextPageToken);
-			Log.d("Debug", "Running with Next Page Token");
-			Log.d("Debug", "NextPageToken G API" + nextPageToken);
 		}
+		if (!(nextPageToken.equals("QueryLimitReached")))
+		{
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get(baseUrl, params, handler);
+		}
 	}
 	
 	public void getRestaurantDetailfromGooglePlaces(String placeId, JsonHttpResponseHandler handler) {
