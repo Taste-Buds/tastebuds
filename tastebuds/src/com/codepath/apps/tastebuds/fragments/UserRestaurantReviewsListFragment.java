@@ -51,7 +51,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-						adapter = new ReviewListAdapter(getActivity(),  users.get(0));
+						adapter = new ReviewListAdapter(getActivity(),  users.get(0), listener);
 						lvUserReviews.setAdapter(adapter);
 						adapter.notifyDataSetChanged();
 						lvUserReviews.setOnItemClickListener(adapter);

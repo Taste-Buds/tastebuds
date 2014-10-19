@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
+import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -24,6 +25,7 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 	implements OnItemClickListener {
 
 	private RestaurantReviewListListener listener;
+	private UserRestaurantReviewListListener uListener;
 	public ReviewListAdapter(Context context, final String googlePlacesId,
 			final List<ParseObject> friends, RestaurantReviewListListener listener) {
 		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
@@ -35,14 +37,16 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		this.listener = listener;
 	}
 
-	public ReviewListAdapter(Context context,final ParseUser user) {
+	public ReviewListAdapter(Context context,final ParseUser user, UserRestaurantReviewListListener listener) {
 		super(context, new ParseQueryAdapter.QueryFactory<RestaurantReview>() {
 			public ParseQuery<RestaurantReview> create() {
 				ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(
 						user);
 				return query;
 			}
+			
 		});
+		this.uListener = listener;
 	}
 	@Override
 	public View getItemView(RestaurantReview review, View view, ViewGroup parent) {
@@ -66,9 +70,15 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		RestaurantReview review = getItem(position);
-		listener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
-		Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
+		if(listener != null){
+			RestaurantReview review = getItem(position);
+			listener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
+		}else if(uListener != null){
+			RestaurantReview review = getItem(position);
+			uListener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	/*@Override

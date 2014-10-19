@@ -51,7 +51,6 @@ public class HomeActivity extends FragmentActivity {
 	public void onLogoutAction(MenuItem mi){
 		Session session = Session.getActiveSession();
 		if (session != null) {
-
 			if (!session.isClosed()) {
 				session.closeAndClearTokenInformation();
 				//clear your preferences if saved

@@ -39,11 +39,16 @@ import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends SherlockFragmentActivity implements UserRestaurantReviewListListener {
 	private ImageButton barImage;
+	private String profImgURL;
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem actionViewItem = (MenuItem) menu.findItem(R.id.itemImg);
 		View v = actionViewItem.getActionView();
 		barImage = (ImageButton) v.findViewById(R.id.ibButton);
+		
+		if(user == null){
+			setUserInfo();
+		}
 		// Handle button click here
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -77,9 +82,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_HOME); 
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setDisplayShowTitleEnabled(true);
-		if(user ==null){
-			setUserInfo();
-		}
+		
 		
 	}
  private void setUserInfo(){
@@ -88,8 +91,12 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 
 			@Override
 			public void done(List<ParseUser> users, ParseException arg1) {
-				String profImgURL = users.get(0).getString("profileImgURL");
-				Picasso.with(getApplicationContext()).load(profImgURL).resize(40, 40).centerCrop().into(barImage);
+				
+				profImgURL = users.get(0).getString("profileImgURL");
+				if(profImgURL != null){
+					
+					Picasso.with(getApplicationContext()).load(profImgURL).resize(70, 70).centerCrop().into(barImage);
+				}
 				
 			}
      });
