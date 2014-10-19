@@ -1,5 +1,8 @@
 package com.codepath.apps.tastebuds.activities;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.DishListFragment;
 import com.codepath.apps.tastebuds.fragments.DishListFragment.DishListListener;
@@ -25,25 +29,51 @@ import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.DishReview;
+import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class RestaurantDetailActivity extends FragmentActivity 
 	implements RestaurantReviewListListener, DishListListener {
 	
-	String placeId;
+	private String placeId;
+	private Restaurant restaurant;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_detail);
 		placeId = getIntent().getStringExtra("place_id");
-		setupTabs();	
+		restaurantDetailFromGooglePlacesApi();	
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.review, menu);
 		return true;
+	}
+
+	private void restaurantDetailFromGooglePlacesApi() {
+		
+		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
+		placesApi.getRestaurantDetailfromGooglePlaces(placeId, 
+				new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(JSONObject response) {
+        		JSONObject restaurantDetailJson = null;
+        		try {
+        			restaurantDetailJson = response.getJSONObject("result");
+        			restaurant = Restaurant.fromJSONDetail(restaurantDetailJson);
+        			setupTabs();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+        	}
+			@Override
+    		public void onFailure(Throwable e, JSONObject errorResponse) {
+				Log.e("Error", e.toString());
+    		}		
+		});		
 	}
 
 	private void setupTabs() {
@@ -54,7 +84,8 @@ public class RestaurantDetailActivity extends FragmentActivity
 		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
-		args.putString("restaurantName", "");
+		args.putString("restaurantName", restaurant.getName());
+		args.putSerializable("restaurant", restaurant);
 		Tab tab1 = actionBar
 			.newTab()
 			.setText("Details")
@@ -96,7 +127,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	    ft.addToBackStack(null);
 	    if (getActionBar().getSelectedTab().getTag() != "DishListFragment") {
 			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance(
-					"Shree Datta", "czswrt");
+					restaurant.getName(), restaurant.getPlace_id());
 			dialog.show(ft, "compose");
 			dialog.listener = new RestaurantReviewDialogListener() {
 				@Override
@@ -107,7 +138,8 @@ public class RestaurantDetailActivity extends FragmentActivity
 				}
 			};
 	    } else {
-			DishReviewDialog dialog = DishReviewDialog.newInstance("Shree Datta", "cztwerx");
+			DishReviewDialog dialog = DishReviewDialog.newInstance(
+					restaurant.getName(), restaurant.getPlace_id());
 			dialog.show(ft, "compose");
 			dialog.listener = new DishReviewDialogListener() {
 				@Override
@@ -128,7 +160,8 @@ public class RestaurantDetailActivity extends FragmentActivity
 	        ft.remove(prev);
 	    }
 	    ft.addToBackStack(null);
-		RestaurantReviewDetailDialog dialog = RestaurantReviewDetailDialog.newInstance(reviewId,
+		RestaurantReviewDetailDialog dialog = 
+				RestaurantReviewDetailDialog.newInstance(reviewId,
 				restaurantName);
 		dialog.show(ft, "detail");
 		dialog.listener = new RestaurantReviewDetailDialogListener() {
@@ -141,8 +174,8 @@ public class RestaurantDetailActivity extends FragmentActivity
 	public void onDishSelected(String googlePlacesId, String dishName) {
 		Intent i = new Intent(RestaurantDetailActivity.this, DishDetailActivity.class);
 		i.putExtra("placesId", placeId);
-		i.putExtra("restaurant_name", "Shree Datta");
-		i.putExtra("dish_name", "Butter chicken");
+		i.putExtra("restaurant_name", restaurant.getName());
+		i.putExtra("dish_name", dishName);
 		startActivity(i);
 	}
 }

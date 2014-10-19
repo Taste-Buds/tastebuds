@@ -1,24 +1,18 @@
 package com.codepath.apps.tastebuds.fragments;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.codepath.apps.tastebuds.GooglePlacesApiClient;
-import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.models.Restaurant;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+
+import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.models.Restaurant;
 
 public class RestaurantDetailFragment extends Fragment {
 
@@ -35,7 +29,8 @@ public class RestaurantDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		placeId = getArguments().getString("placeId");
-		restaurantDetailFromGooglePlacesApi();	
+		restaurant = (Restaurant) getArguments().getSerializable("restaurant");
+		//restaurantDetailFromGooglePlacesApi();	
 	}
 	
 	@Override
@@ -48,10 +43,11 @@ public class RestaurantDetailFragment extends Fragment {
 		tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 		tvOpenNow = (TextView) v.findViewById(R.id.tvOpenNow);
 		wvGoogleMap = (WebView) v.findViewById(R.id.wvGoogleMap);
+		updateDetailFragmentView();
 		return v;		
 	}
 	
-	private void restaurantDetailFromGooglePlacesApi() {
+	/*private void restaurantDetailFromGooglePlacesApi() {
 		
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
 		placesApi.getRestaurantDetailfromGooglePlaces(placeId, new JsonHttpResponseHandler() {
@@ -73,7 +69,7 @@ public class RestaurantDetailFragment extends Fragment {
 				Log.e("Error", e.toString());
     		}		
 		});		
-	}
+	}*/
 	
 	public void updateDetailFragmentView() {
 		tvGoogleRating.setText(Double.toString(restaurant.getGoogle_rating()));	

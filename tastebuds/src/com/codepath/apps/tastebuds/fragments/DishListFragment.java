@@ -41,9 +41,8 @@ public class DishListFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		googlePlacesId = "monrez";
+		googlePlacesId = getArguments().getString("placeId");
         List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
         ParseQuery<DishReview> query = DishReview.getQuery(googlePlacesId, friends);
         dishes = new ArrayList<Dish>();
