@@ -2,6 +2,7 @@ package com.codepath.apps.tastebuds.fragments;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -23,12 +25,12 @@ import com.parse.ParseUser;
 public class UserRestaurantReviewsListFragment extends Fragment {
 
 	private ReviewListAdapter adapter;
-	private ReviewListListener listener;
+	private UserRestaurantReviewListListener listener;
 	private ListView lvUserReviews;
 	private String userId;
 	private static ParseUser user;
 
-    public interface ReviewListListener {
+    public interface UserRestaurantReviewListListener {
     	void onReviewSelected(String reviewId, String restaurantName);
     }
 
@@ -52,7 +54,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 						adapter = new ReviewListAdapter(getActivity(),  users.get(0));
 						lvUserReviews.setAdapter(adapter);
 						adapter.notifyDataSetChanged();
-					
+						lvUserReviews.setOnItemClickListener(adapter);
 				}
 
 			});
@@ -60,5 +62,15 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 
 
 		return view;
+	}
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof UserRestaurantReviewListListener) {
+			listener = (UserRestaurantReviewListListener) activity;
+		} else {
+			throw new ClassCastException(activity.toString()
+					+ " must implement RestaurantReviewDialog.UserRestaurantReviewListListener");
+		}
 	}
 }

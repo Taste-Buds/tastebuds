@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.Restaurant;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,12 @@ public class FriendsListAdapter extends ArrayAdapter<Object> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ParseUser friend = (ParseUser)getItem(position);
+		try {
+			friend = friend.fetchIfNeeded();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		View v;
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -49,7 +50,16 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 
-		username.setText("abcdefgh");//review.getUser().getUsername());
+		//username.setText("abcdefgh");
+		ParseUser reviewer;
+		try {
+			reviewer = review.getUser().fetchIfNeeded();
+			username.setText(reviewer.getUsername());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		return view;
