@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,23 +34,28 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
-public class RestaurantListFragment extends Fragment {
 
+
+public class RestaurantListFragment extends Fragment {
+	
 	List<Restaurant> restaurants;
 	List<String> placeIds;
 	ArrayAdapter<Restaurant> restaurantAdapter;
 	ListView lvRestaurants;
 	List<ParseObject> friends;
 	List<RestaurantReview> reviews;
+	Location mCurrentLocation;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mCurrentLocation = getArguments().getParcelable("mCurrentLocation");
 		restaurants = new ArrayList<Restaurant>();
 		restaurantAdapter = new RestaurantAdapter(getActivity(), restaurants);
 		placeIds = new ArrayList<String>();
 		friendsFromFacebook();
-		restaurantsFromGooglePlacesApi();	
+		restaurantsFromGooglePlacesApi();
 		
 	}
 
@@ -76,11 +82,14 @@ public class RestaurantListFragment extends Fragment {
 	}
 
 	private void restaurantsFromGooglePlacesApi() {
-
+		
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
-		double latitude = 37.764046;
-		double longitude = -122.387863;
+		//double latitude = 37.764046; // Static for 700 Illinois
+		//double longitude = -122.387863; // Static for 700 Illinois
+		
+		double latitude = mCurrentLocation.getLatitude();
+		double longitude = mCurrentLocation.getLongitude();	
 		
 		placesApi.getRestaurantListfromGooglePlaces(latitude, longitude, new JsonHttpResponseHandler() {
 			@Override
