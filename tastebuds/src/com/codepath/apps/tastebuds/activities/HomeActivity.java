@@ -7,6 +7,8 @@ import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -28,18 +30,31 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class HomeActivity extends FragmentActivity {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+
+public class HomeActivity extends FragmentActivity implements
+	GooglePlayServicesClient.ConnectionCallbacks,
+	GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private ParseUser user;
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+	Location mCurrentLocation;
+	LocationClient mLocationClient;
+	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
-		Log.d("Debug", "Home Activity OnCreate");
 		user = ParseUser.getCurrentUser();
-		setupTabs();
+		mLocationClient = new LocationClient(this, this, this);
+		setContentView(R.layout.activity_home);		
+		Log.d("Debug", "Home Activity OnCreate");
+		//user = ParseUser.getCurrentUser();
+		//setupTabs();
 
 	}
 	@Override
@@ -48,6 +63,25 @@ public class HomeActivity extends FragmentActivity {
 		return true;
 	}
 
+    /*
+     * Called when the Activity becomes visible.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mLocationClient.connect();
+    }
+    /*
+     * Called when the Activity is no longer visible.
+     */
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mLocationClient.disconnect();
+        super.onStop();
+    }
+	
 	public void onLogoutAction(MenuItem mi){
 		Session session = Session.getActiveSession();
 		if (session != null) {
@@ -72,11 +106,14 @@ public class HomeActivity extends FragmentActivity {
 		i.putExtra("user_id", ParseUser.getCurrentUser().getString("fbId"));
 		startActivity(i);
 	}
-	private void setupTabs() {
+	private void setupTabs(Location mCurrentLocation) {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 
+		Bundle args = new Bundle();
+		args.putParcelable("mCurrentLocation", mCurrentLocation);
+		
 		Tab tab1 = actionBar
 				.newTab()
 				.setText("Restaurants")
@@ -84,7 +121,7 @@ public class HomeActivity extends FragmentActivity {
 				.setTag("RestaurantListFragment")
 				.setTabListener(
 						new FragmentTabListener<RestaurantListFragment>(R.id.ctRestaurantsLists, this, "first",
-								RestaurantListFragment.class));
+								RestaurantListFragment.class, args));
 
 		actionBar.addTab(tab1);
 		actionBar.selectTab(tab1);
@@ -130,4 +167,66 @@ public class HomeActivity extends FragmentActivity {
 			}
 		};
 	}
+	
+    /*
+     * Called by Location Services when the request to connect the
+     * client finishes successfully. At this point, you can
+     * request the current location or start periodic updates
+     */
+    @Override
+    public void onConnected(Bundle dataBundle) {
+        // Display the connection status
+        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+        Log.d("Debug", "onConnected");
+        mCurrentLocation = mLocationClient.getLastLocation();
+        Log.d("Debug", "Location" + mCurrentLocation.toString());
+		setupTabs(mCurrentLocation);
+
+    }
+    /*
+     * Called by Location Services if the connection to the
+     * location client drops because of an error.
+     */
+    @Override
+    public void onDisconnected() {
+        // Display the connection status
+        Toast.makeText(this, "Disconnected. Please re-connect.",
+                Toast.LENGTH_SHORT).show();
+    }
+    /*
+     * Called by Location Services if the attempt to
+     * Location Services fails.
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        /*
+         * Google Play services can resolve some errors it detects.
+         * If the error has a resolution, try sending an Intent to
+         * start a Google Play services activity that can resolve
+         * error.
+         */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(
+                        this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                /*
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            /*
+             * If no resolution is available, display a dialog to the
+             * user with the error.
+             */
+            //showErrorDialog(connectionResult.getErrorCode());
+        }
+    }
 }
+	
+
