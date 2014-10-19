@@ -1,12 +1,14 @@
 package com.codepath.apps.tastebuds;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class GooglePlacesApiClient {
 	
-	public void getRestaurantListfromGooglePlaces(double latitude, double longitude, JsonHttpResponseHandler handler) {
+	public void getRestaurantListfromGooglePlaces(String nextPageToken, double latitude, double longitude, JsonHttpResponseHandler handler) {
 		// change lat, long from double to String
 		//Log.d("Debug", "Client Called");
 		String latString = String.valueOf(latitude);
@@ -18,9 +20,16 @@ public class GooglePlacesApiClient {
 		String types = "restaurant|bakery|bar|cafe|food|meal_delivery| meal_takeaway";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
+		if (nextPageToken == "None") {
 		params.put("location", location);
 		params.put("rankby", "distance");
 		params.put("types", types);
+		Log.d("Debug", "No Page Token Query");
+		} else {
+			params.put("pagetoken", nextPageToken);
+			Log.d("Debug", "Running with Next Page Token");
+			Log.d("Debug", "NextPageToken G API" + nextPageToken);
+		}
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get(baseUrl, params, handler);
 	}
