@@ -92,7 +92,7 @@ public class TastebudsLoginActivity extends FragmentActivity {
 	private void onLoginButtonClicked() {
 		session = Session.getActiveSession();
 		if (session !=null && session.isOpened()) {
-			Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
 			goToHomeActivity();
 		}else{
 			TastebudsLoginActivity.this.progressDialog = ProgressDialog.show(
