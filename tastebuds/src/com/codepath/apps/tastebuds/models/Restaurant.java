@@ -120,9 +120,6 @@ public class Restaurant implements Serializable {
 	public static Restaurant fromJSONDetail(JSONObject jsonObject) {
 		Restaurant restaurant = new Restaurant();
 		try {
-			restaurant.setIcon(jsonObject.getString("icon"));
-			restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
-			restaurant.setPhotos(jsonObject.getJSONArray("photos"));
 			
 			restaurant.place_id = jsonObject.getString("place_id");
 			
@@ -138,8 +135,6 @@ public class Restaurant implements Serializable {
 			try {
 				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
 				restaurant.latitude = location.getDouble("lat");
-				//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));
-				//restaurant.latitude = jsonObject.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
 				Log.d("Debug", "Lat: " + Double.toString(restaurant.getLatitude()));
 				}
 				catch (Exception e) { 
@@ -161,6 +156,16 @@ public class Restaurant implements Serializable {
 				Log.d("Debug", "No Location");
 			}
 				
+			if(jsonObject.has("icon") && jsonObject.getString("icon") !=null){
+				restaurant.setIcon(jsonObject.getString("icon"));
+			}
+			if(jsonObject.has("reviews") && jsonObject.getJSONArray("reviews") != null){
+				restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
+			}
+			if(jsonObject.has("photos") && jsonObject.getJSONArray("photos") != null){
+				restaurant.setPhotos(jsonObject.getJSONArray("photos"));
+			}
+
 			//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
 			//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
 			
