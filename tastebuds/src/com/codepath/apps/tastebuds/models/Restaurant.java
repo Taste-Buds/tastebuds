@@ -110,6 +110,32 @@ public class Restaurant implements Serializable {
 			restaurant.place_id = jsonObject.getString("place_id");
 			restaurant.name = jsonObject.getString("name");
 			
+			try {
+				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
+				//Log.d("Debug", "Location Object" + location.toString());
+				restaurant.latitude = location.getDouble("lat");
+				//Log.d("Debug", "Lat: " + Double.toString(restaurant.getLatitude()));
+				}
+				catch (Exception e) { 
+					Log.d("Debug", "Can't get Location A");
+					restaurant.latitude = 0; }
+			
+			try {
+				//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));
+				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
+				restaurant.longitude = location.getDouble("lng");
+				}
+			catch (Exception e) { restaurant.longitude = 0; }		
+			
+			if ((restaurant.getLatitude() != 0) && (restaurant.getLongitude() != 0)) {
+				Location location = new Location("");
+			    location.setLatitude(restaurant.getLatitude());
+			    location.setLongitude(restaurant.getLongitude()); 
+			    restaurant.location = location;
+			} else {
+				Log.d("Debug", "No Location");
+			}
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
@@ -134,6 +160,7 @@ public class Restaurant implements Serializable {
 			
 			try {
 				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
+				Log.d("Debug", "Location Object" + location.toString());
 				restaurant.latitude = location.getDouble("lat");
 				Log.d("Debug", "Lat: " + Double.toString(restaurant.getLatitude()));
 				}
@@ -143,7 +170,8 @@ public class Restaurant implements Serializable {
 			
 			try {
 				//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));
-				restaurant.longitude = jsonObject.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+				//JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
+				//restaurant.longitude = location.getDouble("lng");
 				}
 			catch (Exception e) { restaurant.longitude = 0; }		
 			

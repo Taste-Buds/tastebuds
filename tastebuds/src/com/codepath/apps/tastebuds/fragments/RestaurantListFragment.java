@@ -156,12 +156,14 @@ public class RestaurantListFragment extends Fragment {
 			Log.d("Debug", "No User Location");
 		}
 		if (restaurant.getLocation() == null) {
-			//Log.d("Debug", "No Restaurant Location");
+			Log.d("Debug", "No Restaurant Location");
 		}
 		float distance = 0;
 		try { distance = mCurrentLocation.distanceTo(locationRestaurant); }
-			catch (Exception e){Log.d("Debug", "Can't get Location B"); }
-		//restaurant.setCurrentDistancetoUser(distance);
+			catch (Exception e){ //Log.d("Debug", "Can't get Location B"); 
+				
+			}
+		restaurant.setCurrentDistancetoUser(distance);
 	}
 	
 	private void updateNextPageToken (String newNextPageToken) {
