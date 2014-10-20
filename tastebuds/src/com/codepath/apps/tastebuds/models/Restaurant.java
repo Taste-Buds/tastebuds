@@ -103,13 +103,27 @@ public class Restaurant implements Serializable {
 	public static Restaurant fromJSONDetail(JSONObject jsonObject) {
 		Restaurant restaurant = new Restaurant();
 		try {
-			restaurant.setIcon(jsonObject.getString("icon"));
-			restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
-			restaurant.setPhotos(jsonObject.getJSONArray("photos"));
-			restaurant.place_id = jsonObject.getString("place_id"); // place_id
-			restaurant.name = jsonObject.getString("name");			// name
-			restaurant.address = jsonObject.getString("formatted_address");		// formatted_address
-			restaurant.phone = jsonObject.getString("formatted_phone_number");	// formatted_phone_number
+			if(jsonObject.has("icon") && jsonObject.getString("icon") !=null){
+				restaurant.setIcon(jsonObject.getString("icon"));
+			}
+			if(jsonObject.has("reviews") && jsonObject.getJSONArray("reviews") != null){
+				restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
+			}
+			if(jsonObject.has("photos") && jsonObject.getJSONArray("photos") != null){
+				restaurant.setPhotos(jsonObject.getJSONArray("photos"));
+			}
+			if(jsonObject.has("place_id") && jsonObject.getString("place_id") != null){
+				restaurant.place_id = jsonObject.getString("place_id"); // place_id
+			}
+			if(jsonObject.has("name") && jsonObject.getString("name") !=null){
+				restaurant.name = jsonObject.getString("name");			// name
+			}
+			if(jsonObject.has("formatted_address") && jsonObject.getString("formatted_address") !=null){
+				restaurant.address = jsonObject.getString("formatted_address");		// formatted_address
+			}
+			if(jsonObject.has("formatted_phone_number") && jsonObject.getString("formatted_phone_number") !=null){
+				restaurant.phone = jsonObject.getString("formatted_phone_number");	// formatted_phone_number
+			}
 			//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
 			//restaurant.longitude = Doub le.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
 			if ( jsonObject.has("rating")&& jsonObject.getString("rating") != null) {
