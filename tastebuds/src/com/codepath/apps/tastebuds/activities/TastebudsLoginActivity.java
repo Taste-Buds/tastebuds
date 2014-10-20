@@ -52,7 +52,7 @@ public class TastebudsLoginActivity extends FragmentActivity {
 
 		session = Session.getActiveSession();
 		if (session !=null && session.isOpened()) {
-			Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
 			goToHomeActivity();
 		}else{
 			setContentView(R.layout.activity_login);

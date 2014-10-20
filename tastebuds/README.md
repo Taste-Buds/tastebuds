@@ -41,38 +41,33 @@ Completed User Stories-
 
 12. User can compose a dish review while he is on Dishes tab by clicking at the edit button present in the Application bar.
 
-13. Compose Dish Review: This dialog view lets user enter  
+13. Compose Dish Review: This dialog view lets user enter Dish name, rating, auto-completed tags and review for the dish.  
 
-13. Reviews tab: Reviews tab shows reviews for the restaurant from friends.
+14. Reviews tab: Reviews tab shows reviews for the restaurant from friends.
 
-14. User can click on any review to view ratings, content, creation date and tags associated with the restaurant.
+15. User can click on any review to view ratings, content, creation date and tags associated with the restaurant.
 
-15. User can compose a restaurant review while he is on Reviews tab by clicking at the edit button present in the Application bar.
+16. User can compose a restaurant review while he is on Reviews tab by clicking at the edit button present in the Application bar.
 
-16. 
+17. Compose restaurant Review: This dialog view lets user enter rating, auto-completed tags and review for the restaurant.
 
-10. Friends screen shows friends' locations, profile pictures and number of restaurant and dish reviews, they have provided.
+18. Friends tab on Home Activity screen: shows friends' locations, profile pictures and number of restaurant and dish reviews, they have provided.
 
-11. User Profile Screen: User can click on any friend to view his/her restaurant and dish reviews for different restaurants.
+19. User Profile Screen: User can click on any friend to view his/her restaurant and dish reviews for different restaurants.
 
-12. A user can view his own reviews for restaurants and dishes by clicking profile button present in the Application bar.
+20. A user can view his own reviews for restaurants and dishes by clicking profile button present in the Application bar.
 
-5. Users can view list of friends (User List)
+21. A user doesn't go through login process again if a user has logged in with valid credentials earlier. Home Page becomes the default landing page then.
 
-6. Users can view a list of food diaries of their friends on facebook and google+. (View Reviews by Friends)
-
-7. Users can view an indiviual Review (Review Detail)
-
-8. For deciding a cuisine or restaurant, the app would make it easy to look at recommendations from a select expert friends based on user’s opinion. (Filter Reviews based on Hashtags, Friends)
-
-9. Location based restaurants recommendation based on friends input. (Recommendations)
+22. A user can logout of the Application by clicking cross button in the Application bar. 
 
 
 
 Checklist of screens needed: 
 
-- Splash
-- Menu Bar
+- Login screen
+- Home Activity screen with Restaurant and Friends tab
+- 
 - Restaurant List - List View
 - Restaurant List - Map View
 - Restaurant Detail
@@ -84,8 +79,5 @@ Checklist of screens needed:
 - Review List (by Friend, by Resturant) - List View
 - Search Filter
 
-http://ninjamock.com/s/pepwoi (Shawn)
-http://ninjamock.com/s/tdhopp (Sushant)
-http://ninjamock.com/s/vaqmaj (Poorva)
 
 
