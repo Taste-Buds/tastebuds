@@ -133,7 +133,6 @@ public class RestaurantListFragment extends Fragment {
 					e.printStackTrace();
 				}
             	restaurantAdapter.notifyDataSetChanged();
-            	
         	}
 			@Override
     		public void onFailure(Throwable e, JSONObject errorResponse) {
@@ -186,7 +185,7 @@ public class RestaurantListFragment extends Fragment {
 					sumOfRatings = sumOfRatings + rating;
 				}
 			}
-			long friendRating = 0;
+			float friendRating = 0;
 			if (numberOfReviews > 0) {
 				friendRating = sumOfRatings/numberOfReviews;
 			}
@@ -198,6 +197,11 @@ public class RestaurantListFragment extends Fragment {
 			restaurant.setNumOfReviews(numberOfReviews);		
 		}
 		parsingPageToken++;
+		//Restaurant theRamp = restaurants.get(4);
+    	//Log.d("Debug", "Name: " + theRamp.getName());
+    	//Log.d("Debug", "PlaceId: " + theRamp.getPlace_id());
+    	//Log.d("Debug", "Number of Reviews: " + Integer.toString(theRamp.getNumOfReviews()));
+		
 		restaurantAdapter.notifyDataSetChanged();
 	}
 	

@@ -59,10 +59,10 @@ public class FriendsListAdapter extends ArrayAdapter<Object> {
 		tvDishReview = (TextView) v.findViewById(R.id.tvDishReviews);
 		//populateReviewNumbers(friend);
 		if(friend.getList("restReviews") !=null){
-		setRestaurantReviewNum(Integer.parseInt(friend.getList("restReviews").get(0).toString()));
+			setRestaurantReviewNum(Integer.parseInt(friend.getList("restReviews").get(0).toString()));
 		}
 		if(friend.getList("dishReviews") != null){
-		setDishReviewNum(Integer.parseInt(friend.getList("dishReviews").get(0).toString()));
+			setDishReviewNum(Integer.parseInt(friend.getList("dishReviews").get(0).toString()));
 		}
 		return v;
 	}

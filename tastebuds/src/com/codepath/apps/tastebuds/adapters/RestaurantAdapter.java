@@ -7,10 +7,12 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.Restaurant;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
@@ -30,9 +32,12 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		}
 		TextView tvRestaurantName = (TextView) v.findViewById(R.id.tvRestaurantName);
 		tvRestaurantName.setText(restaurant.getName());
-		TextView tvFriendRating = (TextView) v.findViewById(R.id.tvFriendRating);
-		String friendRatingString = Long.toString(restaurant.getFriendRating());
-		tvFriendRating.setText(friendRatingString);
+		RatingBar rbTasteBudsRating = (RatingBar) v.findViewById(R.id.rbTasteBudsRating);
+		String numberOfReviewString = "Reviews: " + Integer.toString(restaurant.getNumOfReviews());
+		float friendRating = (restaurant.getFriendRating());
+		rbTasteBudsRating.setRating(friendRating);
+		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
+		tvNumberofReviews.setText(numberOfReviewString);
 		
 		return v;
 	}
