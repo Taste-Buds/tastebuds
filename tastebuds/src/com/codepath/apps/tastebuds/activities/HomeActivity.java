@@ -111,6 +111,7 @@ public class HomeActivity extends FragmentActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.removeAllTabs();
+		getSupportFragmentManager().executePendingTransactions();
 		Bundle args = new Bundle();
 		args.putParcelable("mCurrentLocation", mCurrentLocation);
 		

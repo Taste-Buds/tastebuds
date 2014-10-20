@@ -65,7 +65,11 @@ public class FragmentTabListener<T extends Fragment> implements TabListener {
  
     public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
         FragmentTransaction sft = mActivity.getSupportFragmentManager().beginTransaction();
+        
+        
         if (mFragment != null) {
+
+        	//sft.addToBackStack(null);
             // Detach the fragment, because another one is being attached
             sft.detach(mFragment);
         }
