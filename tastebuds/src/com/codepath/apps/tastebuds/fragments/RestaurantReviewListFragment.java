@@ -54,7 +54,6 @@ public class RestaurantReviewListFragment extends Fragment {
 		if (activity instanceof RestaurantReviewListListener) {
 			listener = (RestaurantReviewListListener) activity;
 			adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends, listener);
-			adapter.setObjectsPerPage(5);
 		} else {
 			throw new ClassCastException(activity.toString()
 					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
