@@ -79,7 +79,7 @@ Checklist of screens needed:
 - User Dish reviews list- List view
 
 Video Demo:
-<iframe width="420" height="315" src="//www.youtube.com/embed/vJrj7V7bQWs" frameborder="0" allowfullscreen></iframe>
+<a src="//www.youtube.com/embed/vJrj7V7bQWs" frameborder="0" allowfullscreen>Video Demo on YouTube</a>
 
 
 
