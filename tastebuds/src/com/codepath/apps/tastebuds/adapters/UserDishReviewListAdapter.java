@@ -21,9 +21,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
+public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 
-	public DishReviewListAdapter(Context context, final String googlePlacesId,
+	public UserDishReviewListAdapter(Context context, final String googlePlacesId,
 			final List<ParseObject> friends) {
 		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
 			public ParseQuery<DishReview> create() {
@@ -33,7 +33,7 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		});
 	}
 
-	public DishReviewListAdapter(Context context, final String googlePlacesId,
+	public UserDishReviewListAdapter(Context context, final String googlePlacesId,
 			final List<ParseObject> friends, final String dishName) {
 		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
 			public ParseQuery<DishReview> create() {
@@ -44,7 +44,7 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		});
 	}
 
-	public DishReviewListAdapter(Context context,final ParseUser user) {
+	public UserDishReviewListAdapter(Context context,final ParseUser user) {
 		super(context, new ParseQueryAdapter.QueryFactory<DishReview>() {
 			public ParseQuery<DishReview> create() {
 				ParseQuery<DishReview> query = DishReview.getQuery(user);
@@ -69,14 +69,14 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		ParseUser reviewer;
 		try {
 			reviewer = review.getUser().fetchIfNeeded();
-			username.setText(reviewer.getUsername());
+		
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
-		
+		username.setText(review.getDishName());
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		time.setText(df.format(review.getCreatedAt()));
 		return view;

@@ -22,13 +22,17 @@ import com.actionbarsherlock.view.MenuItem;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog;
+import com.codepath.apps.tastebuds.fragments.DishReviewDetailDialog.DishReviewDetailDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog;
 import com.codepath.apps.tastebuds.fragments.UserDishReviewsListFragment;
+import com.codepath.apps.tastebuds.fragments.UserDishReviewsListFragment.UserDishReviewListListener;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog.RestaurantReviewDetailDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
+import com.codepath.apps.tastebuds.models.DishReview;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;
@@ -37,7 +41,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
-public class UserProfileActivity extends SherlockFragmentActivity implements UserRestaurantReviewListListener {
+public class UserProfileActivity extends SherlockFragmentActivity implements UserRestaurantReviewListListener ,UserDishReviewListListener {
 	private ImageButton barImage;
 	private String profImgURL;
 	@Override
@@ -175,4 +179,26 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 //			}
 //		};
 //	}
+
+	@Override
+	public void onDishReviewSelected(String reviewId, String dishName) {
+		 FragmentTransaction ft = getFragmentManager().beginTransaction();
+		    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+		    if (prev != null) {
+		        ft.remove(prev);
+		    }
+		    ft.addToBackStack(null);
+		    DishReviewDetailDialog dialog = DishReviewDetailDialog.newInstance(reviewId,
+					dishName);
+			dialog.show(ft, "detail");
+			dialog.listener = new DishReviewDetailDialogListener() {
+
+				@Override
+				public void onFinishReviewDialog(DishReview review) {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+		
+	}
 }
