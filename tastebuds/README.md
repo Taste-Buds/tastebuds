@@ -67,17 +67,18 @@ Checklist of screens needed:
 
 - Login screen
 - Home Activity screen with Restaurant and Friends tab
-- 
-- Restaurant List - List View
-- Restaurant List - Map View
-- Restaurant Detail
-- Create a Restaurant Review (Form) - Shawn
-- Create a Dish Review (Form) - Shawn
-- Review Detail (from Form) - Shawn
-- Dish Detail  (from Form) - Shawn
-- Friend List - List View
-- Review List (by Friend, by Resturant) - List View
-- Search Filter
+- Restaurant List Fragment- List View
+- Friends list Fragment - List view
+- Restaurant reviews list Fragment- List View
+- Restaurant Detail Fragment
+- Dishes List Fragment - List View
+- Create a Restaurant Review (Form)
+- Create a Dish Review (Form)
+- Restaurant Review Detail ( Form)
+- Dish Review Detail (Form)
+- Dish Detail screen with Dish Reviews list- List View 
+- User Restaurant reviews list - List view
+- User Dish reviews list- List view
 
 
 
