@@ -23,7 +23,9 @@ public class Restaurant implements Serializable {
 	private String web_map;			// URI for Restaurant Map on Google
 	private int numOfReviews;		// Number of Friend Reviews
 	private float friendRating;		// average Rating by Friends
-	
+	private String icon;
+	private JSONArray googleReviews;
+	private JSONArray photos;
 	
 	public int getNumOfReviews() {
 		return numOfReviews;
@@ -101,25 +103,28 @@ public class Restaurant implements Serializable {
 	public static Restaurant fromJSONDetail(JSONObject jsonObject) {
 		Restaurant restaurant = new Restaurant();
 		try {
+			restaurant.setIcon(jsonObject.getString("icon"));
+			restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
+			restaurant.setPhotos(jsonObject.getJSONArray("photos"));
 			restaurant.place_id = jsonObject.getString("place_id"); // place_id
 			restaurant.name = jsonObject.getString("name");			// name
 			restaurant.address = jsonObject.getString("formatted_address");		// formatted_address
 			restaurant.phone = jsonObject.getString("formatted_phone_number");	// formatted_phone_number
 			//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
-			//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
-			if (jsonObject.getString("rating") != null) {
+			//restaurant.longitude = Doub le.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
+			if ( jsonObject.has("rating")&& jsonObject.getString("rating") != null) {
 				restaurant.google_rating = Double.parseDouble(jsonObject.getString("rating"));	// rating
 			}
-			if (jsonObject.getString("price_level") != null) {
+			if (jsonObject.has("price_level") && jsonObject.getString("price_level") != null) {
 				restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));		// price_level
 			}
-			if (jsonObject.getString("website") != null) {
+			if (jsonObject.has("website") && jsonObject.getString("website") != null) {
 				restaurant.website = jsonObject.getString("website");		// website
 			}
-			if (jsonObject.getString("url") != null) {
+			if (jsonObject.has("url") && jsonObject.getString("url") != null) {
 				restaurant.web_map = jsonObject.getString("url");		// web_map
 			}
-			if (jsonObject.getJSONObject("opening_hours") != null &&
+			if (jsonObject.has("opening_hours") && jsonObject.getJSONObject("opening_hours") != null &&
 					jsonObject.getJSONObject("opening_hours").getString("open_now") != null) {
 				restaurant.open_now = Boolean.parseBoolean(jsonObject.getJSONObject("opening_hours").getString("open_now"));		// opening_hours:open_now
 			}
@@ -146,6 +151,30 @@ public class Restaurant implements Serializable {
 			}
 		}
 		return restaurants;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public JSONArray getGoogleReviews() {
+		return googleReviews;
+	}
+
+	public void setGoogleReviews(JSONArray googleReviews) {
+		this.googleReviews = googleReviews;
+	}
+
+	public JSONArray getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(JSONArray photos) {
+		this.photos = photos;
 	}
 
 }

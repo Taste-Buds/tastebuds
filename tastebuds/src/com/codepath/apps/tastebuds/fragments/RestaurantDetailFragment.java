@@ -91,6 +91,12 @@ public class RestaurantDetailFragment extends Fragment {
 		tvAddress.setText(restaurant.getAddress());
 		tvWebsite.setText(restaurant.getWebsite());
 		tvFriendsRating.setText(Double.toString(restaurant.getFriendRating()));
+		wvGoogleMap.loadUrl(restaurant.getWeb_map());
+		wvGoogleMap.setWebViewClient(new WebViewClient() {
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+			          view.loadUrl(url);
+			          return true;
+			           }});
 		if (restaurant.isOpen_now()) {
 			tvStatus.setText("Open");
 			tvStatus.setTextColor(Color.GREEN);
