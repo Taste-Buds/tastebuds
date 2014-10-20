@@ -2,6 +2,7 @@ package com.codepath.apps.tastebuds.fragments;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.DishListAdapter;
 import com.codepath.apps.tastebuds.adapters.DishReviewListAdapter;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.adapters.UserDishReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -24,14 +27,14 @@ import com.parse.ParseUser;
 
 public class UserDishReviewsListFragment extends Fragment {
 
-	private DishReviewListAdapter adapter;
-	private ReviewListListener listener;
+	private UserDishReviewListAdapter adapter;
+	private UserDishReviewListListener listener;
 	private ListView lvUserDishReviews;
 	private String userId;
 	private static ParseUser user;
 
-    public interface ReviewListListener {
-    	void onReviewSelected(String reviewId, String restaurantName);
+    public interface UserDishReviewListListener {
+    	void onDishReviewSelected(String reviewId, String dishName);
     }
 
 	@Override
@@ -50,12 +53,23 @@ public class UserDishReviewsListFragment extends Fragment {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-					adapter = new DishReviewListAdapter(getActivity(),  users.get(0));
+					adapter = new UserDishReviewListAdapter(getActivity(),  users.get(0),listener);
 					lvUserDishReviews.setAdapter(adapter);
 					adapter.notifyDataSetChanged();
+					lvUserDishReviews.setOnItemClickListener(adapter);
 					
 				}
 			});
 		return view;
+	}
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof UserDishReviewListListener) {
+			listener = (UserDishReviewListListener) activity;
+		} else {
+			throw new ClassCastException(activity.toString()
+					+ " must implement UserDishReviewListListener");
+		}
 	}
 }
