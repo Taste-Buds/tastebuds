@@ -1,6 +1,7 @@
 package com.codepath.apps.tastebuds.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.parse.ParseClassName;
@@ -92,8 +93,8 @@ public class DishReview extends ParseObject implements Review {
 		put("owner", user);
 	}
 
-	public long getCreatedTimestamp() {
-		 return getLong("createdAt");
+	public Date getCreatedTimestamp() {
+		 return getDate("createdAt");
 	}
 
 	public int getRating() {
@@ -123,13 +124,15 @@ public class DishReview extends ParseObject implements Review {
 	public String getTags() {
 		List<Tag> tags = getList("tags");
 		StringBuffer buffer = new StringBuffer();
-		for (Tag tag : tags) {
-			try {
-				buffer.append(tag.fetchIfNeeded().getString("tag"));
-			} catch (ParseException e) {
-				e.printStackTrace();
+		if (tags != null) {
+			for (Tag tag : tags) {
+				try {
+					buffer.append(tag.fetchIfNeeded().getString("tag"));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				buffer.append(" ");
 			}
-			buffer.append(" ");
 		}
 		return buffer.toString();
 	}

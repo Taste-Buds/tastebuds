@@ -22,7 +22,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Restaurant restaurant = getItem(position);	
+		Restaurant restaurant = getItem(position);
 		View v;
 		if (convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
