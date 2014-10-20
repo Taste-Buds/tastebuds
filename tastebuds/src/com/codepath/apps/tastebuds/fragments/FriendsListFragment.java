@@ -75,7 +75,9 @@ public class FriendsListFragment extends Fragment {
 			@Override
 			public void done(List<RestaurantReview> reviews, ParseException e) {
 				//tvRestaurantReview.setText(Integer.toString(reviews.size()));
-				user.remove("restReviews");
+				if(user.has("restReviews")){
+					user.remove("restReviews");
+				}
 				user.add("restReviews", reviews.size());
 				//user.setNumRestReview(reviews.size());
 				//((FriendsListAdapter) friendsListAdapter).setRestaurantReviewNum(reviews.size());

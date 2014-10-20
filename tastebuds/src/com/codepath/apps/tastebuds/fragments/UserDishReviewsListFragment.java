@@ -53,9 +53,10 @@ public class UserDishReviewsListFragment extends Fragment {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 				@Override
 				public void done(List<ParseUser> users, ParseException arg1) {
-					adapter = new UserDishReviewListAdapter(getActivity(),  users.get(0));
+					adapter = new UserDishReviewListAdapter(getActivity(),  users.get(0),listener);
 					lvUserDishReviews.setAdapter(adapter);
 					adapter.notifyDataSetChanged();
+					lvUserDishReviews.setOnItemClickListener(adapter);
 					
 				}
 			});
