@@ -11,6 +11,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,14 +112,15 @@ public class HomeActivity extends FragmentActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.removeAllTabs();
+		actionBar.setTitle("TasteBuds");
 		getSupportFragmentManager().executePendingTransactions();
 		Bundle args = new Bundle();
 		args.putParcelable("mCurrentLocation", mCurrentLocation);
 		
 		Tab tab1 = actionBar
 				.newTab()
-				.setText("Restaurants")
-				.setIcon(R.drawable.ic_launcher)
+				.setText(Html.fromHtml("<font color='black'> Restaurants </font>"))
+				.setIcon(R.drawable.ic_restaurant)
 				.setTag("RestaurantListFragment")
 				.setTabListener(
 						new FragmentTabListener<RestaurantListFragment>(R.id.ctRestaurantsLists, this, "first",
@@ -129,8 +131,8 @@ public class HomeActivity extends FragmentActivity implements
 
 		Tab tab2 = actionBar
 				.newTab()
-				.setText("Friends")
-				.setIcon(R.drawable.ic_launcher)
+				.setText(Html.fromHtml("<font color='black'> Friends </font>"))
+				.setIcon(R.drawable.ic_friends)
 				.setTag("FriendsListFragment")
 				.setTabListener(
 						new FragmentTabListener<FriendsListFragment>(R.id.ctRestaurantsLists, this, "second",

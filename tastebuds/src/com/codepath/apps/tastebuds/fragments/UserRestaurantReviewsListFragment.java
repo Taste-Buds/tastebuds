@@ -9,15 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
 import com.codepath.apps.tastebuds.adapters.UserReviewListAdapter;
-import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -30,6 +26,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	private ListView lvUserReviews;
 	private String userId;
 	private static ParseUser user;
+	private ProgressBar mProgress;
 
     public interface UserRestaurantReviewListListener {
     	void onReviewSelected(String reviewId, String restaurantName);
@@ -47,6 +44,9 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_user_restaurant_review_list, container, false);
 		lvUserReviews = (ListView) view.findViewById(R.id.lvUserReviews);
+		mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
+		mProgress.setVisibility(ProgressBar.VISIBLE);
+
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 
@@ -56,6 +56,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 						lvUserReviews.setAdapter(adapter);
 						adapter.notifyDataSetChanged();
 						lvUserReviews.setOnItemClickListener(adapter);
+						mProgress.setVisibility(ProgressBar.GONE);
 				}
 
 			});

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -32,6 +33,7 @@ public class UserDishReviewsListFragment extends Fragment {
 	private ListView lvUserDishReviews;
 	private String userId;
 	private static ParseUser user;
+	private ProgressBar mProgress;
 
     public interface UserDishReviewListListener {
     	void onDishReviewSelected(String reviewId, String dishName);
@@ -49,6 +51,8 @@ public class UserDishReviewsListFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_user_dish_review_list, container, false);
 		lvUserDishReviews = (ListView) view.findViewById(R.id.lvUserDishReviews);
+		mProgress = (ProgressBar) view.findViewById(R.id.pbUserDishReviewList);
+		mProgress.setVisibility(ProgressBar.VISIBLE);
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 				@Override
@@ -57,7 +61,7 @@ public class UserDishReviewsListFragment extends Fragment {
 					lvUserDishReviews.setAdapter(adapter);
 					adapter.notifyDataSetChanged();
 					lvUserDishReviews.setOnItemClickListener(adapter);
-					
+					mProgress.setVisibility(ProgressBar.GONE);
 				}
 			});
 		return view;

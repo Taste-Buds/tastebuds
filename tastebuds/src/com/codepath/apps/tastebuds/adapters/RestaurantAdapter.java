@@ -39,9 +39,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
 		tvNumberofReviews.setText(numberOfReviewString);
 		TextView tvDistance = (TextView) v.findViewById(R.id.tvDistance);
-		float distance = restaurant.getCurrentDistancetoUser();
-		String distanceString = Float.toString(distance);
-		tvDistance.setText(distanceString);
+		float distance = (float) (restaurant.getCurrentDistancetoUser() * 0.00062137);
+		String distanceString = String.format("%.2f", distance);
+		tvDistance.setText(distanceString + " miles");
 		
 		return v;
 	}
