@@ -46,7 +46,7 @@ public class RestaurantReviewDialog extends DialogFragment {
 	public RestaurantReviewDialogListener listener;
 	private List<String> tagStrings;
 
-    public static RestaurantReviewDialog newInstance(String restaurantName, String placesId) {
+    public static RestaurantReviewDialog newInstance(String placesId, String restaurantName) {
     	RestaurantReviewDialog dialog = new RestaurantReviewDialog();
         Bundle args = new Bundle();
         args.putString("restaurant_id", placesId);
@@ -74,8 +74,6 @@ public class RestaurantReviewDialog extends DialogFragment {
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
 
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
-        btnTaste.setBackgroundColor(Color.argb(255, 0, 185, 255));
-        btnTaste.setTextColor(Color.argb(255, 255, 255, 255));
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
 

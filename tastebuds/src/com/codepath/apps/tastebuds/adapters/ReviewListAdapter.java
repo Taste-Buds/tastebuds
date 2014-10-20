@@ -90,12 +90,11 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		}
 	}
 
-	/*@Override
+	@Override
 	public View getNextPageView(View view, ViewGroup parent) {
 		if (view == null) {
 			view = View.inflate(getContext(), R.layout.review_list_item, null);
 		}
-		TextView
 		return view;
-	}*/
+	}
 }

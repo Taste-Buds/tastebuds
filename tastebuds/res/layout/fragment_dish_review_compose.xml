@@ -70,38 +70,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvComposeTags"
+        android:layout_alignLeft="@+id/rbComposeReviewRatings"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/tags_text"
         android:ems="10" />
-
-    <EditText
-        android:id="@+id/etComposeReview"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@android:color/transparent"
-        android:ems="10"
-        android:hint="@string/compose_dish_review_hint"
-        android:inputType="textMultiLine" >
-
-        <requestFocus />
-    </EditText>
-
-    <RatingBar
-        android:id="@+id/rbComposeReviewRatings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/etComposeTags"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/tvComposeTags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/etComposeReview"
-        android:layout_toLeftOf="@+id/rbComposeReviewRatings"
-        android:text="@string/tags_text" />
 
     <TextView
         android:id="@+id/tvDish"
@@ -120,5 +92,32 @@
         android:layout_marginTop="19dp"
         android:layout_toRightOf="@+id/tvDish"
         android:ems="10" />
+
+    <RatingBar
+        android:id="@+id/rbComposeReviewRatings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etDishName"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvComposeTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rbComposeReviewRatings"
+        android:text="@string/tags_text" />
+
+    <EditText
+        android:id="@+id/etComposeReview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etComposeTags"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="@string/compose_dish_review_hint"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

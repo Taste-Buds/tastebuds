@@ -29,22 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/btnComposeBack"
             android:background="#ff9933"
             android:gravity="center"
             android:text="@string/taste_text"
             android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/etWords"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:ems="3"
-            android:text="@string/num_chars_line"
-            android:textColor="#FFFFFFFF" />
 
       <View
         android:layout_width="1dip"
@@ -58,9 +47,21 @@
           android:id="@+id/tvRestaurantNameCompose"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/btnComposeBack"
           android:layout_toRightOf="@+id/btnComposeBack"
           android:text="@string/restaurant_name_string"
           android:textAppearance="?android:attr/textAppearanceMedium" />
+
+      <TextView
+          android:id="@+id/etWords"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/tvRestaurantNameCompose"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="34dp"
+          android:ems="3"
+          android:text="@string/num_chars_line"
+          android:textColor="#FFFFFFFF" />
 
     </RelativeLayout>
 
@@ -77,6 +78,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/tvComposeTags"
         android:background="@android:color/transparent"
         android:ems="10"
@@ -97,7 +99,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvComposeTags"
+        android:layout_alignLeft="@+id/rbComposeReviewRatings"
         android:layout_alignParentRight="true"
         android:contentDescription="@string/tags_text"
         android:ems="10" />
+
 </RelativeLayout>

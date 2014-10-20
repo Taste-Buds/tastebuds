@@ -81,10 +81,10 @@ public class RestaurantDetailActivity extends FragmentActivity
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 
-		//RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
 		if (restaurant.getName() != null) {
+			getActionBar().setTitle(restaurant.getName());
 			args.putString("restaurantName", restaurant.getName());
 		} else {
 			args.putString("restaurantName", "ABCD");
@@ -131,7 +131,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	    ft.addToBackStack(null);
 	    if (getActionBar().getSelectedTab().getTag() != "DishListFragment") {
 			RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance(
-					restaurant.getName(), restaurant.getPlace_id());
+				restaurant.getPlace_id(), restaurant.getName());
 			dialog.show(ft, "compose");
 			dialog.listener = new RestaurantReviewDialogListener() {
 				@Override
@@ -165,8 +165,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	    }
 	    ft.addToBackStack(null);
 		RestaurantReviewDetailDialog dialog = 
-				RestaurantReviewDetailDialog.newInstance(reviewId,
-				restaurantName);
+				RestaurantReviewDetailDialog.newInstance(reviewId, restaurant.getName());
 		dialog.show(ft, "detail");
 		dialog.listener = new RestaurantReviewDetailDialogListener() {
 			@Override
