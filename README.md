@@ -64,6 +64,13 @@ Completed User Stories-
 22. A user can logout of the Application by clicking cross button in the Application bar. 
 
 
+Libraries and Apis Used:
+
+1. Facebook SDK
+2. Google Places API
+3. ActionBar sherlock
+4. Google Play services
+
 
 Checklist of screens needed: 
 
