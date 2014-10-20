@@ -1,6 +1,6 @@
 package com.codepath.apps.tastebuds.models;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -8,11 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class Restaurant implements Serializable {
+public class Restaurant implements Parcelable {
 	
-	private static final long serialVersionUID = 1L;
 	private String place_id; 		// place_id
 	private String name; 			// name
 	private String address;			// formatted_address
@@ -32,6 +33,10 @@ public class Restaurant implements Serializable {
 	private JSONArray googleReviews;
 	private JSONArray photos;
 	
+	public Restaurant() {
+		super();
+	}
+
 	public int getNumOfReviews() {
 		return numOfReviews;
 	}
@@ -265,4 +270,85 @@ public class Restaurant implements Serializable {
 		this.photos = photos;
 	}
 
+
+    protected Restaurant(Parcel in) {
+        place_id = in.readString();
+        name = in.readString();
+        address = in.readString();
+        phone = in.readString();
+        location = (Location) in.readValue(Location.class.getClassLoader());
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        currentDistancetoUser = in.readFloat();
+        google_rating = in.readDouble();
+        price_level = in.readInt();
+        website = in.readString();
+        open_now = in.readByte() != 0x00;
+        web_map = in.readString();
+        numOfReviews = in.readInt();
+        friendRating = in.readFloat();
+        icon = in.readString();
+        try {
+			googleReviews = in.readByte() == 0x00 ? null : new JSONArray(in.readString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+			photos = in.readByte() == 0x00 ? null : new JSONArray(in.readString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(place_id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(phone);
+        dest.writeValue(location);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeFloat(currentDistancetoUser);
+        dest.writeDouble(google_rating);
+        dest.writeInt(price_level);
+        dest.writeString(website);
+        dest.writeByte((byte) (open_now ? 0x01 : 0x00));
+        dest.writeString(web_map);
+        dest.writeInt(numOfReviews);
+        dest.writeFloat(friendRating);
+        dest.writeString(icon);
+        if (googleReviews == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeString(googleReviews.toString());
+        }
+        if (photos == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeString(photos.toString());
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }

@@ -33,7 +33,7 @@ public class RestaurantDetailFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		placeId = getArguments().getString("placeId");
-		restaurant = (Restaurant) getArguments().getSerializable("restaurant");
+		restaurant = (Restaurant) getArguments().getParcelable("restaurant");
 		//restaurantDetailFromGooglePlacesApi();	
 	}
 	

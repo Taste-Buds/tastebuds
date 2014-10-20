@@ -89,7 +89,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 		} else {
 			args.putString("restaurantName", "ABCD");
 		}
-		args.putSerializable("restaurant", restaurant);
+		args.putParcelable("restaurant", restaurant);
 		Tab tab1 = actionBar
 			.newTab()
 			.setText("Details")
