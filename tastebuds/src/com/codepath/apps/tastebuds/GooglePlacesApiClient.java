@@ -37,7 +37,8 @@ public class GooglePlacesApiClient {
 	
 	public void getRestaurantDetailfromGooglePlaces(String placeId, JsonHttpResponseHandler handler) {
 		String baseUrl = "https://maps.googleapis.com/maps/api/place/details/json"; 
-		String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
+		//String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
+		String apiKey = "AIzaSyBnvxHM9wtuaF-GlCBQmvdaMRJKSomiHes";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		params.put("placeid", placeId);
