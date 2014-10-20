@@ -14,7 +14,7 @@ public class GooglePlacesApiClient {
 		String latString = String.valueOf(latitude);
 		String longString = String.valueOf(longitude);
 		String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-		String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
+		String apiKey = "AIzaSyAc2m8O684S5BhhBch0U8MgX35GQQZ6otk";
 		String location = latString+","+longString;
 		//String types = "&types=bakery|bar|cafe|convenience_store|food|grocery_or_supermarket|liquor_store|meal_delivery|meal_takeaway|restaurant";
 		String types = "restaurant|bakery|bar|cafe|food|meal_delivery| meal_takeaway";
