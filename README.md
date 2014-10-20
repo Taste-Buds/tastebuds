@@ -1,6 +1,10 @@
 Taste Buds!
 =========
 
+Video Demo:
+<a href="http://youtu.be/vJrj7V7bQWs">Video Demo on YouTube</a>
+
+
 What problem does this app address: 
 
 Users today are unable to create and share restaurant reviews among Facebook friend lists easily.
@@ -78,8 +82,6 @@ Checklist of screens needed:
 - User Restaurant reviews list - List view
 - User Dish reviews list- List view
 
-Video Demo:
-<a href="http://youtu.be/vJrj7V7bQWs">Video Demo on YouTube</a>
 
 
 
