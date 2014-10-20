@@ -33,6 +33,7 @@ public class DishReview extends ParseObject implements Review {
 	public static ParseQuery<DishReview> getQuery(String ownerId){
 		ParseQuery<DishReview> dishQuery =  ParseQuery.getQuery(
 	    		DishReview.class).whereEqualTo("owner", ownerId);
+	    dishQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 		return dishQuery;
 	}
 	
@@ -47,6 +48,7 @@ public class DishReview extends ParseObject implements Review {
 	    if (googlePlacesId != null) {
 	    	query.whereEqualTo("placesId", googlePlacesId);
 	    }*/
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
@@ -64,11 +66,14 @@ public class DishReview extends ParseObject implements Review {
 	    if (dishName != null) {
 	    	query.whereEqualTo("dishName", dishName);
 	    }*/
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
 	public static ParseQuery<DishReview> getQuery() {
-	    return ParseQuery.getQuery(DishReview.class);
+	    ParseQuery query = ParseQuery.getQuery(DishReview.class);
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return query;
 	}
 
 	public String getGooglePlacesId() {
@@ -77,6 +82,14 @@ public class DishReview extends ParseObject implements Review {
 
 	public void setGooglePlacesId(String googlePlacesId) {
 		put("googlePlacesId", googlePlacesId);
+	}
+
+	public String getRestaurantName() {
+		return getString("restaurantName");
+	}
+
+	public void setRestaurantName(String restaurantName) {
+		put("restaurantName", restaurantName);
 	}
 
 	public static ParseQuery<DishReview> getQuery(ParseObject owner) {

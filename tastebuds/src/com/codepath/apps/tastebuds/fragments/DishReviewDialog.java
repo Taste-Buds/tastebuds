@@ -143,6 +143,7 @@ public class DishReviewDialog extends DialogFragment {
         		review.setUser(ParseUser.getCurrentUser());
         		review.setDishName(etDish.getText().toString());
         		review.setTags(restaurantId, etTags.getText().toString());
+        		review.setRestaurantName(restaurantName);
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

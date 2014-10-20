@@ -24,7 +24,9 @@ public class Tag extends ParseObject {
 	}
 
 	public static ParseQuery<Tag> getQuery() {
-		return ParseQuery.getQuery(Tag.class);
+		ParseQuery query = ParseQuery.getQuery(Tag.class);
+		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		return query;
 	}
 
 	public String getGooglePlacesId() {

@@ -2,31 +2,18 @@ package com.codepath.apps.tastebuds.fragments;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
-import com.codepath.apps.tastebuds.models.Restaurant;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class RestaurantReviewListFragment extends Fragment {
@@ -67,6 +54,7 @@ public class RestaurantReviewListFragment extends Fragment {
 		if (activity instanceof RestaurantReviewListListener) {
 			listener = (RestaurantReviewListListener) activity;
 			adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends, listener);
+			adapter.setObjectsPerPage(5);
 		} else {
 			throw new ClassCastException(activity.toString()
 					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");

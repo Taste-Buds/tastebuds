@@ -33,23 +33,30 @@ public class RestaurantReview extends ParseObject implements Review {
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery() {
-	    return ParseQuery.getQuery(RestaurantReview.class);
+	    ParseQuery query = ParseQuery.getQuery(RestaurantReview.class);
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return query;
 	}
 	public static ParseQuery<RestaurantReview> getQuery(String ownerId){
 		ParseQuery<RestaurantReview> restQuery = ParseQuery.getQuery(
 	    		RestaurantReview.class).whereEqualTo("owner", ownerId);
+		restQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 		return restQuery;
 	}
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
-	    return ParseQuery.getQuery(RestaurantReview.class)
+		ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("placesId", googlePlacesId)
 	    		.orderByDescending("createdAt");
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return query;
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(ParseObject owner) {
-	    return ParseQuery.getQuery(RestaurantReview.class)
+	    ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("owner", owner)
 	    		.orderByDescending("createdAt");
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return query;
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(String googlePlacesId,
@@ -63,15 +70,18 @@ public class RestaurantReview extends ParseObject implements Review {
 	    if (googlePlacesId != null) {
 	    	query.whereEqualTo("placesId", googlePlacesId);
 	    }
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
 	public static ParseQuery<RestaurantReview> getQuery(List<String> googlePlacesIds,
 			List<ParseObject> owners) {
-	    return ParseQuery.getQuery(RestaurantReview.class)
+	    ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
 	    		//.whereContainedIn("owner", owners)
 	    		//.whereContainedIn("placesId", googlePlacesIds)
 	    		.orderByDescending("createdAt");
+	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return query;
 	}
 
 	public String getGooglePlacesId() {
@@ -80,6 +90,14 @@ public class RestaurantReview extends ParseObject implements Review {
 
 	public void setGooglePlacesId(String googlePlacesId) {
 		put("placesId", googlePlacesId);
+	}
+
+	public String getRestaurantName() {
+		return getString("restaurantName");
+	}
+
+	public void setRestaurantName(String restaurantName) {
+		put("restaurantName", restaurantName);
 	}
 
 	public ParseUser getUser() {
