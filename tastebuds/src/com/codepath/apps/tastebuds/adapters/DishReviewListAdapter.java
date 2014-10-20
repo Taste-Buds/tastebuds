@@ -1,8 +1,10 @@
 package com.codepath.apps.tastebuds.adapters;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -62,19 +64,20 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
+		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
 
-		//username.setText("abcdefgh");
 		ParseUser reviewer;
 		try {
 			reviewer = review.getUser().fetchIfNeeded();
 			username.setText(reviewer.getUsername());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		time.setText(df.format(review.getCreatedAt()));
 		return view;
 	}
 

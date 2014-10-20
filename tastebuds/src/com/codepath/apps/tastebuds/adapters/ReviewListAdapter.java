@@ -1,5 +1,6 @@
 package com.codepath.apps.tastebuds.adapters;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -60,16 +61,18 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
+		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
 
 		try {
 			username.setText(review.getUser().fetchIfNeeded().getString("username"));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		rating.setEnabled(false);
+		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		time.setText(df.format(review.getCreatedAt()));
 		return view;
 	}
 

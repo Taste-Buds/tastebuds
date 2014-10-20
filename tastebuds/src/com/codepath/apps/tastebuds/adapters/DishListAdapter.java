@@ -1,5 +1,6 @@
 package com.codepath.apps.tastebuds.adapters;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -56,11 +57,13 @@ public class DishListAdapter extends ArrayAdapter<Dish> {
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
+		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
+		time.setVisibility(TextView.GONE);
 
-		//username.setText(.getUser().getUsername());
-		username.setVisibility(TextView.GONE);
-		content.setText(dish.getName());
-		rating.setRating(4);
+		content.setVisibility(TextView.GONE);
+		username.setText(dish.getName());
+		rating.setRating(dish.getRating());
+		rating.setEnabled(false);
 		return view;
 	}
 
