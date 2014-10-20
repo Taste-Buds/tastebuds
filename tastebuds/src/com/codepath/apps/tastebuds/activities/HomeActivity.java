@@ -119,7 +119,7 @@ public class HomeActivity extends FragmentActivity implements
 		
 		Tab tab1 = actionBar
 				.newTab()
-				.setText(Html.fromHtml("<font color='black'> Restaurants </font>"))
+				.setText("Restaurants")
 				.setIcon(R.drawable.ic_restaurant)
 				.setTag("RestaurantListFragment")
 				.setTabListener(
@@ -131,7 +131,7 @@ public class HomeActivity extends FragmentActivity implements
 
 		Tab tab2 = actionBar
 				.newTab()
-				.setText(Html.fromHtml("<font color='black'> Friends </font>"))
+				.setText("Friends")
 				.setIcon(R.drawable.ic_friends)
 				.setTag("FriendsListFragment")
 				.setTabListener(
