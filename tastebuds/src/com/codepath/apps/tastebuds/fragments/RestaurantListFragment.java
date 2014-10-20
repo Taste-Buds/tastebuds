@@ -103,7 +103,10 @@ public class RestaurantListFragment extends Fragment {
 		//double longitude = -122.387863; // Static for 700 Illinois
 		
 		double latitude = mCurrentLocation.getLatitude();
-		double longitude = mCurrentLocation.getLongitude();	
+		double longitude = mCurrentLocation.getLongitude();
+		//userLocation = new Location("");
+	    //userLocation.setLatitude(latitude);
+	    //userLocation.setLongitude(longitude); 
 		
 		placesApi.getRestaurantListfromGooglePlaces(nextPageToken, latitude, longitude, new JsonHttpResponseHandler() {
 			@Override
@@ -125,6 +128,7 @@ public class RestaurantListFragment extends Fragment {
         				Restaurant restaurant = newRestaurants.get(i);
         				String placeId = restaurant.getPlace_id();    				
         				newPlaceIds.add(placeId);
+        				calcuateDistancetoUser(restaurant);
         			}
         			placeIds.addAll(newPlaceIds);     			     			
         			restaurants.addAll(newRestaurants);
@@ -142,6 +146,22 @@ public class RestaurantListFragment extends Fragment {
     		}
 			
 		});	
+	}
+	
+	private void calcuateDistancetoUser(Restaurant restaurant) {
+		Location locationRestaurant = new Location("");
+		try {locationRestaurant = restaurant.getLocation();}
+			catch (Exception e) { Log.d("Debug", "No Rest Location"); }
+		if (mCurrentLocation == null) {
+			Log.d("Debug", "No User Location");
+		}
+		if (restaurant.getLocation() == null) {
+			//Log.d("Debug", "No Restaurant Location");
+		}
+		float distance = 0;
+		try { distance = mCurrentLocation.distanceTo(locationRestaurant); }
+			catch (Exception e){Log.d("Debug", "Can't get Location B"); }
+		//restaurant.setCurrentDistancetoUser(distance);
 	}
 	
 	private void updateNextPageToken (String newNextPageToken) {

@@ -102,13 +102,14 @@
             android:layout_height="wrap_content"
             android:text="TextView" />
         
-    </LinearLayout>
-
-    <WebView
+   	 <WebView
         android:id="@+id/wvGoogleMap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+         android:layout_width="match_parent"
+            android:layout_height="400dp" 
+        
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout1" />
+        />
+       
+    </LinearLayout>
 
 </RelativeLayout>

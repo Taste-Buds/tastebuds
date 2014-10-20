@@ -38,6 +38,10 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		rbTasteBudsRating.setRating(friendRating);
 		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
 		tvNumberofReviews.setText(numberOfReviewString);
+		TextView tvDistance = (TextView) v.findViewById(R.id.tvDistance);
+		float distance = restaurant.getCurrentDistancetoUser();
+		String distanceString = Float.toString(distance);
+		tvDistance.setText(distanceString);
 		
 		return v;
 	}
