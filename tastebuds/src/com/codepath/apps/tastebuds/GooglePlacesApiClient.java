@@ -8,7 +8,7 @@ import com.loopj.android.http.RequestParams;
 
 public class GooglePlacesApiClient {
 	
-	public void getRestaurantListfromGooglePlaces(String nextPageToken, double latitude, double longitude, JsonHttpResponseHandler handler) {
+	public void getRestaurantListfromGooglePlaces(String search, String nextPageToken, double latitude, double longitude, JsonHttpResponseHandler handler) {
 		// change lat, long from double to String
 		//Log.d("Debug", "Client Called");
 		String latString = String.valueOf(latitude);
@@ -21,6 +21,9 @@ public class GooglePlacesApiClient {
 		String types = "restaurant|bakery|bar|cafe|food|meal_delivery| meal_takeaway";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
+		if (search != "None") {
+			params.put("name", search);
+		}
 		if (nextPageToken == "None") {
 		params.put("location", location);
 		params.put("rankby", "distance");

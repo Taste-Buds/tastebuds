@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -15,11 +16,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MenuItem.OnActionExpandListener;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnCloseListener;
+import android.widget.SearchView.OnQueryTextListener;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
@@ -36,8 +45,6 @@ import com.parse.ParseUser;
 import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
-
-
 public class RestaurantListFragment extends Fragment {
 	
 	List<Restaurant> restaurants;
@@ -46,10 +53,11 @@ public class RestaurantListFragment extends Fragment {
 	ArrayAdapter<Restaurant> restaurantAdapter;
 	ListView lvRestaurants;
 	List<ParseObject> friends;
-	List<RestaurantReview> reviews;
+	//List<RestaurantReview> reviews;
 	Location mCurrentLocation;
 	int parsingPageToken;
 	String nextPageToken;
+	SearchView searchView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,14 +70,15 @@ public class RestaurantListFragment extends Fragment {
 		friendsFromFacebook();
 		parsingPageToken = 0;
 		nextPageToken = "None";
-		restaurantsFromGooglePlacesApi(nextPageToken);
+		String search = "None";
+		restaurantsFromGooglePlacesApi(search, nextPageToken);
+		setHasOptionsMenu(true);
 		
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		//return super.onCreateView(inflater, container, savedInstanceState);
 		
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
@@ -84,7 +93,8 @@ public class RestaurantListFragment extends Fragment {
 	    public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-	    		restaurantsFromGooglePlacesApi(nextPageToken);    		 
+	    		String search = "None";
+	    		restaurantsFromGooglePlacesApi(search, nextPageToken);    		 
 	    }
         });        
 		return v;
@@ -95,7 +105,7 @@ public class RestaurantListFragment extends Fragment {
 		friends = ParseUser.getCurrentUser().getList("userFriends");
 	}
 
-	private void restaurantsFromGooglePlacesApi(String nextPageToken) {
+	private void restaurantsFromGooglePlacesApi(String search, String nextPageToken) {
 		
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
@@ -104,11 +114,8 @@ public class RestaurantListFragment extends Fragment {
 		
 		double latitude = mCurrentLocation.getLatitude();
 		double longitude = mCurrentLocation.getLongitude();
-		//userLocation = new Location("");
-	    //userLocation.setLatitude(latitude);
-	    //userLocation.setLongitude(longitude); 
 		
-		placesApi.getRestaurantListfromGooglePlaces(nextPageToken, latitude, longitude, new JsonHttpResponseHandler() {
+		placesApi.getRestaurantListfromGooglePlaces(search, nextPageToken, latitude, longitude, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
         		JSONArray placesApiResultsJson = null;
@@ -221,10 +228,6 @@ public class RestaurantListFragment extends Fragment {
 			restaurant.setNumOfReviews(numberOfReviews);		
 		}
 		parsingPageToken++;
-		//Restaurant theRamp = restaurants.get(4);
-    	//Log.d("Debug", "Name: " + theRamp.getName());
-    	//Log.d("Debug", "PlaceId: " + theRamp.getPlace_id());
-    	//Log.d("Debug", "Number of Reviews: " + Integer.toString(theRamp.getNumOfReviews()));
 		
 		restaurantAdapter.notifyDataSetChanged();
 	}
@@ -234,6 +237,75 @@ public class RestaurantListFragment extends Fragment {
 		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
 		i.putExtra("place_id", restaurants.get(position).getPlace_id());
 		startActivity(i);
+	}
+	
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	    super.onCreateOptionsMenu(menu, inflater);
+
+	    inflater.inflate(R.menu.search, menu);
+	    MenuItem searchItem = menu.findItem(R.id.action_search);
+	    searchItem.setOnActionExpandListener(new OnActionExpandListener() {
+	    	@Override
+	    	public boolean onMenuItemActionExpand(MenuItem item) {
+	    	    Log.d("Debug","onMenuItemActionExpand");
+	    	    return true;
+	    	}
+
+	    	@Override
+	    	public boolean onMenuItemActionCollapse(MenuItem item) {
+	    	    Log.d("Debug","onMenuItemActionCollapse");
+	    		restaurants.clear();
+	    		placeIds.clear();
+	    		newPlaceIds.clear();
+	    		parsingPageToken = 0;
+	    	   String search = "None";
+	    	   String nextPageToken = "None";
+	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
+	    	    return true;
+	    	}
+	    });
+	    searchView = (SearchView) searchItem.getActionView();
+	    //searchView = (SearchView) searchItem.
+	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
+	       @Override
+	       public boolean onQueryTextSubmit(String query) {
+	            // perform query here
+	    		restaurants.clear();
+	    		placeIds.clear();
+	    		newPlaceIds.clear();
+	    		parsingPageToken = 0;
+	    	   String search = query;
+	    	   String nextPageToken = "None";
+	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
+	    	   // Dismiss Keyboard
+	    	   hideSoftKeyBoard();	    	   
+	            return true;
+	       }
+
+	       @Override
+	       public boolean onQueryTextChange(String newText) {
+	           return false;
+	       }
+	   });
+	    /*
+	    searchView.setOnCloseListener(new OnCloseListener() {
+	        @Override
+	        public boolean onClose() {
+	            Log.d("Debug","Testing. 1, 2, 3...");
+	            return false;
+	        }
+	    });
+	    */
+	}
+	
+	private void hideSoftKeyBoard() {
+		Context context = getActivity().getBaseContext();
+	    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+	    if(imm.isAcceptingText()) {                      
+	        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+	    }
 	}
 
 }
