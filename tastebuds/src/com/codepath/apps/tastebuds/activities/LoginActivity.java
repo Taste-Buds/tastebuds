@@ -47,5 +47,7 @@ public class LoginActivity extends OAuthLoginActivity<GoogleClient> {
 		//getClient().connect();
 		Intent i = new Intent(this, HomeActivity.class);
 		startActivity(i);
+		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
+	
 }

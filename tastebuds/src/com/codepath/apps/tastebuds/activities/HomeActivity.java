@@ -22,6 +22,7 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.FriendsListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
+import com.codepath.apps.tastebuds.fragments.RestaurantListFragment.RestaurantListListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.Restaurant;
@@ -38,7 +39,8 @@ import com.google.android.gms.location.LocationClient;
 
 public class HomeActivity extends FragmentActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
-	GooglePlayServicesClient.OnConnectionFailedListener {
+	GooglePlayServicesClient.OnConnectionFailedListener,
+	RestaurantListListener {
 
 	private ParseUser user;
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -90,6 +92,7 @@ public class HomeActivity extends FragmentActivity implements
 				session.closeAndClearTokenInformation();
 				//clear your preferences if saved
 				startActivity(new Intent(getApplicationContext(), TastebudsLoginActivity.class));
+				overridePendingTransition(R.anim.right_in, R.anim.left_out);
 				// make sure the user can not access the page after he/she is logged out
 				// clear the activity stack
 				finish();
@@ -106,6 +109,7 @@ public class HomeActivity extends FragmentActivity implements
 		Intent i = new Intent(this, UserProfileActivity.class);
 		i.putExtra("user_id", ParseUser.getCurrentUser().getString("fbId"));
 		startActivity(i);
+		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
 	private void setupTabs(Location mCurrentLocation) {
 		ActionBar actionBar = getActionBar();
@@ -244,6 +248,19 @@ public class HomeActivity extends FragmentActivity implements
              */
             //showErrorDialog(connectionResult.getErrorCode());
         }
+    }
+	@Override
+	public void onRestaurantSelected(String place_id) {
+		Intent i = new Intent(this, RestaurantDetailActivity.class);
+		i.putExtra("place_id", place_id);
+		startActivity(i);
+		overridePendingTransition(R.anim.right_in, R.anim.left_out);
+	}
+
+    @Override
+    public void onBackPressed() {
+	finish();
+	overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
 }
 	

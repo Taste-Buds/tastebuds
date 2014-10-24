@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -40,9 +42,12 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		tvNumberofReviews.setText(numberOfReviewString);
 		TextView tvDistance = (TextView) v.findViewById(R.id.tvDistance);
 		float distance = (float) (restaurant.getCurrentDistancetoUser() * 0.00062137);
-		String distanceString = String.format("%.2f", distance);
-		tvDistance.setText(distanceString + " miles");
-		
+		String distanceString = String.format("%.1f", distance);
+		tvDistance.setText(distanceString);
+		ImageView ivRestaurantImage = (ImageView) v.findViewById(R.id.ivRestaurantImage);
+		if (restaurant.getIcon() != null) {
+			Picasso.with(getContext()).load(restaurant.getIcon()).into(ivRestaurantImage);
+		}
 		return v;
 	}
 }

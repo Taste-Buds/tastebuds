@@ -181,5 +181,12 @@ public class RestaurantDetailActivity extends FragmentActivity
 		i.putExtra("restaurant_name", restaurant.getName());
 		i.putExtra("dish_name", dishName);
 		startActivity(i);
+		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
+
+    @Override
+    public void onBackPressed() {
+	finish();
+	overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }

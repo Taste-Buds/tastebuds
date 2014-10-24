@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -29,11 +30,14 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.ProgressBar;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
+import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,6 +46,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
@@ -58,6 +63,7 @@ public class RestaurantListFragment extends Fragment {
 	int parsingPageToken;
 	String nextPageToken;
 	SearchView searchView;
+	private RestaurantListListener listener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,10 @@ public class RestaurantListFragment extends Fragment {
 		
 	}
 
+    public interface RestaurantListListener {
+    	void onRestaurantSelected(String place_id);
+    }
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,7 +95,7 @@ public class RestaurantListFragment extends Fragment {
 		lvRestaurants.setAdapter(restaurantAdapter);
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			   public void onItemClick(AdapterView parentView, View childView, int position, long id) {
-				   showRestaurantDetail(position);
+				   listener.onRestaurantSelected(restaurants.get(position).getPlace_id());
 			   } 
 			});		
         lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
@@ -232,14 +242,13 @@ public class RestaurantListFragment extends Fragment {
 		restaurantAdapter.notifyDataSetChanged();
 	}
 	
-	public void showRestaurantDetail(int position) {
+	/*public void showRestaurantDetail(int position) {
 		//Log.d("Debug", "P: " + position);
 		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
 		i.putExtra("place_id", restaurants.get(position).getPlace_id());
 		startActivity(i);
-	}
-	
-	
+	}*/
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 	    super.onCreateOptionsMenu(menu, inflater);
@@ -289,7 +298,6 @@ public class RestaurantListFragment extends Fragment {
 	           return false;
 	       }
 	   });
-	    /*
 	    searchView.setOnCloseListener(new OnCloseListener() {
 	        @Override
 	        public boolean onClose() {
@@ -297,7 +305,6 @@ public class RestaurantListFragment extends Fragment {
 	            return false;
 	        }
 	    });
-	    */
 	}
 	
 	private void hideSoftKeyBoard() {
@@ -308,4 +315,14 @@ public class RestaurantListFragment extends Fragment {
 	    }
 	}
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof RestaurantListListener) {
+			listener = (RestaurantListListener) activity;
+		} else {
+			throw new ClassCastException(activity.toString()
+					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
+		}
+	}
 }
