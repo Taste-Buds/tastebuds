@@ -39,5 +39,6 @@
     <string name="website">WEBSITE</string>
     <string name="friendRating">Friends Rating</string>
     <string name="FriendsRating">FRIENDS RATING</string>
+    <string name="image_result">Image Result</string>
 
 </resources>

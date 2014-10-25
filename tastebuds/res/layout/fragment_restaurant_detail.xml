@@ -10,6 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
         android:orientation="vertical" >
 
         <TextView
@@ -101,15 +102,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />
-        
-   	 <WebView
-        android:id="@+id/wvGoogleMap"
-         android:layout_width="match_parent"
-            android:layout_height="400dp" 
-        
-        android:layout_alignParentLeft="true"
-        />
        
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginTop="36dp" >
+    </ListView>
 
 </RelativeLayout>
