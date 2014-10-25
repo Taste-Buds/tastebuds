@@ -15,28 +15,35 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnActionExpandListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
+import com.codepath.apps.tastebuds.adapters.TextWatcherAdapter;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
@@ -47,10 +54,15 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment.OnEmojiconClickedListener;
+import com.rockerhieu.emojicon.EmojiconTextView;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
-public class RestaurantListFragment extends Fragment {
+public class RestaurantListFragment extends Fragment implements OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
 	
 	List<Restaurant> restaurants;
 	List<String> placeIds;
@@ -63,11 +75,16 @@ public class RestaurantListFragment extends Fragment {
 	int parsingPageToken;
 	String nextPageToken;
 	SearchView searchView;
+	
+	EmojiconsFragment nf;
 	private RestaurantListListener listener;
 
+	EmojiconEditText mEditEmojicon;
+    //EmojiconTextView mTxtEmojicon;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		mCurrentLocation = getArguments().getParcelable("mCurrentLocation");
 		restaurants = new ArrayList<Restaurant>();
 		restaurantAdapter = new RestaurantAdapter(getActivity(), restaurants);
@@ -91,6 +108,9 @@ public class RestaurantListFragment extends Fragment {
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+
+	    setEmojiconFragment(false);
+
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
 		lvRestaurants.setAdapter(restaurantAdapter);
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -255,16 +275,27 @@ public class RestaurantListFragment extends Fragment {
 
 	    inflater.inflate(R.menu.search, menu);
 	    MenuItem searchItem = menu.findItem(R.id.action_search);
+
+	    
 	    searchItem.setOnActionExpandListener(new OnActionExpandListener() {
 	    	@Override
 	    	public boolean onMenuItemActionExpand(MenuItem item) {
 	    	    Log.d("Debug","onMenuItemActionExpand");
-	    	    return true;
+	        	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		        ft.show(nf);
+		        ft.commit();
+	            return true;
+
 	    	}
 
 	    	@Override
 	    	public boolean onMenuItemActionCollapse(MenuItem item) {
 	    	    Log.d("Debug","onMenuItemActionCollapse");
+	        	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		       // nf = (EmojiconsFragment) EmojiconsFragment.newInstance(false);
+		       // ft.add(R.id.emojicons, nf,"main");
+		        ft.hide(nf);
+		        ft.commit();
 	    		restaurants.clear();
 	    		placeIds.clear();
 	    		newPlaceIds.clear();
@@ -275,36 +306,70 @@ public class RestaurantListFragment extends Fragment {
 	    	    return true;
 	    	}
 	    });
-	    searchView = (SearchView) searchItem.getActionView();
+	    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
+       
+    //setEmojiconFragment(false);
+//    
+    mEditEmojicon.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+	        ft.show(nf);
+	        ft.commit();
+			
+		}
+	});
+	   // mEditEmojicon.setOnQueryTextListener(queryTextListener);
 	    //searchView = (SearchView) searchItem.
-	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
-	       @Override
-	       public boolean onQueryTextSubmit(String query) {
-	            // perform query here
-	    		restaurants.clear();
+     
+    
+    mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            	restaurants.clear();
 	    		placeIds.clear();
 	    		newPlaceIds.clear();
 	    		parsingPageToken = 0;
-	    	   String search = query;
+	    	   String search = v.getText().toString();
 	    	   String nextPageToken = "None";
 	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
 	    	   // Dismiss Keyboard
 	    	   hideSoftKeyBoard();	    	   
 	            return true;
-	       }
-
-	       @Override
-	       public boolean onQueryTextChange(String newText) {
-	           return false;
-	       }
-	   });
-	    searchView.setOnCloseListener(new OnCloseListener() {
-	        @Override
-	        public boolean onClose() {
-	            Log.d("Debug","Testing. 1, 2, 3...");
-	            return false;
-	        }
-	    });
+            }
+            return false;
+        }
+    });
+//    mEditEmojicon.setOnQueryTextListener(new OnQueryTextListener() {
+//	       @Override
+//	       public boolean onQueryTextSubmit(String query) {
+//	            // perform query here
+//	    		restaurants.clear();
+//	    		placeIds.clear();
+//	    		newPlaceIds.clear();
+//	    		parsingPageToken = 0;
+//	    	   String search = query;
+//	    	   String nextPageToken = "None";
+//	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
+//	    	   // Dismiss Keyboard
+//	    	   hideSoftKeyBoard();	    	   
+//	            return true;
+//	       }
+//
+//	       @Override
+//	       public boolean onQueryTextChange(String newText) {
+//	           return false;
+//	       }
+//	   });
+//	    searchView.setOnCloseListener(new OnCloseListener() {
+//	        @Override
+//	        public boolean onClose() {
+//	            Log.d("Debug","Testing. 1, 2, 3...");
+//	            return false;
+//	        }
+//	    });
 	}
 	
 	private void hideSoftKeyBoard() {
@@ -325,4 +390,41 @@ public class RestaurantListFragment extends Fragment {
 					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
 		}
 	}
+
+
+	private void setEmojiconFragment(boolean useSystemDefault) {
+		
+		
+		  FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+	        nf = (EmojiconsFragment) EmojiconsFragment.newInstance(useSystemDefault);
+	        ft.add(R.id.emojicons, nf,"main");
+	        ft.hide(nf);
+	        ft.commit();
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.emojicons, EmojiconsFragment.newInstance(useSystemDefault))
+//                .commit();
+    }
+
+	@Override
+	public void onEmojiconClicked(Emojicon emojicon) {
+		EmojiconsFragment.input(mEditEmojicon, emojicon);
+	}
+
+//	@Override
+//	public void onEmojiconBackspaceClicked(View v) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+    @Override
+    public void onEmojiconBackspaceClicked(View v) {
+        EmojiconsFragment.backspace(mEditEmojicon);
+    }
+
+//	@Override
+//	public void onEmojiconClicked(Emojicon emojicon) {
+//		  EmojiconsFragment.input(mEditEmojicon, emojicon);
+//		
+//	}
 }
