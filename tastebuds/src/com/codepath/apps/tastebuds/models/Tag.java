@@ -1,5 +1,7 @@
 package com.codepath.apps.tastebuds.models;
 
+import java.util.ArrayList;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -24,7 +26,14 @@ public class Tag extends ParseObject {
 	}
 
 	public static ParseQuery<Tag> getQuery() {
-		ParseQuery query = ParseQuery.getQuery(Tag.class);
+		ParseQuery<Tag> query = ParseQuery.getQuery(Tag.class);
+		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		return query;
+	}
+	
+	public static ParseQuery<Tag> getQuery(ArrayList<String> tags) {
+		ParseQuery<Tag> query = ParseQuery.getQuery(Tag.class);
+		query.whereContainedIn("tag", tags);
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 		return query;
 	}

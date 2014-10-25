@@ -55,7 +55,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
-import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.*;
 import com.rockerhieu.emojicon.EmojiconGridFragment.OnEmojiconClickedListener;
 import com.rockerhieu.emojicon.EmojiconTextView;
 import com.rockerhieu.emojicon.EmojiconsFragment;
@@ -81,7 +81,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	private RestaurantListListener listener;
 
 	EmojiconEditText mEditEmojicon;
-	//EmojiconTextView mTxtEmojicon;
+	EmojiconTextView mTxtEmojicon;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
