@@ -202,4 +202,10 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 			};
 		
 	}
+
+    @Override
+    public void onBackPressed() {
+	finish();
+	overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }

@@ -110,6 +110,7 @@ public class TastebudsLoginActivity extends FragmentActivity {
 						getFacebookIdInBackground();
 						Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 						startActivity(i);
+						overridePendingTransition(R.anim.right_in, R.anim.left_out);
 						Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 					}
 				}
@@ -182,6 +183,13 @@ public class TastebudsLoginActivity extends FragmentActivity {
 		getFacebookFriends();
 		Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 		startActivity(i);
+		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 		Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 	}
+
+    @Override
+    public void onBackPressed() {
+	finish();
+	overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
 }
