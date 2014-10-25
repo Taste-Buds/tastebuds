@@ -31,17 +31,50 @@
 	            android:layout_alignLeft="@+id/textView1"
 	            android:layout_below="@+id/textView1"
 	            android:text="TextView" />
+
+     	   <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="32sp"
+		        android:layout_alignParentLeft="true"
+		        android:layout_alignParentRight="true"
+		        android:layout_alignParentBottom="true" 
+		        android:orientation="horizontal">
+
+		       <com.codepath.apps.tastebuds.ui.CircleButton
+		           android:id="@+id/btnCallRestaurantDetail"
+		           android:layout_width="32sp"
+		           android:layout_height="32sp"
+		           android:layout_marginBottom="8sp"
+		           android:layout_marginleft="16sp"
+		           android:src="@drawable/ic_action_egg"
+		           app:cb_color="#99CC00" />
 	
-	       <com.codepath.apps.tastebuds.ui.CircleButton
-	            android:id="@+id/button0"
-	            android:layout_width="48dip"
-	            android:layout_height="48dip"
-	            android:layout_centerHorizontal="true"
-	            android:layout_alignParentBottom="true"
-	            android:layout_alignParentLeft="true"
-	            android:layout_marginBottom="8sp"
-	            android:layout_marginleft="8sp"
-	            android:src="@drawable/ic_action_egg"
-	            app:cb_color="#A0A0A0" />
+		       <com.codepath.apps.tastebuds.ui.CircleButton
+		           android:id="@+id/btnDirectionsRestaurantDetail"
+		           android:layout_width="32sp"
+		           android:layout_height="32sp"
+		           android:layout_marginBottom="8sp"
+		           android:layout_marginleft="16sp"
+		           android:src="@drawable/ic_action_egg"
+		           app:cb_color="#99CC00" />
+		       <com.codepath.apps.tastebuds.ui.CircleButton
+		           android:id="@+id/btnReviewRestaurantDetail"
+		           android:layout_width="32dip"
+		           android:layout_height="32dip"
+		           android:layout_marginBottom="8sp"
+		           android:layout_marginleft="16sp"
+		           android:src="@drawable/ic_action_egg"
+		           app:cb_color="#99CC00" />
+		       <com.codepath.apps.tastebuds.ui.CircleButton
+		           android:id="@+id/btnRateRestaurantDetail"
+		           android:layout_width="48dip"
+		           android:layout_height="48dip"
+		           android:layout_alignParentBottom="true"
+		           android:layout_alignParentLeft="true"
+		           android:layout_centerHorizontal="true"
+		           android:layout_marginBottom="8sp"
+		           android:layout_marginleft="8sp"
+		           android:src="@drawable/ic_action_egg"
+		           app:cb_color="#99CC00" />
 	    </RelativeLayout>
 	</RelativeLayout>
