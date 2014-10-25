@@ -195,7 +195,7 @@ public class Objects {
             Emojicon.fromChar((char) 0x2615, "coffee"),
             Emojicon.fromCodePoint(0x1f375, "soup"),
             //Emojicon.fromCodePoint(0x1f376, ""),
-            Emojicon.fromCodePoint(0x1f37c, "diary"),
+           // Emojicon.fromCodePoint(0x1f37c, "diary"),
             Emojicon.fromCodePoint(0x1f37a, "beer"),
            // Emojicon.fromCodePoint(0x1f37b),
             Emojicon.fromCodePoint(0x1f378, "martini"),

@@ -277,7 +277,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		super.onCreateOptionsMenu(menu, inflater);
 
 		inflater.inflate(R.menu.search, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
+		final MenuItem searchItem = menu.findItem(R.id.action_search);
 		/** Get the action view of the menu item whose id is search */
 		View v = (View) searchItem.getActionView();
 
@@ -297,7 +297,8 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				String nextPageToken = "None";
 				restaurantsFromGooglePlacesApi(search, nextPageToken);
 				// Dismiss Keyboard
-				hideSoftKeyBoard();	    	   
+				hideSoftKeyBoard();	   
+				searchItem.collapseActionView();
 
 			}
 		});
