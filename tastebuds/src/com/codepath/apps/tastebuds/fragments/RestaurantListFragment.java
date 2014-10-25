@@ -64,7 +64,7 @@ import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
 public class RestaurantListFragment extends Fragment implements OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
-	
+
 	List<Restaurant> restaurants;
 	List<String> placeIds;
 	List<String> newPlaceIds;
@@ -81,11 +81,11 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	private RestaurantListListener listener;
 
 	EmojiconEditText mEditEmojicon;
-    //EmojiconTextView mTxtEmojicon;
+	//EmojiconTextView mTxtEmojicon;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		mCurrentLocation = getArguments().getParcelable("mCurrentLocation");
 		restaurants = new ArrayList<Restaurant>();
 		restaurantAdapter = new RestaurantAdapter(getActivity(), restaurants);
@@ -97,38 +97,38 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		String search = "None";
 		restaurantsFromGooglePlacesApi(search, nextPageToken);
 		setHasOptionsMenu(true);
-		
+
 	}
 
-    public interface RestaurantListListener {
-    	void onRestaurantSelected(String place_id);
-    }
+	public interface RestaurantListListener {
+		void onRestaurantSelected(String place_id);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		
+
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 
-	    setEmojiconFragment(false);
+		setEmojiconFragment(false);
 
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
 		lvRestaurants.setAdapter(restaurantAdapter);
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			   public void onItemClick(AdapterView parentView, View childView, int position, long id) {
-				   listener.onRestaurantSelected(restaurants.get(position).getPlace_id());
-			   } 
-			});		
-        lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
-	    @Override
-	    public void onLoadMore(int page, int totalItemsCount) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-	    		String search = "None";
-	    		restaurantsFromGooglePlacesApi(search, nextPageToken);
-	           	restaurantAdapter.notifyDataSetChanged();
-	    }
-        });        
+			public void onItemClick(AdapterView parentView, View childView, int position, long id) {
+				listener.onRestaurantSelected(restaurants.get(position).getPlace_id());
+			} 
+		});		
+		lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				// Triggered only when new data needs to be appended to the list
+				// Add whatever code is needed to append new items to your AdapterView
+				String search = "None";
+				restaurantsFromGooglePlacesApi(search, nextPageToken);
+				restaurantAdapter.notifyDataSetChanged();
+			}
+		});        
 		return v;
 	}
 
@@ -138,60 +138,60 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	}
 
 	private void restaurantsFromGooglePlacesApi(String search, String nextPageToken) {
-		
+
 		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
 		//double latitude = 37.764046; // Static for 700 Illinois
 		//double longitude = -122.387863; // Static for 700 Illinois
-		
+
 		double latitude = mCurrentLocation.getLatitude();
 		double longitude = mCurrentLocation.getLongitude();
-		
+
 		placesApi.getRestaurantListfromGooglePlaces(search, nextPageToken, latitude, longitude,
 				new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
-        		JSONArray placesApiResultsJson = null;
-        		try {
-        			placesApiResultsJson = response.getJSONArray("results");
-        			String newNextPageToken = "";
-        			try {
-        			newNextPageToken = response.getString("next_page_token");
-        			} catch (Exception e) {
-        				newNextPageToken = "QueryLimitReached";
-        			}
-        			updateNextPageToken(newNextPageToken);
-        			List<Restaurant> newRestaurants = Restaurant.fromJSONArray(placesApiResultsJson);
-        			
-        			newPlaceIds.clear();
-        			for(int i=0; i<newRestaurants.size(); i++) {
-        				Restaurant restaurant = newRestaurants.get(i);
-        				String placeId = restaurant.getPlace_id();
-        				newPlaceIds.add(placeId);
-        				calcuateDistancetoUser(restaurant);
-        			}
-        			placeIds.addAll(newPlaceIds);
-        			restaurants.addAll(newRestaurants);
-        			//Log.d("Debug", "Added more Restaurants");
-        			restaurantReviewsWithGoogleAndFacebookData(newRestaurants);
-        			
+				JSONArray placesApiResultsJson = null;
+				try {
+					placesApiResultsJson = response.getJSONArray("results");
+					String newNextPageToken = "";
+					try {
+						newNextPageToken = response.getString("next_page_token");
+					} catch (Exception e) {
+						newNextPageToken = "QueryLimitReached";
+					}
+					updateNextPageToken(newNextPageToken);
+					List<Restaurant> newRestaurants = Restaurant.fromJSONArray(placesApiResultsJson);
+
+					newPlaceIds.clear();
+					for(int i=0; i<newRestaurants.size(); i++) {
+						Restaurant restaurant = newRestaurants.get(i);
+						String placeId = restaurant.getPlace_id();
+						newPlaceIds.add(placeId);
+						calcuateDistancetoUser(restaurant);
+					}
+					placeIds.addAll(newPlaceIds);
+					restaurants.addAll(newRestaurants);
+					//Log.d("Debug", "Added more Restaurants");
+					restaurantReviewsWithGoogleAndFacebookData(newRestaurants);
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-            	restaurantAdapter.notifyDataSetChanged();
-        	}
+				restaurantAdapter.notifyDataSetChanged();
+			}
 			@Override
-    		public void onFailure(Throwable e, JSONObject errorResponse) {
+			public void onFailure(Throwable e, JSONObject errorResponse) {
 				Log.e("Error", e.toString());
-    		}
-			
+			}
+
 		});	
 	}
-	
+
 	private void calcuateDistancetoUser(Restaurant restaurant) {
 		Location locationRestaurant = new Location("");
 		try {locationRestaurant = restaurant.getLocation();}
-			catch (Exception e) { Log.d("Debug", "No Rest Location"); }
+		catch (Exception e) { Log.d("Debug", "No Rest Location"); }
 		if (mCurrentLocation == null) {
 			Log.d("Debug", "No User Location");
 		}
@@ -200,16 +200,16 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		}
 		float distance = 0;
 		try { distance = mCurrentLocation.distanceTo(locationRestaurant); }
-			catch (Exception e){ //Log.d("Debug", "Can't get Location B"); 
-				
-			}
+		catch (Exception e){ //Log.d("Debug", "Can't get Location B"); 
+
+		}
 		restaurant.setCurrentDistancetoUser(distance);
 	}
-	
+
 	private void updateNextPageToken (String newNextPageToken) {
 		setNextPageToken(newNextPageToken);
 	}
-	
+
 
 	public String getNextPageToken() {
 		return nextPageToken;
@@ -224,13 +224,13 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(newPlaceIds, friends);
 		query.findInBackground(new FindCallback<RestaurantReview>() {
 			@Override
-			  public void done(List<RestaurantReview> results, ParseException e) {
-				    // results has the list of user reviews from Parse
-					List<RestaurantReview> newReviews = new ArrayList<RestaurantReview>();
-				  	newReviews = results;
-				  	parseReviews(newReviews);
-				  }
-			});
+			public void done(List<RestaurantReview> results, ParseException e) {
+				// results has the list of user reviews from Parse
+				List<RestaurantReview> newReviews = new ArrayList<RestaurantReview>();
+				newReviews = results;
+				parseReviews(newReviews);
+			}
+		});
 	}
 
 	private void parseReviews(List<RestaurantReview> newReviews) {
@@ -261,10 +261,10 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			restaurant.setNumOfReviews(numberOfReviews);		
 		}
 		parsingPageToken++;
-		
+
 		restaurantAdapter.notifyDataSetChanged();
 	}
-	
+
 	/*public void showRestaurantDetail(int position) {
 		//Log.d("Debug", "P: " + position);
 		Intent i = new Intent(getActivity(), RestaurantDetailActivity.class);
@@ -274,132 +274,132 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	    super.onCreateOptionsMenu(menu, inflater);
+		super.onCreateOptionsMenu(menu, inflater);
 
-	    inflater.inflate(R.menu.search, menu);
-	    MenuItem searchItem = menu.findItem(R.id.action_search);
-	    /** Get the action view of the menu item whose id is search */
-        View v = (View) searchItem.getActionView();
- 
-        /** Get the edit text from the action view */
-        mEditEmojicon = ( EmojiconEditText ) v.findViewById(R.id.txt_search);
-        searchImg = (ImageView) v.findViewById(R.id.searchImg);
-	    
-        searchImg.setOnClickListener(new OnClickListener() {
-			
+		inflater.inflate(R.menu.search, menu);
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		/** Get the action view of the menu item whose id is search */
+		View v = (View) searchItem.getActionView();
+
+		/** Get the edit text from the action view */
+		mEditEmojicon = ( EmojiconEditText ) v.findViewById(R.id.txt_search);
+		searchImg = (ImageView) v.findViewById(R.id.searchImg);
+
+		searchImg.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				restaurants.clear();
-	    		placeIds.clear();
-	    		newPlaceIds.clear();
-	    		parsingPageToken = 0;
-	    	   String search = mEditEmojicon.getText().toString();
-	    	   String nextPageToken = "None";
-	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
-	    	   // Dismiss Keyboard
-	    	   hideSoftKeyBoard();	    	   
-	           				
+				placeIds.clear();
+				newPlaceIds.clear();
+				parsingPageToken = 0;
+				String search = mEditEmojicon.getText().toString();
+				String nextPageToken = "None";
+				restaurantsFromGooglePlacesApi(search, nextPageToken);
+				// Dismiss Keyboard
+				hideSoftKeyBoard();	    	   
+
 			}
 		});
-	    searchItem.setOnActionExpandListener(new OnActionExpandListener() {
-	    	@Override
-	    	public boolean onMenuItemActionExpand(MenuItem item) {
-	    	    Log.d("Debug","onMenuItemActionExpand");
-	        	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-		        ft.show(nf);
-		        ft.commit();
-	            return true;
+		searchItem.setOnActionExpandListener(new OnActionExpandListener() {
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem item) {
+				Log.d("Debug","onMenuItemActionExpand");
+				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+				ft.show(nf);
+				ft.commit();
+				return true;
 
-	    	}
+			}
 
-	    	@Override
-	    	public boolean onMenuItemActionCollapse(MenuItem item) {
-	    	    Log.d("Debug","onMenuItemActionCollapse");
-	        	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-		        ft.hide(nf);
-		        ft.commit();
-	    		restaurants.clear();
-	    		placeIds.clear();
-	    		newPlaceIds.clear();
-	    		parsingPageToken = 0;
-	    	   String search = "None";
-	    	   String nextPageToken = "None";
-	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
-	    	    return true;
-	    	}
-	    });
-	//    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
-       
-    //setEmojiconFragment(false);
-//    
-    mEditEmojicon.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-	        ft.show(nf);
-	        ft.commit();
-			
-		}
-	});
-	   // mEditEmojicon.setOnQueryTextListener(queryTextListener);
-	    //searchView = (SearchView) searchItem.
-     
-    
-    mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            	restaurants.clear();
-	    		placeIds.clear();
-	    		newPlaceIds.clear();
-	    		parsingPageToken = 0;
-	    	   String search = v.getText().toString();
-	    	   String nextPageToken = "None";
-	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
-	    	   // Dismiss Keyboard
-	    	   hideSoftKeyBoard();	    	   
-	            return true;
-            }
-            return false;
-        }
-    });
-//    mEditEmojicon.setOnQueryTextListener(new OnQueryTextListener() {
-//	       @Override
-//	       public boolean onQueryTextSubmit(String query) {
-//	            // perform query here
-//	    		restaurants.clear();
-//	    		placeIds.clear();
-//	    		newPlaceIds.clear();
-//	    		parsingPageToken = 0;
-//	    	   String search = query;
-//	    	   String nextPageToken = "None";
-//	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
-//	    	   // Dismiss Keyboard
-//	    	   hideSoftKeyBoard();	    	   
-//	            return true;
-//	       }
-//
-//	       @Override
-//	       public boolean onQueryTextChange(String newText) {
-//	           return false;
-//	       }
-//	   });
-//	    searchView.setOnCloseListener(new OnCloseListener() {
-//	        @Override
-//	        public boolean onClose() {
-//	            Log.d("Debug","Testing. 1, 2, 3...");
-//	            return false;
-//	        }
-//	    });
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem item) {
+				Log.d("Debug","onMenuItemActionCollapse");
+				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+				ft.hide(nf);
+				ft.commit();
+				restaurants.clear();
+				placeIds.clear();
+				newPlaceIds.clear();
+				parsingPageToken = 0;
+				String search = "None";
+				String nextPageToken = "None";
+				restaurantsFromGooglePlacesApi(search, nextPageToken);
+				return true;
+			}
+		});
+		//    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
+
+		//setEmojiconFragment(false);
+		//    
+		mEditEmojicon.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+				ft.show(nf);
+				ft.commit();
+
+			}
+		});
+		// mEditEmojicon.setOnQueryTextListener(queryTextListener);
+		//searchView = (SearchView) searchItem.
+
+
+		mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					restaurants.clear();
+					placeIds.clear();
+					newPlaceIds.clear();
+					parsingPageToken = 0;
+					String search = v.getText().toString();
+					String nextPageToken = "None";
+					restaurantsFromGooglePlacesApi(search, nextPageToken);
+					// Dismiss Keyboard
+					hideSoftKeyBoard();	    	   
+					return true;
+				}
+				return false;
+			}
+		});
+		//    mEditEmojicon.setOnQueryTextListener(new OnQueryTextListener() {
+		//	       @Override
+		//	       public boolean onQueryTextSubmit(String query) {
+		//	            // perform query here
+		//	    		restaurants.clear();
+		//	    		placeIds.clear();
+		//	    		newPlaceIds.clear();
+		//	    		parsingPageToken = 0;
+		//	    	   String search = query;
+		//	    	   String nextPageToken = "None";
+		//	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
+		//	    	   // Dismiss Keyboard
+		//	    	   hideSoftKeyBoard();	    	   
+		//	            return true;
+		//	       }
+		//
+		//	       @Override
+		//	       public boolean onQueryTextChange(String newText) {
+		//	           return false;
+		//	       }
+		//	   });
+		//	    searchView.setOnCloseListener(new OnCloseListener() {
+		//	        @Override
+		//	        public boolean onClose() {
+		//	            Log.d("Debug","Testing. 1, 2, 3...");
+		//	            return false;
+		//	        }
+		//	    });
 	}
-	
+
 	private void hideSoftKeyBoard() {
 		Context context = getActivity().getBaseContext();
-	    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    if(imm.isAcceptingText()) {                      
-	        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-	    }
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(imm.isAcceptingText()) {                      
+			imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+		}
 	}
 
 	@Override
@@ -415,38 +415,25 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 
 	private void setEmojiconFragment(boolean useSystemDefault) {
-		
-		
-		  FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-	        nf = (EmojiconsFragment) EmojiconsFragment.newInstance(useSystemDefault);
-	        ft.add(R.id.emojicons, nf,"main");
-	        ft.hide(nf);
-	        ft.commit();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.emojicons, EmojiconsFragment.newInstance(useSystemDefault))
-//                .commit();
-    }
+
+
+		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		nf = (EmojiconsFragment) EmojiconsFragment.newInstance(useSystemDefault);
+		ft.add(R.id.emojicons, nf,"main");
+		ft.hide(nf);
+		ft.commit();
+	}
 
 	@Override
 	public void onEmojiconClicked(Emojicon emojicon) {
 		EmojiconsFragment.input(mEditEmojicon, emojicon);
 	}
 
-//	@Override
-//	public void onEmojiconBackspaceClicked(View v) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
-    @Override
-    public void onEmojiconBackspaceClicked(View v) {
-        EmojiconsFragment.backspace(mEditEmojicon);
-    }
 
-//	@Override
-//	public void onEmojiconClicked(Emojicon emojicon) {
-//		  EmojiconsFragment.input(mEditEmojicon, emojicon);
-//		
-//	}
+	@Override
+	public void onEmojiconBackspaceClicked(View v) {
+		EmojiconsFragment.backspace(mEditEmojicon);
+	}
+
 }
