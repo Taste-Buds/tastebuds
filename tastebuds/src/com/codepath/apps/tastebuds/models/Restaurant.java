@@ -32,6 +32,7 @@ public class Restaurant implements Parcelable {
 	private String icon;
 	private JSONArray googleReviews;
 	private JSONArray photos;
+	private String displayPhotoReference;
 	
 	public Restaurant() {
 		super();
@@ -109,6 +110,38 @@ public class Restaurant implements Parcelable {
 		this.currentDistancetoUser = currentDistancetoUser;
 	}
 
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public JSONArray getGoogleReviews() {
+		return googleReviews;
+	}
+
+	public void setGoogleReviews(JSONArray googleReviews) {
+		this.googleReviews = googleReviews;
+	}
+
+	public JSONArray getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(JSONArray photos) {
+		this.photos = photos;
+	}
+
+	public String getDisplayPhotoReference() {
+		return displayPhotoReference;
+	}
+
+	public void setDisplayPhotoReference(String reference) {
+		this.displayPhotoReference = reference;
+	}
+
 	public static Restaurant fromJSON(JSONObject jsonObject) {
 		Restaurant restaurant = new Restaurant();
 		try {
@@ -140,11 +173,16 @@ public class Restaurant implements Parcelable {
 			} else {
 				Log.d("Debug", "No Location");
 			}
-			
+			if(jsonObject.has("icon") && jsonObject.getString("icon") !=null){
+				restaurant.setIcon(jsonObject.getString("icon"));
+			}
+			if (jsonObject.has("price_level") && jsonObject.getString("price_level") != null) {
+				restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
-		}		
+		}
 		return restaurant;
 	}
 	
@@ -245,31 +283,6 @@ public class Restaurant implements Parcelable {
 		}
 		return restaurants;
 	}
-
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
-	public JSONArray getGoogleReviews() {
-		return googleReviews;
-	}
-
-	public void setGoogleReviews(JSONArray googleReviews) {
-		this.googleReviews = googleReviews;
-	}
-
-	public JSONArray getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(JSONArray photos) {
-		this.photos = photos;
-	}
-
 
     protected Restaurant(Parcel in) {
         place_id = in.readString();

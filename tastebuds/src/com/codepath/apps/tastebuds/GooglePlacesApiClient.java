@@ -7,8 +7,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class GooglePlacesApiClient {
-	
-	public void getRestaurantListfromGooglePlaces(String search, String nextPageToken, double latitude, double longitude, JsonHttpResponseHandler handler) {
+	private String apiKey = "AIzaSyBnvxHM9wtuaF-GlCBQmvdaMRJKSomiHes";
+	public void getRestaurantListfromGooglePlaces(String search, String nextPageToken,
+			double latitude, double longitude, JsonHttpResponseHandler handler) {
 		// change lat, long from double to String
 		//Log.d("Debug", "Client Called");
 		String latString = String.valueOf(latitude);
@@ -16,6 +17,7 @@ public class GooglePlacesApiClient {
 		String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 
 		//String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
+
 		String apiKey = "AIzaSyBnvxHM9wtuaF-GlCBQmvdaMRJKSomiHes";
 
 		String location = latString+","+longString;
@@ -42,13 +44,20 @@ public class GooglePlacesApiClient {
 	
 	public void getRestaurantDetailfromGooglePlaces(String placeId, JsonHttpResponseHandler handler) {
 		String baseUrl = "https://maps.googleapis.com/maps/api/place/details/json"; 
-		//String apiKey = "AIzaSyCMD74MgiALP22wpGggAAf4QXYzutiKRQg";
-		String apiKey = "AIzaSyBnvxHM9wtuaF-GlCBQmvdaMRJKSomiHes";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		params.put("placeid", placeId);
 		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(baseUrl, params, handler);		
+		client.get(baseUrl, params, handler);
 	}
 
+	public void getRestaurantDisplayPhoto(String photoReference, int maxWidth,
+			JsonHttpResponseHandler handler) {
+		String baseUrl = "https://maps.googleapis.com/maps/api/place/photo";
+		RequestParams params = new RequestParams();
+		params.put("photoReference", photoReference);
+		params.put("maxWidth", Integer.toString(maxWidth));
+		AsyncHttpClient client = new AsyncHttpClient();
+		client.get(baseUrl, params, handler);
+	}
 }

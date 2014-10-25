@@ -3,11 +3,14 @@ package com.codepath.apps.tastebuds.adapters;
 import java.util.List;
 
 
+import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +21,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
-	
+
 	public RestaurantAdapter(Context context, List<Restaurant> restaurants) {
 		super(context, 0, restaurants);
 	}
@@ -45,9 +48,20 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		String distanceString = String.format("%.1f", distance);
 		tvDistance.setText(distanceString);
 		ImageView ivRestaurantImage = (ImageView) v.findViewById(R.id.ivRestaurantImage);
+		/*Bitmap photo = BitmapFactory.decodeStream(
+				placesApi.getRestaurantDisplayPhoto(restaurant.getDisplayPhotoReference(), 56));
+		Picasso.with(getContext()).load(restaurant.getIcon()).into(ivRestaurantImage);*/
 		if (restaurant.getIcon() != null) {
 			Picasso.with(getContext()).load(restaurant.getIcon()).into(ivRestaurantImage);
 		}
+
+		TextView tvDollars = (TextView) v.findViewById(R.id.tvDollars);
+		int price_level = restaurant.getPrice_level();
+		String dollar_string = "$";
+		for (int ii = 0; ii < price_level-1; ii++) {
+			dollar_string += "$";
+		}
+		tvDollars.setText(dollar_string);
 		return v;
 	}
 }
