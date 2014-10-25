@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.etsy.android.grid.util.DynamicHeightImageView
+        android:id="@+id/ivImage"
+ 		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/image_result"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher" />
+
+      <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentLeft="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/image_result"
+        android:textSize="5sp" />
+
+</RelativeLayout>

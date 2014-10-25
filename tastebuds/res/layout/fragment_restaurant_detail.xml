@@ -32,7 +32,7 @@
 	            android:layout_below="@+id/textView1"
 	            android:text="TextView" />
 
-     	   <LinearLayout
+<!--      	   <LinearLayout
 		        android:layout_width="wrap_content"
 		        android:layout_height="32sp"
 		        android:layout_alignParentLeft="true"
@@ -76,5 +76,6 @@
 		           android:layout_marginleft="8sp"
 		           android:src="@drawable/ic_action_egg"
 		           app:cb_color="#99CC00" />
+		       </LinearLayout> -->
 	    </RelativeLayout>
 	</RelativeLayout>
