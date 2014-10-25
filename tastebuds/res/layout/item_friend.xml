@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="96sp"
+    android:layout_height="72sp"
     android:paddingLeft="8sp"
     android:paddingRight="8sp" >
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="8sp"
         android:layout_marginLeft="8sp"
         android:layout_toRightOf="@+id/ivProfileImg"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="TextView" />
 
     <TextView
@@ -32,30 +32,26 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvFriendName"
         android:layout_below="@+id/tvFriendName"
-        android:layout_marginLeft="8sp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/tvRestaurantReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocation"
-        android:layout_alignLeft="@+id/tvLocation"
-        android:layout_marginLeft="8sp"
-        android:drawableLeft="@drawable/ic_action_restaurant"
-        android:text="TextView" />
+        android:layout_above="@+id/tvLocation"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvFriendName"
+        android:drawableLeft="@drawable/ic_restaurant"
+        android:text="11" />
 
     <TextView
         android:id="@+id/tvDishReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvLocation"
-        android:layout_toRightOf="@+id/tvRestaurantReviews"
-        android:layout_alignBaseline="@+id/tvRestaurantReviews"
-        android:layout_alignBottom="@+id/tvRestaurantReviews"
-        android:drawableLeft="@drawable/ic_action_dish"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="8sp"
-        android:text="TextView" />
+        android:layout_alignBaseline="@+id/tvLocation"
+        android:layout_alignBottom="@+id/tvLocation"
+        android:layout_alignLeft="@+id/tvRestaurantReviews"
+        android:drawableLeft="@drawable/ic_dish_review"
+        android:text="10" />
 
 </RelativeLayout>

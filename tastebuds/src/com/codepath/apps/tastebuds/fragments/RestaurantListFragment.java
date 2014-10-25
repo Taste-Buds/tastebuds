@@ -104,7 +104,8 @@ public class RestaurantListFragment extends Fragment {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
 	    		String search = "None";
-	    		restaurantsFromGooglePlacesApi(search, nextPageToken);    		 
+	    		restaurantsFromGooglePlacesApi(search, nextPageToken);
+	           	restaurantAdapter.notifyDataSetChanged();
 	    }
         });        
 		return v;
@@ -125,7 +126,8 @@ public class RestaurantListFragment extends Fragment {
 		double latitude = mCurrentLocation.getLatitude();
 		double longitude = mCurrentLocation.getLongitude();
 		
-		placesApi.getRestaurantListfromGooglePlaces(search, nextPageToken, latitude, longitude, new JsonHttpResponseHandler() {
+		placesApi.getRestaurantListfromGooglePlaces(search, nextPageToken, latitude, longitude,
+				new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
         		JSONArray placesApiResultsJson = null;
@@ -143,14 +145,14 @@ public class RestaurantListFragment extends Fragment {
         			newPlaceIds.clear();
         			for(int i=0; i<newRestaurants.size(); i++) {
         				Restaurant restaurant = newRestaurants.get(i);
-        				String placeId = restaurant.getPlace_id();    				
+        				String placeId = restaurant.getPlace_id();
         				newPlaceIds.add(placeId);
         				calcuateDistancetoUser(restaurant);
         			}
-        			placeIds.addAll(newPlaceIds);     			     			
+        			placeIds.addAll(newPlaceIds);
         			restaurants.addAll(newRestaurants);
         			//Log.d("Debug", "Added more Restaurants");
-        			restaurantReviewsWithGoogleAndFacebookData(newRestaurants);       			
+        			restaurantReviewsWithGoogleAndFacebookData(newRestaurants);
         			
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -209,7 +211,7 @@ public class RestaurantListFragment extends Fragment {
 				  }
 			});
 	}
-	
+
 	private void parseReviews(List<RestaurantReview> newReviews) {
 		for(int i=0; i<newPlaceIds.size();i++) {
 			String placeId = newPlaceIds.get(i);

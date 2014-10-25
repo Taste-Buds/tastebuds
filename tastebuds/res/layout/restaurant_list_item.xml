@@ -37,16 +37,6 @@
         android:isIndicator="true" />
 
     <TextView
-        android:id="@+id/tvNumberofReviews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rbTasteBudsRating"
-        android:layout_toRightOf="@+id/ivRestaurantImage"
-        android:layout_marginLeft="8sp"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
         android:id="@+id/tvDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,4 +44,35 @@
         android:layout_alignParentRight="true"
         android:text="Distance"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvDollars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvDistance"
+        android:layout_alignTop="@+id/rbTasteBudsRating"
+        android:text="$"
+        android:textAlignment="textEnd" />
+
+    <TextView
+        android:id="@+id/tvNumberofReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvDollars"
+        android:layout_alignBottom="@+id/tvDollars"
+        android:layout_toRightOf="@+id/rbTasteBudsRating"
+        android:layout_marginLeft="8sp"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvNumberofDishReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rbTasteBudsRating"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/rbTasteBudsRating"
+        android:drawableLeft="@drawable/ic_dish_review"
+        android:text="11" />
+    
 </RelativeLayout>
