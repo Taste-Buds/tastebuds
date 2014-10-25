@@ -41,7 +41,7 @@ public class RestaurantDetailFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
-		tvGoogleRating = (TextView) v.findViewById(R.id.tvGoogleRating);
+		/*tvGoogleRating = (TextView) v.findViewById(R.id.tvGoogleRating);
 		tvPrice = (TextView) v.findViewById(R.id.tvPrice);
 		tvPhone = (TextView) v.findViewById(R.id.tvPhone);
 		tvAddress = (TextView) v.findViewById(R.id.tvAddress);
@@ -49,7 +49,7 @@ public class RestaurantDetailFragment extends Fragment {
 		tvWebsite = (TextView) v.findViewById(R.id.tvWebsite);
 		tvFriendsRating= (TextView) v.findViewById(R.id.tvFriendRating);
 		wvGoogleMap = (WebView) v.findViewById(R.id.wvGoogleMap);
-		updateDetailFragmentView();
+		updateDetailFragmentView();*/
 		return v;		
 	}
 	
