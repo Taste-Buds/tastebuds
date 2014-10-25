@@ -31,6 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
@@ -75,7 +76,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	int parsingPageToken;
 	String nextPageToken;
 	SearchView searchView;
-	
+	ImageView searchImg;
 	EmojiconsFragment nf;
 	private RestaurantListListener listener;
 
@@ -277,8 +278,29 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	    inflater.inflate(R.menu.search, menu);
 	    MenuItem searchItem = menu.findItem(R.id.action_search);
-
+	    /** Get the action view of the menu item whose id is search */
+        View v = (View) searchItem.getActionView();
+ 
+        /** Get the edit text from the action view */
+        mEditEmojicon = ( EmojiconEditText ) v.findViewById(R.id.txt_search);
+        searchImg = (ImageView) v.findViewById(R.id.searchImg);
 	    
+        searchImg.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				restaurants.clear();
+	    		placeIds.clear();
+	    		newPlaceIds.clear();
+	    		parsingPageToken = 0;
+	    	   String search = mEditEmojicon.getText().toString();
+	    	   String nextPageToken = "None";
+	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
+	    	   // Dismiss Keyboard
+	    	   hideSoftKeyBoard();	    	   
+	           				
+			}
+		});
 	    searchItem.setOnActionExpandListener(new OnActionExpandListener() {
 	    	@Override
 	    	public boolean onMenuItemActionExpand(MenuItem item) {
@@ -294,8 +316,6 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	    	public boolean onMenuItemActionCollapse(MenuItem item) {
 	    	    Log.d("Debug","onMenuItemActionCollapse");
 	        	FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-		       // nf = (EmojiconsFragment) EmojiconsFragment.newInstance(false);
-		       // ft.add(R.id.emojicons, nf,"main");
 		        ft.hide(nf);
 		        ft.commit();
 	    		restaurants.clear();
@@ -308,7 +328,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	    	    return true;
 	    	}
 	    });
-	    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
+	//    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
        
     //setEmojiconFragment(false);
 //    

@@ -22,7 +22,7 @@ public class GooglePlacesApiClient {
 
 		String location = latString+","+longString;
 		//String types = "&types=bakery|bar|cafe|convenience_store|food|grocery_or_supermarket|liquor_store|meal_delivery|meal_takeaway|restaurant";
-		String types = "restaurant|bakery|bar|cafe|food|meal_delivery| meal_takeaway";
+		String types = "restaurant|bar|cafe";
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		if (search != "None") {
