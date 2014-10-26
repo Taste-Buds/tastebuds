@@ -124,24 +124,30 @@ public class HomeActivity extends FragmentActivity implements
 	                R.string.app_name // nav drawer close - description for accessibility
 	        ){
 	            public void onDrawerClosed(View view) {
-	                getActionBar().setTitle(mTitle);
+	               // getActionBar().setTitle(mTitle);
 	                // calling onPrepareOptionsMenu() to show action bar icons
 	                invalidateOptionsMenu();
 	            }
 	 
 	            public void onDrawerOpened(View drawerView) {
-	                getActionBar().setTitle(mDrawerTitle);
+	               // getActionBar().setTitle(mDrawerTitle);
 	                // calling onPrepareOptionsMenu() to hide action bar icons
 
 	                invalidateOptionsMenu();
 	            }
 	        };
 	        mDrawerLayout.setDrawerListener(mDrawerToggle);
-//	 
+	 
+	        
 //	        if (savedInstanceState == null) {
-//	            // on first time display view for first nav item
-//	            displayView(0);
+//	        	 if(mCurrentLocation == null){
+//	        		 mLocationClient = new LocationClient(this, this, this);
+//	 	        	//mCurrentLocation = getLocation(mLocationClient);
+//	 	        }
+//	 	        // on first time display view for first nav item
+//	 	        	displayView(0);
 //	        }
+	       
 	        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 	}
 	/**
@@ -354,13 +360,19 @@ public class HomeActivity extends FragmentActivity implements
      */
     @Override
     public void onConnected(Bundle dataBundle) {
+    	if(!mLocationClient.isConnected()){
+    		 mLocationClient.connect();
+    	}
         // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         Log.d("Debug", "onConnected");
-        mCurrentLocation = getLocation(mLocationClient);
+        if(mCurrentLocation == null){
+        	mCurrentLocation = getLocation(mLocationClient);
+        	setupTabs(mCurrentLocation);
+        }
       //  mCurrentLocation = mLocationClient.getLastLocation();
        // Log.d("Debug", "Location" + mCurrentLocation.toString());
-		setupTabs(mCurrentLocation);
+		
 
     }
     

@@ -18,6 +18,8 @@
         android:layout_marginTop="100dp"
         android:onClick="onLoginButtonClicked"
         android:text="@string/title_facebook_login"
+        android:paddingLeft="8sp"
+        android:paddingRight="8sp"
         android:background="@drawable/com_facebook_button_blue"
         android:textColor="#fff"
         android:textStyle="bold" />
