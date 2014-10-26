@@ -203,11 +203,11 @@ public class RestaurantDetailActivity extends FragmentActivity
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
 
-    /*@Override
+    @Override
     public void onBackPressed() {
 		finish();
 		overridePendingTransition(R.anim.left_in, R.anim.right_out);
-    }*/
+    }
 
 	@Override
 	public void onCallRestaurant(String phoneNumber) {

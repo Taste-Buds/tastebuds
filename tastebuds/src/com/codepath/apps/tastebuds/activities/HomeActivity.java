@@ -444,14 +444,14 @@ public class HomeActivity extends FragmentActivity implements
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
 
-    /*@Override
+    @Override
     public void onBackPressed() {
 		finish();
 		Intent intent = new Intent(Intent.ACTION_MAIN);
 		intent.addCategory(Intent.CATEGORY_HOME);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-    }*/
+    }
 }
 	
 

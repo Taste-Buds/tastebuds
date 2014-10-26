@@ -271,7 +271,7 @@ public class RestaurantDetailFragment extends Fragment {
 	      // with access to the result of the long running task
 		  if (result != null) {
 			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
-			  image.setAlpha(2/10);
+			  //image.setAlpha(2/10);
 			  rlDetail.setBackground(image);
 		  }
 	  }
