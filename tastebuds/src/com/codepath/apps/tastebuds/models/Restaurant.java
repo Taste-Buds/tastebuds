@@ -36,6 +36,7 @@ public class Restaurant implements Parcelable {
 	private String icon;
 	private JSONArray googleReviews;
 	private JSONArray photos;
+	private ArrayList<PlacesPhotoData> photoReferences;
 	private PlacesPhotoData displayPhotoReference;
 	private Bitmap displayPhoto;
 	
@@ -135,12 +136,12 @@ public class Restaurant implements Parcelable {
 		this.googleReviews = googleReviews;
 	}
 
-	public JSONArray getPhotos() {
-		return photos;
+	public ArrayList<PlacesPhotoData> getPhotoReferences() {
+		return photoReferences;
 	}
 
-	public void setPhotos(JSONArray photos) {
-		this.photos = photos;
+	public void setPhotoReferences(ArrayList<PlacesPhotoData> photos) {
+		this.photoReferences = photos;
 	}
 
 	public PlacesPhotoData getDisplayPhotoReference() {
@@ -262,7 +263,7 @@ public class Restaurant implements Parcelable {
 				restaurant.setGoogleReviews(jsonObject.getJSONArray("reviews"));
 			}
 			if(jsonObject.has("photos") && jsonObject.getJSONArray("photos") != null){
-				restaurant.setPhotos(jsonObject.getJSONArray("photos"));
+				restaurant.setPhotoReferences(getPhotosJSONArray(jsonObject.getJSONArray("photos")));
 			}
 
 			restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
@@ -327,6 +328,28 @@ public class Restaurant implements Parcelable {
 			}
 		}
 		return restaurants;
+	}
+
+	public static ArrayList<PlacesPhotoData> getPhotosJSONArray(JSONArray jsonArray) {
+		ArrayList<PlacesPhotoData> photoReferences = new ArrayList<PlacesPhotoData>(jsonArray.length());
+		
+		for (int i=0; i<jsonArray.length(); i++) {
+			JSONObject photoJson = null;
+			try {
+				photoJson = jsonArray.getJSONObject(i);
+				if (photoJson.has("photo_reference")) {
+					PlacesPhotoData data = new PlacesPhotoData();
+					data.reference = photoJson.getString("photo_reference");
+					data.width = photoJson.getInt("width");
+					data.height = photoJson.getInt("height");
+					photoReferences.add(data);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
+		return photoReferences;
 	}
 
     protected Restaurant(Parcel in) {
