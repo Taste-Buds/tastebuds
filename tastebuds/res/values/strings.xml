@@ -40,5 +40,6 @@
     <string name="friendRating">Friends Rating</string>
     <string name="FriendsRating">FRIENDS RATING</string>
     <string name="image_result">Image Result</string>
+    <string name="title_activity_search_tag">SearchTagActivity</string>
 
 </resources>
