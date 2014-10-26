@@ -12,6 +12,7 @@ import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -42,6 +43,7 @@ import com.facebook.Session;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -90,7 +92,6 @@ public class HomeActivity extends FragmentActivity implements
 	        // nav drawer icons from resources
 	        navMenuIcons = getResources()
 	                .obtainTypedArray(R.array.nav_drawer_icons);
-	 
 	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 	 
@@ -100,9 +101,10 @@ public class HomeActivity extends FragmentActivity implements
 	        // Home
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
 	        //profile
-	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+	        
+	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1, -1)));
 	        //logout
-	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(2, -1)));
+	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 	         
 	 
 	        // Recycle the typed array
@@ -130,6 +132,7 @@ public class HomeActivity extends FragmentActivity implements
 	            public void onDrawerOpened(View drawerView) {
 	                getActionBar().setTitle(mDrawerTitle);
 	                // calling onPrepareOptionsMenu() to hide action bar icons
+
 	                invalidateOptionsMenu();
 	            }
 	        };
@@ -176,21 +179,7 @@ public class HomeActivity extends FragmentActivity implements
         default:
             break;
         }
- 
-//        if (fragment != null) {
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.frame_container, fragment).commit();
-// 
-//            // update selected item and title, then close the drawer
-//            mDrawerList.setItemChecked(position, true);
-//            mDrawerList.setSelection(position);
-//            setTitle(navMenuTitles[position]);
-//            mDrawerLayout.closeDrawer(mDrawerList);
-//        } else {
-//            // error in creating fragment
-//            Log.e("MainActivity", "Error in creating fragment");
-//        }
+
     }
 	 @Override
 	    public boolean onOptionsItemSelected(MenuItem item) {
@@ -214,7 +203,7 @@ public class HomeActivity extends FragmentActivity implements
 	    public boolean onPrepareOptionsMenu(Menu menu) {
 	        // if nav drawer is opened, hide the action items
 	        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-	        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+	        //menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 	        return super.onPrepareOptionsMenu(menu);
 	    }
 	 

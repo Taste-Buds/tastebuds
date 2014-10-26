@@ -238,8 +238,10 @@ public class Restaurant implements Parcelable {
 				restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));
 				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
 				restaurant.longitude = location.getDouble("lng");
-				} catch (Exception e) { 
-					restaurant.longitude = 0; }		
+
+				}
+			catch (Exception e) { restaurant.longitude = 0; }		
+
 			
 			if ((restaurant.getLatitude() != 0) && (restaurant.getLongitude() != 0)) {
 				Location location = new Location("");
@@ -260,8 +262,8 @@ public class Restaurant implements Parcelable {
 				restaurant.setPhotos(jsonObject.getJSONArray("photos"));
 			}
 
-			//restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
-			//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
+			restaurant.latitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lat"));		// geometry:location:lat
+			restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
 			
 			//restaurant.location = jsonObject.getJSONObject("geometry").getJSONObject("location");
 			if (jsonObject.has("rating") && jsonObject.getString("rating") != null) {

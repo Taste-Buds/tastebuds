@@ -229,7 +229,17 @@ public class Objects {
             Emojicon.fromCodePoint(0x1f367, "icecream"),
             Emojicon.fromCodePoint(0x1f382, "cake"),
             Emojicon.fromCodePoint(0x1f370, "pastry"),
-            Emojicon.fromCodePoint(0x1f36a, "cookie")
+            Emojicon.fromCodePoint(0x1f36a, "cookie"),
+            Emojicon.fromChars("\ud83c\uddef\ud83c\uddf5", "japanese"),
+            Emojicon.fromChars("\ud83c\uddf0\ud83c\uddf7", "korean"),
+           // Emojicon.fromChars("\ud83c\udde9\ud83c\uddea", ""),
+            Emojicon.fromChars("\ud83c\udde8\ud83c\uddf3", "turkish"),
+            Emojicon.fromChars("\ud83c\uddfa\ud83c\uddf8", "american"),
+            Emojicon.fromChars("\ud83c\uddeb\ud83c\uddf7", "french"),
+            Emojicon.fromChars("\ud83c\uddea\ud83c\uddf8", "spainish"),
+            Emojicon.fromChars("\ud83c\uddee\ud83c\uddf9", "italian"),
+           // Emojicon.fromChars("\ud83c\uddf7\ud83c\uddfa", ""),
+            Emojicon.fromChars("\ud83c\uddec\ud83c\udde7", "english")
 //            Emojicon.fromCodePoint(0x1f36b),
 //            Emojicon.fromCodePoint(0x1f36c),
 //            Emojicon.fromCodePoint(0x1f36d),

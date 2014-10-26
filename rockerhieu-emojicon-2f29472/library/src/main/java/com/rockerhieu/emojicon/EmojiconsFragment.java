@@ -67,8 +67,8 @@ public class EmojiconsFragment extends Fragment implements ViewPager.OnPageChang
                 EmojiconRecentsGridFragment.newInstance(mUseSystemDefault),
               //  EmojiconGridFragment.newInstance(People.DATA, recents, mUseSystemDefault),
               //  EmojiconGridFragment.newInstance(Nature.DATA, recents, mUseSystemDefault),
-                EmojiconGridFragment.newInstance(Objects.DATA, recents, mUseSystemDefault)
-              //  EmojiconGridFragment.newInstance(Places.DATA, recents, mUseSystemDefault),
+                EmojiconGridFragment.newInstance(Objects.DATA, recents, mUseSystemDefault),
+                EmojiconGridFragment.newInstance(Places.DATA, recents, mUseSystemDefault)
                // EmojiconGridFragment.newInstance(Symbols.DATA, recents, mUseSystemDefault)
         ));
         emojisPager.setAdapter(mEmojisAdapter);
@@ -78,6 +78,7 @@ public class EmojiconsFragment extends Fragment implements ViewPager.OnPageChang
       //  mEmojiTabs[1] = view.findViewById(R.id.emojis_tab_1_people);
       //  mEmojiTabs[2] = view.findViewById(R.id.emojis_tab_2_nature);
         mEmojiTabs[1] = view.findViewById(R.id.emojis_tab_1_people);
+   //     mEmojiTabs[2] = view.findViewById(R.id.emojis_tab_2_places);
      //   mEmojiTabs[4] = view.findViewById(R.id.emojis_tab_4_cars);
       //  mEmojiTabs[5] = view.findViewById(R.id.emojis_tab_5_punctuation);
         for (int i = 0; i < mEmojiTabs.length; i++) {
