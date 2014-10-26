@@ -218,7 +218,7 @@ public class HomeActivity extends FragmentActivity implements
 	    @Override
 	    public void setTitle(CharSequence title) {
 	        mTitle = title;
-	      //  getActionBar().setTitle(mTitle);
+	        getActionBar().setTitle(mTitle);
 	    }
 	 
 	    /**
@@ -242,7 +242,7 @@ public class HomeActivity extends FragmentActivity implements
 	 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.search, menu);
+		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
 

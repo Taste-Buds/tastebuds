@@ -182,10 +182,10 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			            		try {
 			            			int maxWidth = rest.getDisplayPhotoReference().width == 0 ? 300 :
 			            				rest.getDisplayPhotoReference().width;
-				            		Bitmap photo = placesApi.getRestaurantDisplayPhoto(
-				            				rest.getDisplayPhotoReference().reference, maxWidth);
-				            		rest.setDisplayPhoto(photo);
-				    				restaurantAdapter.notifyDataSetChanged();
+//				            		Bitmap photo = placesApi.getRestaurantDisplayPhoto(
+//				            				rest.getDisplayPhotoReference().reference, maxWidth);
+//				            		rest.setDisplayPhoto(photo);
+//				    				restaurantAdapter.notifyDataSetChanged();
 			            		} catch (Exception e) {
 			            			continue;
 			            		}
@@ -296,7 +296,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
 		/** Get the action view of the menu item whose id is search */
 		View v = (View) searchItem.getActionView();
-
+		//setEmojiconFragment(false);
 		/** Get the edit text from the action view */
 		mEditEmojicon = ( EmojiconEditText ) v.findViewById(R.id.txt_search);
 		searchImg = (ImageView) v.findViewById(R.id.searchImg);
@@ -345,9 +345,10 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				return true;
 			}
 		});
+		//setEmojiconFragment(false);
 		//    mEditEmojicon = (EmojiconEditText) searchItem.getActionView();
 
-		//setEmojiconFragment(false);
+		
 		//    
 		mEditEmojicon.setOnClickListener(new OnClickListener() {
 

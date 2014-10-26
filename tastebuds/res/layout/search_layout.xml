@@ -10,7 +10,7 @@
           android:actionViewClass="com.rockerhieu.emojicon.EmojiconEditText"
            android:inputType="text"
            android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+       	 android:layout_height="match_parent"
           android:imeOptions="actionSearch"
           android:layout_weight="3" />
 
