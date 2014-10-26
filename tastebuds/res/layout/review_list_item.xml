@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48sp" 
+ 	android:layout_height="wrap_content"
+    android:paddingLeft="8sp"
+    android:paddingRight="8sp"
+    android:paddingBottom="16sp"
     android:descendantFocusability="blocksDescendants">
 
     <ImageView
@@ -10,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:paddingTop="8sp"
         android:contentDescription="@string/review_user_desc"
         android:src="@drawable/ic_action_restaurant" />
 
@@ -17,17 +21,20 @@
         android:id="@+id/rbReviewRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
+             style="?android:attr/ratingBarStyleSmall"
         android:layout_below="@+id/tvReviewUsername"
-        android:layout_marginLeft="14dp"
+        android:paddingLeft="8sp"
+         android:paddingBottom="8sp"
         android:layout_toRightOf="@+id/ivReviewUser" />
 
     <TextView
         android:id="@+id/tvReviewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="8sp"
         android:layout_alignLeft="@+id/rbReviewRating"
         android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/user_name_text" />
 
     <TextView
@@ -36,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:paddingTop="8sp"
         android:text="@string/time_hint"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -45,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+         android:paddingTop="8sp"
         android:layout_below="@+id/rbReviewRating"
         android:text="@string/review_text" />
 

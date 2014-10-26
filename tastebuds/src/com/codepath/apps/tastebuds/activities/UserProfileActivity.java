@@ -43,7 +43,7 @@ import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends SherlockFragmentActivity implements UserRestaurantReviewListListener ,UserDishReviewListListener {
-	private ImageButton barImage;
+	private ImageView barImage;
 	private String profImgURL;
 	private ParseUser user;
 	private String userId;
@@ -53,7 +53,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem actionViewItem = (MenuItem) menu.findItem(R.id.itemImg);
 		View v = actionViewItem.getActionView();
-		barImage = (ImageButton) v.findViewById(R.id.ibButton);
+		barImage = (ImageView) v.findViewById(R.id.ibButton);
 		
 		if(user == null){
 			setUserInfo();
@@ -91,6 +91,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		getActionBar().setDisplayShowTitleEnabled(true);
 		
 		
+		
 	}
  private void setUserInfo(){
 	 ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
@@ -104,6 +105,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 					
 					Picasso.with(getApplicationContext()).load(profImgURL).resize(70, 70).centerCrop().into(barImage);
 				}
+				setTitle(users.get(0).getUsername());
 				
 			}
      });
@@ -116,7 +118,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		args.putString("user_id", userId);
 		Tab tab1 = actionBar
 			.newTab()
-			.setText("User Restaurant Reviews")
+			.setText("Restaurant Reviews")
 			.setIcon(R.drawable.ic_launcher)
 			.setTag("UserRestaurantReviewsListFragment")
 			.setTabListener(
@@ -128,7 +130,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 
 		Tab tab2 = actionBar
 			.newTab()
-			.setText("User Dish Reviews")
+			.setText("Dish Reviews")
 			.setIcon(R.drawable.ic_launcher)
 			.setTag("UserDishReviewsListFragment")
 			.setTabListener(
