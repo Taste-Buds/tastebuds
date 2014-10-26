@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -41,6 +42,7 @@ import com.facebook.Session;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -89,7 +91,6 @@ public class HomeActivity extends FragmentActivity implements
 	        // nav drawer icons from resources
 	        navMenuIcons = getResources()
 	                .obtainTypedArray(R.array.nav_drawer_icons);
-	 
 	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 	 
@@ -99,7 +100,8 @@ public class HomeActivity extends FragmentActivity implements
 	        // Home
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
 	        //profile
-	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+	        
+	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1, -1)));
 	        //logout
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(2, -1)));
 	         
@@ -134,10 +136,10 @@ public class HomeActivity extends FragmentActivity implements
 	        };
 	        mDrawerLayout.setDrawerListener(mDrawerToggle);
 //	 
-//	        if (savedInstanceState == null) {
-//	            // on first time display view for first nav item
-//	            displayView(0);
-//	        }
+	        if (savedInstanceState == null) {
+	            // on first time display view for first nav item
+	            displayView(0);
+	        }
 	        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 	}
 	/**
