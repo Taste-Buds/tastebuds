@@ -7,11 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,22 +29,16 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SearchView.OnCloseListener;
-import android.widget.SearchView.OnQueryTextListener;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.activities.RestaurantDetailActivity;
 import com.codepath.apps.tastebuds.adapters.RestaurantAdapter;
-import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
-import com.codepath.apps.tastebuds.adapters.TextWatcherAdapter;
-import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
+import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -55,11 +47,11 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.ParseQueryAdapter.OnQueryLoadListener;
-import com.rockerhieu.emojicon.*;
+import com.rockerhieu.emojicon.EmojiconEditText;
 import com.rockerhieu.emojicon.EmojiconGridFragment.OnEmojiconClickedListener;
+import com.rockerhieu.emojicon.EmojiconTextView;
+import com.rockerhieu.emojicon.EmojiconsFragment;
 import com.rockerhieu.emojicon.emoji.Emojicon;
-import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
 
 public class RestaurantListFragment extends Fragment implements OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
@@ -102,7 +94,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	}
 
 	public interface RestaurantListListener {
-		void onRestaurantSelected(String place_id, Bitmap image);
+		void onRestaurantSelected(String place_id, PlacesPhotoData photoData);
 	}
 
 	@Override
@@ -118,7 +110,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView parentView, View childView, int position, long id) {
 				listener.onRestaurantSelected(restaurants.get(position).getPlace_id(),
-						restaurants.get(position).getDisplayPhoto());
+						restaurants.get(position).getDisplayPhotoReference());
 			} 
 		});		
 		lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
@@ -188,8 +180,10 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			            try {
 			            	for (Restaurant rest : newRestaurants) {
 			            		try {
+			            			int maxWidth = rest.getDisplayPhotoReference().width == 0 ? 300 :
+			            				rest.getDisplayPhotoReference().width;
 				            		Bitmap photo = placesApi.getRestaurantDisplayPhoto(
-				            				rest.getDisplayPhotoReference(), 56);
+				            				rest.getDisplayPhotoReference().reference, maxWidth);
 				            		rest.setDisplayPhoto(photo);
 				    				restaurantAdapter.notifyDataSetChanged();
 			            		} catch (Exception e) {
@@ -438,8 +432,6 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 
 	private void setEmojiconFragment(boolean useSystemDefault) {
-
-
 		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 		nf = (EmojiconsFragment) EmojiconsFragment.newInstance(useSystemDefault);
 		ft.add(R.id.emojicons, nf,"main");

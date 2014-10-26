@@ -38,6 +38,7 @@ import com.codepath.apps.tastebuds.fragments.RestaurantListFragment.RestaurantLi
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog.RestaurantReviewDialogListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.NavDrawerItem;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.facebook.Session;
@@ -436,10 +437,10 @@ public class HomeActivity extends FragmentActivity implements
     }
 
 	@Override
-	public void onRestaurantSelected(String place_id, Bitmap image) {
+	public void onRestaurantSelected(String place_id, PlacesPhotoData image) {
 		Intent i = new Intent(this, RestaurantDetailActivity.class);
 		i.putExtra("place_id", place_id);
-		i.putExtra("bgImage", image);
+		i.putExtra("photo_data", image);
 		startActivity(i);
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
