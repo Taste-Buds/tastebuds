@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -431,10 +432,12 @@ public class HomeActivity extends FragmentActivity implements
             //showErrorDialog(connectionResult.getErrorCode());
         }
     }
+
 	@Override
-	public void onRestaurantSelected(String place_id) {
+	public void onRestaurantSelected(String place_id, Bitmap image) {
 		Intent i = new Intent(this, RestaurantDetailActivity.class);
 		i.putExtra("place_id", place_id);
+		i.putExtra("bgImage", image);
 		startActivity(i);
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}

@@ -1,5 +1,11 @@
 package com.codepath.apps.tastebuds;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -47,17 +53,33 @@ public class GooglePlacesApiClient {
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		params.put("placeid", placeId);
+		//params.put("extensions", "review_summary");
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get(baseUrl, params, handler);
 	}
 
-	public void getRestaurantDisplayPhoto(String photoReference, int maxWidth,
-			JsonHttpResponseHandler handler) {
-		String baseUrl = "https://maps.googleapis.com/maps/api/place/photo";
-		RequestParams params = new RequestParams();
-		params.put("photoReference", photoReference);
-		params.put("maxWidth", Integer.toString(maxWidth));
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(baseUrl, params, handler);
+	public Bitmap getRestaurantDisplayPhoto(String photoReference, int maxWidth) {
+		if (photoReference == null) {
+			return null;
+		}
+
+		String baseUrl = "https://maps.googleapis.com/maps/api/place/photo?";
+		baseUrl += "key=" + apiKey;
+		baseUrl += "&photoreference=" + photoReference;
+		baseUrl += "&maxwidth=" + Integer.toString(maxWidth);
+		URL url;
+		Bitmap photo;
+		try {
+			url = new URL(baseUrl);
+			try {
+				photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+				return photo;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		return null;
 	}
 }

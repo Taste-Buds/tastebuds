@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -26,6 +29,7 @@ public class Restaurant implements Parcelable {
 	private int price_level;		// price_level
 	private String website;			// website
 	private boolean open_now; 		// opening_hours:open_now
+	private String open_hours;  	// opening_hours:open_now
 	private String web_map;			// URI for Restaurant Map on Google
 	private int numOfReviews;		// Number of Friend Reviews
 	private float friendRating;		// average Rating by Friends
@@ -33,6 +37,7 @@ public class Restaurant implements Parcelable {
 	private JSONArray googleReviews;
 	private JSONArray photos;
 	private String displayPhotoReference;
+	private Bitmap displayPhoto;
 	
 	public Restaurant() {
 		super();
@@ -90,6 +95,10 @@ public class Restaurant implements Parcelable {
 		return open_now;
 	}
 
+	public String getOpenHours() {
+		return open_hours;
+	}
+
 	public String getPlace_id() {
 		return place_id;
 	}
@@ -142,6 +151,14 @@ public class Restaurant implements Parcelable {
 		this.displayPhotoReference = reference;
 	}
 
+	public Bitmap getDisplayPhoto() {
+		return displayPhoto;
+	}
+	
+	public void setDisplayPhoto(Bitmap photo) {
+		this.displayPhoto = photo;
+	}
+
 	public static Restaurant fromJSON(JSONObject jsonObject) {
 		Restaurant restaurant = new Restaurant();
 		try {
@@ -178,6 +195,12 @@ public class Restaurant implements Parcelable {
 			}
 			if (jsonObject.has("price_level") && jsonObject.getString("price_level") != null) {
 				restaurant.price_level  = Integer.parseInt(jsonObject.getString("price_level"));
+			}
+			if(jsonObject.has("photos") && jsonObject.getJSONArray("photos") !=null){
+				JSONObject photoJson = jsonObject.getJSONArray("photos").getJSONObject(0);
+				if (photoJson.has("photo_reference")) {
+					restaurant.displayPhotoReference = photoJson.getString("photo_reference");
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -241,7 +264,7 @@ public class Restaurant implements Parcelable {
 			//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));	// geometry:location:lng
 			
 			//restaurant.location = jsonObject.getJSONObject("geometry").getJSONObject("location");
-			if (jsonObject.getString("rating") != null) {
+			if (jsonObject.has("rating") && jsonObject.getString("rating") != null) {
 				restaurant.google_rating = Double.parseDouble(jsonObject.getString("rating"));	// rating
 			}
 			if (jsonObject.has("price_level") && jsonObject.getString("price_level") != null) {
@@ -257,7 +280,24 @@ public class Restaurant implements Parcelable {
 					jsonObject.getJSONObject("opening_hours").getString("open_now") != null) {
 				restaurant.open_now = Boolean.parseBoolean(jsonObject.getJSONObject("opening_hours").getString("open_now"));		// opening_hours:open_now
 			}
-		
+			if (jsonObject.has("opening_hours") && jsonObject.getJSONObject("opening_hours") != null) {
+				try {
+					JSONObject timeJson = jsonObject.getJSONObject("opening_hours")
+							.getJSONArray("periods").getJSONObject(0);
+					String open = timeJson.getJSONObject("open").getString("time") + " am";
+					if (timeJson.has("close")) {
+						String close_time = timeJson.getJSONObject("close").getString("time");
+						if (close_time.equals("0000")) {
+							open += " to midnight";
+						} else {
+							open += " to " + timeJson.getJSONObject("close").getString("time") + " pm";
+						}
+					} 
+					restaurant.open_hours = open;
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 			catch (JSONException e) {
 			e.printStackTrace();

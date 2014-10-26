@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -57,8 +58,6 @@ import com.parse.ParseUser;
 import com.parse.ParseQueryAdapter.OnQueryLoadListener;
 import com.rockerhieu.emojicon.*;
 import com.rockerhieu.emojicon.EmojiconGridFragment.OnEmojiconClickedListener;
-import com.rockerhieu.emojicon.EmojiconTextView;
-import com.rockerhieu.emojicon.EmojiconsFragment;
 import com.rockerhieu.emojicon.emoji.Emojicon;
 import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 
@@ -78,6 +77,8 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	SearchView searchView;
 	ImageView searchImg;
 	EmojiconsFragment nf;
+	private List<Restaurant> newRestaurants;
+	private GooglePlacesApiClient placesApi;
 	private RestaurantListListener listener;
 
 	EmojiconEditText mEditEmojicon;
@@ -101,7 +102,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	}
 
 	public interface RestaurantListListener {
-		void onRestaurantSelected(String place_id);
+		void onRestaurantSelected(String place_id, Bitmap image);
 	}
 
 	@Override
@@ -116,7 +117,8 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		lvRestaurants.setAdapter(restaurantAdapter);
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView parentView, View childView, int position, long id) {
-				listener.onRestaurantSelected(restaurants.get(position).getPlace_id());
+				listener.onRestaurantSelected(restaurants.get(position).getPlace_id(),
+						restaurants.get(position).getDisplayPhoto());
 			} 
 		});		
 		lvRestaurants.setOnScrollListener(new EndlessScrollListener() {
@@ -139,7 +141,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	private void restaurantsFromGooglePlacesApi(String search, String nextPageToken) {
 
-		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();
+		placesApi = new GooglePlacesApiClient();
 		// 700 Illinois Street, SF = 37.764046, -122.387863
 		//double latitude = 37.764046; // Static for 700 Illinois
 		//double longitude = -122.387863; // Static for 700 Illinois
@@ -152,6 +154,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			@Override
 			public void onSuccess(JSONObject response) {
 				JSONArray placesApiResultsJson = null;
+				newRestaurants = new ArrayList<Restaurant>();
 				try {
 					placesApiResultsJson = response.getJSONArray("results");
 					String newNextPageToken = "";
@@ -161,7 +164,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 						newNextPageToken = "QueryLimitReached";
 					}
 					updateNextPageToken(newNextPageToken);
-					List<Restaurant> newRestaurants = Restaurant.fromJSONArray(placesApiResultsJson);
+					newRestaurants.addAll(Restaurant.fromJSONArray(placesApiResultsJson));
 
 					newPlaceIds.clear();
 					for(int i=0; i<newRestaurants.size(); i++) {
@@ -179,6 +182,25 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 					e.printStackTrace();
 				}
 				restaurantAdapter.notifyDataSetChanged();
+			    new Thread(new Runnable(){
+			        @Override
+			         public void run() {
+			            try {
+			            	for (Restaurant rest : newRestaurants) {
+			            		try {
+				            		Bitmap photo = placesApi.getRestaurantDisplayPhoto(
+				            				rest.getDisplayPhotoReference(), 56);
+				            		rest.setDisplayPhoto(photo);
+				    				restaurantAdapter.notifyDataSetChanged();
+			            		} catch (Exception e) {
+			            			continue;
+			            		}
+			            	}
+			             } catch (Exception ex) {
+			                ex.printStackTrace();
+			             }
+			           } 
+			    }).start();
 			}
 			@Override
 			public void onFailure(Throwable e, JSONObject errorResponse) {

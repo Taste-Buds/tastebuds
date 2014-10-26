@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="8sp"
         android:layout_marginBottom="8sp"
-        android:src="@drawable/abs__ab_bottom_solid_dark_holo" />
+        android:src="@drawable/abs__ab_bottom_solid_dark_holo"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvRestaurantName"

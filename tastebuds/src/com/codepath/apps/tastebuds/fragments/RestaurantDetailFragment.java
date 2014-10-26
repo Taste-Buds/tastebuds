@@ -2,30 +2,24 @@ package com.codepath.apps.tastebuds.fragments;
 
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.location.Criteria;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.ui.CircleButton;
 
@@ -36,24 +30,36 @@ public class RestaurantDetailFragment extends Fragment {
 	private TextView tvFriendsRating;
 	private TextView tvPrice;
 	private TextView tvPhone;
+	private TextView tvHours;
+	private TextView tvOpenNow;
 	private TextView tvAddress;
 	private TextView tvStatus;
 	private TextView tvWebsite;
 	private TextView tvName;
 	private ListView lvPhotos;
 	private RelativeLayout rlDetail;
-	private CircleButton call;
-	private CircleButton rate;
-	private CircleButton dish;
-	private CircleButton map;
-	private CircleButton bookmark;
+	private CircleButton btnCall;
+	private CircleButton btnReview;
+	private CircleButton btnDish;
+	private CircleButton btnMap;
+	private CircleButton btnBookmark;
+	private RestaurantDetailListener listener;
+	private Bitmap bgImage;
 	public Restaurant restaurant;
 	
+	public interface RestaurantDetailListener {
+		public void onCallRestaurant(String phoneNumber);
+		public void onDirections(String address);
+		public void onAddReview(Restaurant restaurant);
+		public void onAddDish(Restaurant restaurant);
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		placeId = getArguments().getString("placeId");
 		restaurant = (Restaurant) getArguments().getParcelable("restaurant");
+		bgImage = (Bitmap) getArguments().getParcelable("bgImage");
 		//restaurantDetailFromGooglePlacesApi();
 	}
 	
@@ -63,37 +69,47 @@ public class RestaurantDetailFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
 		rbRating = (RatingBar) v.findViewById(R.id.rbRatingRestaurantDetail);
 		tvPrice = (TextView) v.findViewById(R.id.tvDollarsRestaurantDetail);
-		tvPhone = (TextView) v.findViewById(R.id.tvPhoneRestaurantDetail);
+		tvHours = (TextView) v.findViewById(R.id.tvHoursRestaurantDetail);
+		tvOpenNow = (TextView) v.findViewById(R.id.tvOpenRestaurantDetail);
+		tvWebsite = (TextView) v.findViewById(R.id.tvWebsiteRestaurantDetail);
 		tvAddress = (TextView) v.findViewById(R.id.tvAddressRestaurantDetail);
+		tvPhone = (TextView) v.findViewById(R.id.tvPhoneRestaurantDetail);
 		tvName = (TextView) v.findViewById(R.id.tvNameRestaurantDetail);
 		rlDetail = (RelativeLayout) v.findViewById(R.id.rldetailImage);
-		call = (CircleButton) v.findViewById(R.id.btnCallRestaurantDetail);
-		rate = (CircleButton) v.findViewById(R.id.btnReviewRestaurantDetail);
-		dish = (CircleButton) v.findViewById(R.id.btnDishRestaurantDetail);
-		map = (CircleButton) v.findViewById(R.id.btnDirectionsRestaurantDetail);
-		bookmark = (CircleButton) v.findViewById(R.id.btnBookmarkRestaurantDetail);
+		btnCall = (CircleButton) v.findViewById(R.id.btnCallRestaurantDetail);
+		btnReview = (CircleButton) v.findViewById(R.id.btnReviewRestaurantDetail);
+		btnDish = (CircleButton) v.findViewById(R.id.btnDishRestaurantDetail);
+		btnMap = (CircleButton) v.findViewById(R.id.btnDirectionsRestaurantDetail);
+		btnBookmark = (CircleButton) v.findViewById(R.id.btnBookmarkRestaurantDetail);
 		
-		call.setOnClickListener(new OnClickListener() {
+		btnCall.setOnClickListener(new OnClickListener() {
 	        public void onClick(View v) {
-	            try {
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:"+ tvPhone.getText().toString()));
-                    startActivity(callIntent);
-	            } catch (ActivityNotFoundException activityException) {
-	                 Log.e("Calling a Phone Number", "Call failed", activityException);
-	            }
+	        	listener.onCallRestaurant(restaurant.getPhone());
 	        }
 	    });
 
-		map.setOnClickListener(new OnClickListener() {
+		btnMap.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//String uri = "geo:"+ Double.toString(restaurant.getLatitude()) 
-					//	+ "," + Double.toString(restaurant.getLongitude());
-				//startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
-				startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+ restaurant.getAddress())));
+				listener.onDirections(restaurant.getAddress());
 			}
 		});
+
+		btnReview.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				listener.onAddReview(restaurant);
+			}
+		});
+
+		btnDish.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				listener.onAddDish(restaurant);
+			}
+		});
+
+		
 		//tvStatus = (TextView) v.findViewById(R.id.tvStatus);
 		//tvWebsite = (TextView) v.findViewById(R.id.tvWebsite);
 		//tvFriendsRating= (TextView) v.findViewById(R.id.tvFriendRating);
@@ -113,20 +129,43 @@ public class RestaurantDetailFragment extends Fragment {
 	public void updateDetailFragmentView() {
 		//tvGoogleRating.setText(Double.toString(restaurant.getGoogle_rating()));	
 		switch (restaurant.getPrice_level()) {
-			case 0: tvPrice.setText(""); break;
+			case 0: tvPrice.setText("$"); break;
 			case 1: tvPrice.setText("$"); break;
 			case 2: tvPrice.setText("$$"); break;
 			case 3: tvPrice.setText("$$$"); break;
 			case 4: tvPrice.setText("$$$$"); break;
-			default: tvPrice.setText("");
+			default: tvPrice.setText("$");
 		}
 
-		tvPhone.setText(restaurant.getPhone());
+		tvName.setText(Html.fromHtml("<b>" + restaurant.getName() + "</b>"));
 		tvAddress.setText(restaurant.getAddress().replace(",", "\n"));
-		//tvWebsite.setText(restaurant.getWebsite());
-		//rbRating.setRating((float) restaurant.getGoogle_rating());
 		rbRating.setRating(5);
-		tvName.setText(restaurant.getName());
+		if (restaurant.getWebsite() != null) {
+			tvWebsite.setText(Html.fromHtml("<b>Website: </b><span>" +
+					"<font color=\"blue\">" + restaurant.getWebsite() + "</font>"));
+		} else {
+			tvWebsite.setVisibility(TextView.GONE);
+		}
+
+		if (restaurant.getOpenHours() != null) {
+			tvHours.setText(Html.fromHtml("<b>Hours: </b><span>" + restaurant.getOpenHours()));
+		} else {
+			tvWebsite.setVisibility(TextView.GONE);
+		}		
+		
+		if (restaurant.isOpen_now()) {
+			tvOpenNow.setText(Html.fromHtml("<font color=\"green\"> Open Now </font>"));
+		} else {
+			tvOpenNow.setText(Html.fromHtml("<font color=\"red\"> Closed </font>"));
+		}
+		if (restaurant.getPhone() != null) {
+			tvPhone.setText(Html.fromHtml("<b>Phone: </b><span>" + restaurant.getPhone()));
+		} else {
+			tvWebsite.setVisibility(TextView.GONE);
+		}
+		if (bgImage != null) {
+			rlDetail.setBackground(new BitmapDrawable(getResources(), bgImage));
+		}
 		/*int imageResource = getResources().getIdentifier("res1", "drawable",
 				"com.codepath.apps.tastebuds.fragments");
 		Drawable res = getResources().getDrawable(imageResource);
@@ -161,5 +200,14 @@ public class RestaurantDetailFragment extends Fragment {
 //	      }
 //	   }
 	
-	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof RestaurantDetailListener) {
+			listener = (RestaurantDetailListener) activity;
+		} else {
+			throw new ClassCastException(activity.toString()
+					+ " must implement RestaurantReviewDialog.UserRestaurantReviewListListener");
+		}
+	}	
 }

@@ -7,8 +7,9 @@
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true" >
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -18,13 +19,16 @@
 	        android:id="@+id/rldetailImage"
 	        android:layout_width="match_parent"
 	        android:layout_height="240sp">
+
 	        <ImageView
 	            android:id="@+id/ivBackground"
 	            android:layout_width="fill_parent"
 	            android:layout_height="match_parent"
-	            android:src="@drawable/res1"
-	            android:alpha=".2" 
-	            android:scaleType="centerCrop"/>
+	            android:layout_alignParentRight="true"
+	            android:alpha=".2"
+	            android:scaleType="centerCrop"
+	            android:src="@drawable/res1" />
+
 	        <TextView
 	            android:id="@+id/tvNameRestaurantDetail"
 	            android:layout_width="wrap_content"
@@ -34,8 +38,7 @@
 	            android:text="Medium Text"
 	            android:textAppearance="?android:attr/textAppearanceMedium" 
 	            android:paddingTop="8sp"
-	            android:paddingLeft="8sp"
-    			android:paddingRight="8sp"/>
+	            android:paddingLeft="8sp"/>
 	
 	        <TextView
 	            android:id="@+id/tvAddressRestaurantDetail"
@@ -45,7 +48,6 @@
 	            android:layout_below="@+id/tvNameRestaurantDetail"
 	            android:text="TextView"
 	            android:paddingLeft="8sp"
-    			android:paddingRight="8sp"
     			android:maxLines="2"/>
 	
 	        <RatingBar
@@ -62,10 +64,19 @@
 	            android:id="@+id/tvDollarsRestaurantDetail"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-				android:layout_below="@+id/rbRatingRestaurantDetail"
 	            android:layout_alignParentRight="true"
-	            android:text="TextView"
-    			android:paddingRight="16sp" />
+	            android:layout_below="@+id/rbRatingRestaurantDetail"
+	            android:paddingRight="8sp"
+	            android:text="$" />
+
+	         <TextView
+		        android:id="@+id/tvOpenRestaurantDetail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:text="TextView"
+		        android:layout_below="@+id/tvDollarsRestaurantDetail"
+		        android:paddingRight="8sp" />
 	
 	        <LinearLayout
 	            android:layout_width="wrap_content"
@@ -132,16 +143,16 @@
         	android:paddingTop="8sp"
             android:paddingLeft="8sp"
    			android:paddingRight="8sp" >
-	        <!-- TextView
-		        android:id="@+id/tvAddressRestaurantDetail"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="TextView" /-->
-	        <TextView
+	       <TextView
 	            android:id="@+id/tvPhoneRestaurantDetail"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="TextView" />
+	        <TextView
+		        android:id="@+id/tvWebsiteRestaurantDetail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="TextView" />
 	        <TextView
 		        android:id="@+id/tvHoursRestaurantDetail"
 		        android:layout_width="wrap_content"
