@@ -212,11 +212,11 @@ public class Restaurant implements Parcelable {
 					restaurant.latitude = 0; }
 			
 			try {
-				//restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));
-				//JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
-				//restaurant.longitude = location.getDouble("lng");
-				}
-			catch (Exception e) { restaurant.longitude = 0; }		
+				restaurant.longitude = Double.parseDouble(jsonObject.getJSONObject("geometry").getJSONObject("location").getString("lng"));
+				JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
+				restaurant.longitude = location.getDouble("lng");
+				} catch (Exception e) { 
+					restaurant.longitude = 0; }		
 			
 			if ((restaurant.getLatitude() != 0) && (restaurant.getLongitude() != 0)) {
 				Location location = new Location("");
