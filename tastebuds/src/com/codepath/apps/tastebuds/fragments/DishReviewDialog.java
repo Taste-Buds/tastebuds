@@ -50,12 +50,12 @@ public class DishReviewDialog extends DialogFragment {
 	private ArrayList<String> tagStrings;
 	private ArrayList<String> dishStrings;
 
-    public static DishReviewDialog newInstance(String restaurantName,
-    		String restaurantId) {
+    public static DishReviewDialog newInstance(String dishName,
+    		String dishId) {
     	DishReviewDialog dialog = new DishReviewDialog();
         Bundle args = new Bundle();
-        args.putString("restaurant_id", restaurantId);
-        args.putString("restaurant_name", restaurantName);
+        args.putString("dish_id", dishId);
+        args.putString("dish_name", dishName);
         dialog.setArguments(args);
         return dialog;
     }
@@ -68,8 +68,8 @@ public class DishReviewDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dish_review_compose, container);
-        restaurantName = getArguments().getString("restaurant_name");
-        restaurantId = getArguments().getString("restaurant_id");
+        restaurantName = getArguments().getString("dish_name");
+        restaurantId = getArguments().getString("dish_id");
         etDish = (AutoCompleteTextView) view.findViewById(R.id.etDishName);
         tvRestaurantName = (TextView) view.findViewById(R.id.tvRestaurantNameCompose);
         tvRestaurantName.setText(restaurantName);

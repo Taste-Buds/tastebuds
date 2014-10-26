@@ -86,6 +86,7 @@ public class DishReviewDetailDialog extends DialogFragment {
         DishReview review;
 		try {
 			review = query.get(reviewId).fetchIfNeeded();
+			dishName = review.getRestaurantName();
 	        etWords.setText(review.getText());
 	        etWords.setEnabled(false);
 	        etDish.setText(dishName);

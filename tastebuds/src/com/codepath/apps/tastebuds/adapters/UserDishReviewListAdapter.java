@@ -102,11 +102,11 @@ public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> imp
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		if(uListener != null){
 			DishReview review = getItem(position);
-			uListener.onDishReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			uListener.onDishReviewSelected(review.getObjectId(), review.getDishName());
 			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
 		}else if(uListener != null){
 			DishReview review = getItem(position);
-			uListener.onDishReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			uListener.onDishReviewSelected(review.getObjectId(), review.getDishName());
 			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
 		}
 		
