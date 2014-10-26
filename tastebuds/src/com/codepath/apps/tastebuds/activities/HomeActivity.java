@@ -103,7 +103,7 @@ public class HomeActivity extends FragmentActivity implements
 	        
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1, -1)));
 	        //logout
-	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(2, -1)));
+	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 	         
 	 
 	        // Recycle the typed array
@@ -131,6 +131,7 @@ public class HomeActivity extends FragmentActivity implements
 	            public void onDrawerOpened(View drawerView) {
 	                getActionBar().setTitle(mDrawerTitle);
 	                // calling onPrepareOptionsMenu() to hide action bar icons
+
 	                invalidateOptionsMenu();
 	            }
 	        };
@@ -177,21 +178,7 @@ public class HomeActivity extends FragmentActivity implements
         default:
             break;
         }
- 
-//        if (fragment != null) {
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction()
-//                    .replace(R.id.frame_container, fragment).commit();
-// 
-//            // update selected item and title, then close the drawer
-//            mDrawerList.setItemChecked(position, true);
-//            mDrawerList.setSelection(position);
-//            setTitle(navMenuTitles[position]);
-//            mDrawerLayout.closeDrawer(mDrawerList);
-//        } else {
-//            // error in creating fragment
-//            Log.e("MainActivity", "Error in creating fragment");
-//        }
+
     }
 	 @Override
 	    public boolean onOptionsItemSelected(MenuItem item) {
@@ -215,7 +202,7 @@ public class HomeActivity extends FragmentActivity implements
 	    public boolean onPrepareOptionsMenu(Menu menu) {
 	        // if nav drawer is opened, hide the action items
 	        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-	        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+	        //menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 	        return super.onPrepareOptionsMenu(menu);
 	    }
 	 

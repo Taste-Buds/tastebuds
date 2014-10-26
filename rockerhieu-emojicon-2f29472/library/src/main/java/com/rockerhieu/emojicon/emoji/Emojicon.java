@@ -67,6 +67,12 @@ public class Emojicon implements Serializable {
         
         return emoji;
     }
+    public static Emojicon fromChars(String chars, String value) {
+        Emojicon emoji = new Emojicon();
+        emoji.emoji = chars;
+        emoji.setEmojiVal(value);
+        return emoji;
+    }
 
     public Emojicon(String emoji) {
         this.emoji = emoji;
