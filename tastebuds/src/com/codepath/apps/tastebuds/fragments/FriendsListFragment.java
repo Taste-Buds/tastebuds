@@ -217,12 +217,12 @@ public class FriendsListFragment extends Fragment implements OnEmojiconClickedLi
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		if (activity instanceof FriendsListListener) {
-			listener = (FriendsListListener) activity;
-		} else {
-			throw new ClassCastException(activity.toString()
-					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
-		}
+//		if (activity instanceof FriendsListListener) {
+//			listener = (FriendsListListener) activity;
+//		} else {
+//			throw new ClassCastException(activity.toString()
+//					+ " must implement RestaurantReviewDialog.RestaurantReviewListListener");
+//		}
 	}
 
 

@@ -55,7 +55,7 @@ import com.google.android.gms.location.LocationClient;
 public class HomeActivity extends FragmentActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener,
-	RestaurantListListener, FriendsListListener {
+	RestaurantListListener{
 
 	private ParseUser user;
 	ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -453,15 +453,14 @@ public class HomeActivity extends FragmentActivity implements
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
     }
-	@Override
-	public void onFriendSelected(String place_id) {
-		Intent i = new Intent(this, UserProfileActivity.class);
-		i.putExtra("place_id", place_id);
-		i.putExtra("bgImage", image);
-		startActivity(i);
-		overridePendingTransition(R.anim.right_in, R.anim.left_out);
-		
-	}
+//	@Override
+//	public void onFriendSelected(String place_id) {
+//		Intent i = new Intent(this, UserProfileActivity.class);
+//		i.putExtra("place_id", place_id);
+//		startActivity(i);
+//		overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//		
+//	}
 }
 	
 
