@@ -209,7 +209,7 @@ public class HomeActivity extends FragmentActivity implements
 	    @Override
 	    public void setTitle(CharSequence title) {
 	        mTitle = title;
-	        getActionBar().setTitle(mTitle);
+	      //  getActionBar().setTitle(mTitle);
 	    }
 	 
 	    /**
