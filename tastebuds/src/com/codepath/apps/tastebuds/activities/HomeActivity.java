@@ -242,7 +242,7 @@ public class HomeActivity extends FragmentActivity implements
 	 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.login, menu);
+		getMenuInflater().inflate(R.menu.search, menu);
 		return true;
 	}
 
