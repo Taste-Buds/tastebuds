@@ -1,5 +1,7 @@
 package com.codepath.apps.tastebuds.fragments;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -27,6 +29,9 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	private String userId;
 	private static ParseUser user;
 	private ProgressBar mProgress;
+	private String searchType;
+	private String searchTerm;
+	private ArrayList<String> tags;
 
     public interface UserRestaurantReviewListListener {
     	void onReviewSelected(String reviewId, String restaurantName);
@@ -36,7 +41,9 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userId = getArguments().getString("user_id");
- 
+        searchType = getArguments().getString("searchType");
+        searchTerm = getArguments().getString("searchType");
+        List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
 	}
 
 	@Override
@@ -46,8 +53,24 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 		lvUserReviews = (ListView) view.findViewById(R.id.lvUserReviews);
 		mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
 		mProgress.setVisibility(ProgressBar.VISIBLE);
+		/*
+		ParseQuery<ParseTag> parseQuery = ParseTag.getQuery(tags);
+	    if (searchTerm.equals("Tags")) {
+	        parseQuery.findInBackground(new FindCallback<ParseTag>() {
+				@Override
+				public void done(List<ParseTag> users, ParseException arg1) {
+						adapter = new UserReviewListAdapter(getActivity(),  users.get(0), listener);
+						lvUserReviews.setAdapter(adapter);
+						adapter.notifyDataSetChanged();
+						lvUserReviews.setOnItemClickListener(adapter);
+						mProgress.setVisibility(ProgressBar.GONE);
+				}
 
+			});
+	    }
+	    */		
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
+	    if (searchTerm.equals("User")) {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 
 				@Override
@@ -60,7 +83,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 				}
 
 			});
-		
+	    }
 
 
 		return view;
