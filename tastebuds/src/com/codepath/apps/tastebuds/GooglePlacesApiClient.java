@@ -26,7 +26,7 @@ public class GooglePlacesApiClient {
 		RequestParams params = new RequestParams();
 		params.put("key", apiKey);
 		if (search != "None") {
-			params.put("name", search);
+			params.put("keyword", search);
 		}
 		if (nextPageToken == "None") {
 		params.put("location", location);
