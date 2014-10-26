@@ -86,7 +86,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".SearchTagActivity"
+            android:name="com.codepath.apps.tastebuds.activities.SearchActivity"
             android:label="@string/title_activity_search_tag" >
         </activity>
     </application>

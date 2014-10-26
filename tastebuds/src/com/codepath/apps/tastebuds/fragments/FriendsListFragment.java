@@ -30,7 +30,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
-import com.codepath.apps.tastebuds.SearchTagActivity;
+import com.codepath.apps.tastebuds.activities.SearchActivity;
 import com.codepath.apps.tastebuds.activities.UserProfileActivity;
 import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
 import com.codepath.apps.tastebuds.fragments.RestaurantListFragment.RestaurantListListener;
@@ -111,8 +111,9 @@ public class FriendsListFragment extends Fragment implements OnEmojiconClickedLi
 				String search = mEditEmojicon.getText().toString();
 				// Dismiss Keyboard
 				hideSoftKeyBoard();	
-				Intent i = new Intent(getActivity(), SearchTagActivity.class);
-				i.putExtra("Search", search);
+				Intent i = new Intent(getActivity(), SearchActivity.class);
+				i.putExtra("SearchTerm", search);
+				i.putExtra("SearchType", "Tags");
 				startActivity(i);
 			}
 		});
@@ -170,6 +171,7 @@ public class FriendsListFragment extends Fragment implements OnEmojiconClickedLi
 		Log.d("Debug", "P: " + position);
 		Intent i = new Intent(getActivity(), UserProfileActivity.class);
 		i.putExtra("user_id", ((ParseUser)friends.get(position)).getString("fbId"));
+		i.putExtra("SearchType", "User");
 		startActivity(i);
 	}
 	public void  populateReviewNumbers( final ParseUser user){
