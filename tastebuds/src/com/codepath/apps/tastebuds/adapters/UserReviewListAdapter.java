@@ -77,11 +77,11 @@ public class UserReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 			long id) {
 		if(listener != null){
 			RestaurantReview review = getItem(position);
-			listener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			listener.onReviewSelected(review.getObjectId(), review.getRestaurantName());
 			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
 		}else if(uListener != null){
 			RestaurantReview review = getItem(position);
-			uListener.onReviewSelected(review.getObjectId(), review.getGooglePlacesId());
+			uListener.onReviewSelected(review.getObjectId(), review.getRestaurantName());
 			Toast.makeText(getContext(), "Review clicked", Toast.LENGTH_LONG).show();
 		}
 	}
