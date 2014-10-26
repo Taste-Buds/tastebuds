@@ -74,17 +74,26 @@ public class RestaurantDetailFragment extends Fragment {
 		bookmark = (CircleButton) v.findViewById(R.id.btnBookmarkRestaurantDetail);
 		
 		call.setOnClickListener(new OnClickListener() {
-			
 	        public void onClick(View v) {
 	            try {
-	                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-	                    callIntent.setData(Uri.parse("tel:"+ tvPhone.getText().toString()));
-	                    startActivity(callIntent);
-	                } catch (ActivityNotFoundException activityException) {
-	                    Log.e("Calling a Phone Number", "Call failed", activityException);
-	                }
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:"+ tvPhone.getText().toString()));
+                    startActivity(callIntent);
+	            } catch (ActivityNotFoundException activityException) {
+	                 Log.e("Calling a Phone Number", "Call failed", activityException);
+	            }
 	        }
 	    });
+
+		map.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//String uri = "geo:"+ Double.toString(restaurant.getLatitude()) 
+					//	+ "," + Double.toString(restaurant.getLongitude());
+				//startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+				startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+ restaurant.getAddress())));
+			}
+		});
 		//tvStatus = (TextView) v.findViewById(R.id.tvStatus);
 		//tvWebsite = (TextView) v.findViewById(R.id.tvWebsite);
 		//tvFriendsRating= (TextView) v.findViewById(R.id.tvFriendRating);
