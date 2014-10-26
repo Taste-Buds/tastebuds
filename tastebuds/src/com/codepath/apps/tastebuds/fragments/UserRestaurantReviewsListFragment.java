@@ -15,9 +15,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
 import com.codepath.apps.tastebuds.adapters.UserReviewListAdapter;
+import com.codepath.apps.tastebuds.models.Restaurant;
+import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.codepath.apps.tastebuds.models.Tag;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -32,6 +37,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	private String searchType;
 	private String searchTerm;
 	private ArrayList<String> tags;
+	private List<Object> friends;
 
     public interface UserRestaurantReviewListListener {
     	void onReviewSelected(String reviewId, String restaurantName);
@@ -41,6 +47,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userId = getArguments().getString("user_id");
+        user = ParseUser.getCurrentUser();
         searchType = getArguments().getString("searchType");
         searchTerm = getArguments().getString("searchType");
         List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
@@ -53,22 +60,48 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 		lvUserReviews = (ListView) view.findViewById(R.id.lvUserReviews);
 		mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
 		mProgress.setVisibility(ProgressBar.VISIBLE);
-		/*
-		ParseQuery<ParseTag> parseQuery = ParseTag.getQuery(tags);
+		
+		ParseQuery<Tag> tagQuery = Tag.getQuery(tags);
+		
 	    if (searchTerm.equals("Tags")) {
-	        parseQuery.findInBackground(new FindCallback<ParseTag>() {
+	        tagQuery.findInBackground(new FindCallback<Tag>() {
 				@Override
-				public void done(List<ParseTag> users, ParseException arg1) {
-						adapter = new UserReviewListAdapter(getActivity(),  users.get(0), listener);
-						lvUserReviews.setAdapter(adapter);
-						adapter.notifyDataSetChanged();
-						lvUserReviews.setOnItemClickListener(adapter);
-						mProgress.setVisibility(ProgressBar.GONE);
+				public void done(List<Tag> tags, ParseException arg1) {
+						ArrayList<String> placeIds = new ArrayList<String>();
+						for(int i=0; i<tags.size(); i++) {
+							Tag tag = tags.get(i);
+							String placeId = tag.getGooglePlacesId();
+							placeIds.add(placeId);
+						}
+						friends = ParseUser.getCurrentUser().getList("userFriends");
+						ArrayList<ParseObject> friendList = new ArrayList<ParseObject>();
+						for(int i=0; i<friends.size(); i++) {
+							ParseObject friend = (ParseObject) friends.get(i);
+							friendList.add(friend);
+						}
+						/*
+						ParseQuery<RestaurantReview> reviewQuery = RestaurantReview.getQuery(placeIds,
+								friendList);						
+						reviewQuery.findInBackground(new FindCallback<RestaurantReview>() {
+							@Override
+							
+							public void done(List<RestaurantReview> reviews, ParseException arg1) {
+							
+							//adapter = new UserReviewListAdapter(getActivity(), reviews, listener);
+							lvUserReviews.setAdapter(adapter);
+							adapter.notifyDataSetChanged();
+							lvUserReviews.setOnItemClickListener(adapter);
+							mProgress.setVisibility(ProgressBar.GONE);
+							
+							}							
+						}
+						*/
+						
 				}
 
 			});
 	    }
-	    */		
+	    		
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	    if (searchTerm.equals("User")) {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {

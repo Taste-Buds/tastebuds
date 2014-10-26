@@ -237,6 +237,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	private void restaurantReviewsWithGoogleAndFacebookData(List<Restaurant> newRestaurants) {
 
+		
 		ParseQuery<RestaurantReview> query = RestaurantReview.getQuery(newPlaceIds, friends);
 		query.findInBackground(new FindCallback<RestaurantReview>() {
 			@Override
@@ -247,6 +248,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				parseReviews(newReviews);
 			}
 		});
+		
 	}
 
 	private void parseReviews(List<RestaurantReview> newReviews) {
