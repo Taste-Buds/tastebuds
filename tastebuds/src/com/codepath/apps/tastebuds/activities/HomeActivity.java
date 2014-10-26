@@ -447,11 +447,19 @@ public class HomeActivity extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-		finish();
-		Intent intent = new Intent(Intent.ACTION_MAIN);
-		intent.addCategory(Intent.CATEGORY_HOME);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
+//		finish();
+//		Intent intent = new Intent(Intent.ACTION_MAIN);
+//		intent.addCategory(Intent.CATEGORY_HOME);
+//		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//		startActivity(intent);
+    	
+    	
+    	Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+        startActivity(intent);
+        finish();
+        System.exit(0);
     }
 //	@Override
 //	public void onFriendSelected(String place_id) {

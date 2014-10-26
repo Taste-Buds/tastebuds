@@ -74,10 +74,16 @@ public class RestaurantDetailFragment extends Fragment {
 		photoData = (PlacesPhotoData) getArguments().getParcelable("photo_data");
 		placesApi = new GooglePlacesApiClient();
 		PhotosAsyncTask task = new PhotosAsyncTask();
-		task.execute(new String[] { photoData.reference, Integer.toString(photoData.width) });
+		if(photoData != null){
+		task.execute(new String[] { 
+				photoData.reference, Integer.toString(photoData.width)
+				});
+		}
+		if(restaurant.getPhotoReferences() != null){
 		for (PlacesPhotoData photo : restaurant.getPhotoReferences()) {
 			AllPhotosAsyncTask allPhotostask = new AllPhotosAsyncTask();
 			allPhotostask.execute(new String[] { photo.reference, Integer.toString(photo.width) });
+		}
 		}
 	}
 	
