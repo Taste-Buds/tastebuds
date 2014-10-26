@@ -7,9 +7,12 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +25,7 @@ import com.codepath.apps.tastebuds.fragments.DishListFragment.DishListListener;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog;
 import com.codepath.apps.tastebuds.fragments.DishReviewDialog.DishReviewDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantDetailFragment;
+import com.codepath.apps.tastebuds.fragments.RestaurantDetailFragment.RestaurantDetailListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDetailDialog.RestaurantReviewDetailDialogListener;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewDialog;
@@ -35,16 +39,19 @@ import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class RestaurantDetailActivity extends FragmentActivity 
-	implements RestaurantReviewListListener, DishListListener {
+	implements RestaurantReviewListListener, DishListListener, RestaurantDetailListener {
 	
 	private String placeId;
+	private Bitmap bgImage;
 	private Restaurant restaurant;
+	private	GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_detail);
 		placeId = getIntent().getStringExtra("place_id");
+		bgImage = getIntent().getParcelableExtra("bgImage");
 		restaurantDetailFromGooglePlacesApi();	
 	}
 
@@ -55,8 +62,6 @@ public class RestaurantDetailActivity extends FragmentActivity
 	}
 
 	private void restaurantDetailFromGooglePlacesApi() {
-		
-		GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
 		placesApi.getRestaurantDetailfromGooglePlaces(placeId, 
 				new JsonHttpResponseHandler() {
 			@Override
@@ -65,6 +70,8 @@ public class RestaurantDetailActivity extends FragmentActivity
         		try {
         			restaurantDetailJson = response.getJSONObject("result");
         			restaurant = Restaurant.fromJSONDetail(restaurantDetailJson);
+        			//Bitmap photo = placesApi.getRestaurantDisplayPhoto(restaurant.getDisplayPhotoReference(), 56);
+        			//restaurant.setDisplayPhoto(photo);
         			setupTabs();
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -74,7 +81,7 @@ public class RestaurantDetailActivity extends FragmentActivity
     		public void onFailure(Throwable e, JSONObject errorResponse) {
 				Log.e("Error", e.toString());
     		}		
-		});		
+		});
 	}
 
 	private void setupTabs() {
@@ -84,6 +91,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
+		args.putParcelable("bgImage", bgImage);
 		if (restaurant.getName() != null) {
 			getActionBar().setTitle(restaurant.getName());
 			args.putString("restaurantName", restaurant.getName());
@@ -189,4 +197,64 @@ public class RestaurantDetailActivity extends FragmentActivity
 	finish();
 	overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
+
+	@Override
+	public void onCallRestaurant(String phoneNumber) {
+		try {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:"+ phoneNumber));
+            startActivity(callIntent);
+        } catch (ActivityNotFoundException activityException) {
+             Log.e("Calling a Phone Number", "Call failed", activityException);
+        }
+	}
+
+	@Override
+	public void onDirections(String address) {
+		startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+				Uri.parse("google.navigation:q="+ restaurant.getAddress())));
+	}
+
+	@Override
+	public void onAddReview(Restaurant restaurant) {
+	    FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+	    if (prev != null) {
+	        ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+		RestaurantReviewDialog dialog = RestaurantReviewDialog.newInstance(
+			restaurant.getPlace_id(), restaurant.getName());
+		dialog.show(ft, "compose");
+		dialog.listener = new RestaurantReviewDialogListener() {
+			@Override
+			public void onFinishReviewComposeDialog(RestaurantReview review) {
+				if (review != null) {
+					review.saveInBackground();
+				}
+			}
+		};
+	}
+
+	@Override
+	public void onAddDish(Restaurant restaurant) {
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+	    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+	    if (prev != null) {
+	        ft.remove(prev);
+	    }
+	    ft.addToBackStack(null);
+		DishReviewDialog dialog = DishReviewDialog.newInstance(
+				restaurant.getName(), restaurant.getPlace_id());
+		dialog.show(ft, "compose");
+		dialog.listener = new DishReviewDialogListener() {
+			@Override
+			public void onFinishReviewComposeDialog(DishReview review) {
+				if (review != null) {
+					review.saveInBackground();
+				}
+			}
+		};
+		
+	}
 }
