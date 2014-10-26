@@ -136,10 +136,10 @@ public class HomeActivity extends FragmentActivity implements
 	        };
 	        mDrawerLayout.setDrawerListener(mDrawerToggle);
 //	 
-	        if (savedInstanceState == null) {
-	            // on first time display view for first nav item
-	            displayView(0);
-	        }
+//	        if (savedInstanceState == null) {
+//	            // on first time display view for first nav item
+//	            displayView(0);
+//	        }
 	        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 	}
 	/**
