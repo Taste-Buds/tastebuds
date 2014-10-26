@@ -2,9 +2,13 @@ package com.codepath.apps.tastebuds.adapters;
 
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -12,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +43,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		} else {
 			v = convertView;
 		}
+
 		TextView tvRestaurantName = (TextView) v.findViewById(R.id.tvRestaurantName);
 		tvRestaurantName.setText(restaurant.getName());
 		RatingBar rbTasteBudsRating = (RatingBar) v.findViewById(R.id.rbTasteBudsRating);

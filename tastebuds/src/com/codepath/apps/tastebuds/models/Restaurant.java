@@ -36,7 +36,7 @@ public class Restaurant implements Parcelable {
 	private String icon;
 	private JSONArray googleReviews;
 	private JSONArray photos;
-	private String displayPhotoReference;
+	private PlacesPhotoData displayPhotoReference;
 	private Bitmap displayPhoto;
 	
 	public Restaurant() {
@@ -143,11 +143,11 @@ public class Restaurant implements Parcelable {
 		this.photos = photos;
 	}
 
-	public String getDisplayPhotoReference() {
+	public PlacesPhotoData getDisplayPhotoReference() {
 		return displayPhotoReference;
 	}
 
-	public void setDisplayPhotoReference(String reference) {
+	public void setDisplayPhotoReference(PlacesPhotoData reference) {
 		this.displayPhotoReference = reference;
 	}
 
@@ -199,7 +199,10 @@ public class Restaurant implements Parcelable {
 			if(jsonObject.has("photos") && jsonObject.getJSONArray("photos") !=null){
 				JSONObject photoJson = jsonObject.getJSONArray("photos").getJSONObject(0);
 				if (photoJson.has("photo_reference")) {
-					restaurant.displayPhotoReference = photoJson.getString("photo_reference");
+					restaurant.displayPhotoReference  = new PlacesPhotoData();
+					restaurant.displayPhotoReference.reference = photoJson.getString("photo_reference");
+					restaurant.displayPhotoReference.width = photoJson.getInt("width");
+					restaurant.displayPhotoReference.height = photoJson.getInt("height");
 				}
 			}
 		} catch (JSONException e) {

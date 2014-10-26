@@ -34,6 +34,7 @@ import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment;
 import com.codepath.apps.tastebuds.fragments.RestaurantReviewListFragment.RestaurantReviewListListener;
 import com.codepath.apps.tastebuds.listeners.FragmentTabListener;
 import com.codepath.apps.tastebuds.models.DishReview;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -42,7 +43,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	implements RestaurantReviewListListener, DishListListener, RestaurantDetailListener {
 	
 	private String placeId;
-	private Bitmap bgImage;
+	private PlacesPhotoData photoData;
 	private Restaurant restaurant;
 	private	GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
 
@@ -51,7 +52,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurant_detail);
 		placeId = getIntent().getStringExtra("place_id");
-		bgImage = getIntent().getParcelableExtra("bgImage");
+		photoData = getIntent().getParcelableExtra("photo_data");
 		restaurantDetailFromGooglePlacesApi();	
 	}
 
@@ -70,9 +71,19 @@ public class RestaurantDetailActivity extends FragmentActivity
         		try {
         			restaurantDetailJson = response.getJSONObject("result");
         			restaurant = Restaurant.fromJSONDetail(restaurantDetailJson);
-        			//Bitmap photo = placesApi.getRestaurantDisplayPhoto(restaurant.getDisplayPhotoReference(), 56);
-        			//restaurant.setDisplayPhoto(photo);
-        			setupTabs();
+	       			 /*new Thread(new Runnable(){
+	        	        @Override
+	        	         public void run() {
+	        	            try {
+	        	            	int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
+	                			Bitmap photo = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
+	                			restaurant.setDisplayPhoto(photo);
+	        	            } catch (Exception e) {
+	        	        	  e.printStackTrace();
+	        	            }
+	        	        }  
+	        	     }).start();*/
+	       			 setupTabs();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -91,7 +102,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 
 		Bundle args = new Bundle();
 		args.putString("placeId", placeId);
-		args.putParcelable("bgImage", bgImage);
+		args.putParcelable("photo_data", photoData);
 		if (restaurant.getName() != null) {
 			getActionBar().setTitle(restaurant.getName());
 			args.putString("restaurantName", restaurant.getName());
@@ -192,11 +203,11 @@ public class RestaurantDetailActivity extends FragmentActivity
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
 
-    @Override
+    /*@Override
     public void onBackPressed() {
-	finish();
-	overridePendingTransition(R.anim.left_in, R.anim.right_out);
-    }
+		finish();
+		overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }*/
 
 	@Override
 	public void onCallRestaurant(String phoneNumber) {

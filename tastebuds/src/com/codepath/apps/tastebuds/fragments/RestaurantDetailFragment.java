@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,10 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.ui.CircleButton;
 
@@ -45,6 +48,8 @@ public class RestaurantDetailFragment extends Fragment {
 	private CircleButton btnBookmark;
 	private RestaurantDetailListener listener;
 	private Bitmap bgImage;
+	private PlacesPhotoData photoData;
+	private GooglePlacesApiClient placesApi;
 	public Restaurant restaurant;
 	
 	public interface RestaurantDetailListener {
@@ -59,8 +64,22 @@ public class RestaurantDetailFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		placeId = getArguments().getString("placeId");
 		restaurant = (Restaurant) getArguments().getParcelable("restaurant");
-		bgImage = (Bitmap) getArguments().getParcelable("bgImage");
-		//restaurantDetailFromGooglePlacesApi();
+		photoData = (PlacesPhotoData) getArguments().getParcelable("photo_data");
+		placesApi = new GooglePlacesApiClient();
+		PhotosAsyncTask task = new PhotosAsyncTask();
+		task.execute(new String[] { photoData.reference, Integer.toString(photoData.width) });
+	    /*new Thread(new Runnable(){
+        @Override
+         public void run() {
+            try {
+    			int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
+        		bgImage = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
+        		restaurant.setDisplayPhoto(bgImage);
+             } catch (Exception ex) {
+                ex.printStackTrace();
+             }
+           } 
+    	}).start();*/
 	}
 	
 	@Override
@@ -127,6 +146,22 @@ public class RestaurantDetailFragment extends Fragment {
 	
 	@SuppressLint("NewApi")
 	public void updateDetailFragmentView() {
+
+	    /*new Thread(new Runnable(){
+	        @Override
+	         public void run() {
+	            try {
+        			int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
+            		bgImage = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
+            		if (bgImage != null) {
+            			rlDetail.setBackground(new BitmapDrawable(getResources(), bgImage));
+            		}
+	             } catch (Exception ex) {
+	                ex.printStackTrace();
+	             }
+	           } 
+	    }).start();*/
+
 		//tvGoogleRating.setText(Double.toString(restaurant.getGoogle_rating()));	
 		switch (restaurant.getPrice_level()) {
 			case 0: tvPrice.setText("$"); break;
@@ -163,9 +198,11 @@ public class RestaurantDetailFragment extends Fragment {
 		} else {
 			tvWebsite.setVisibility(TextView.GONE);
 		}
-		if (bgImage != null) {
-			rlDetail.setBackground(new BitmapDrawable(getResources(), bgImage));
+		if (restaurant.getDisplayPhoto() != null) {
+			rlDetail.setBackground(new BitmapDrawable(getResources(), restaurant.getDisplayPhoto()));
+			//rlDetail.setAlpha(2/10);
 		}
+		
 		/*int imageResource = getResources().getIdentifier("res1", "drawable",
 				"com.codepath.apps.tastebuds.fragments");
 		Drawable res = getResources().getDrawable(imageResource);
@@ -209,5 +246,34 @@ public class RestaurantDetailFragment extends Fragment {
 			throw new ClassCastException(activity.toString()
 					+ " must implement RestaurantReviewDialog.UserRestaurantReviewListListener");
 		}
-	}	
+	}
+	
+	//The types specified here are the input data type, the progress type, and the result type
+	private class PhotosAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+	  protected void onPreExecute() {}
+
+	  protected Bitmap doInBackground(String... strings) {
+	      String reference = strings[0];
+	      int maxWidth = Integer.parseInt(strings[1]);
+	      return placesApi.getRestaurantDisplayPhoto(reference, maxWidth);
+	  }
+
+	  //protected void onProgressUpdate(Progress... values) {
+	     // Executes whenever publishProgress is called from doInBackground
+	     // Used to update the progress indicator
+	    // progressBar.setProgress(values[0]);
+	  //}  
+
+	  @SuppressLint("NewApi")
+	  protected void onPostExecute(Bitmap result) {
+	      // This method is executed in the UIThread
+	      // with access to the result of the long running task
+		  if (result != null) {
+			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
+			  image.setAlpha(2/10);
+			  rlDetail.setBackground(image);
+		  }
+	  }
+	}
 }
