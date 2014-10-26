@@ -1,6 +1,8 @@
 package com.codepath.apps.tastebuds.fragments;
 
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
+import com.codepath.apps.tastebuds.adapters.GridImageAdapter;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
@@ -51,6 +55,9 @@ public class RestaurantDetailFragment extends Fragment {
 	private PlacesPhotoData photoData;
 	private GooglePlacesApiClient placesApi;
 	public Restaurant restaurant;
+	private GridImageAdapter aImageResults;
+	private ArrayList<Bitmap> images;
+	private GridView gvImages;
 	
 	public interface RestaurantDetailListener {
 		public void onCallRestaurant(String phoneNumber);
@@ -68,18 +75,10 @@ public class RestaurantDetailFragment extends Fragment {
 		placesApi = new GooglePlacesApiClient();
 		PhotosAsyncTask task = new PhotosAsyncTask();
 		task.execute(new String[] { photoData.reference, Integer.toString(photoData.width) });
-	    /*new Thread(new Runnable(){
-        @Override
-         public void run() {
-            try {
-    			int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
-        		bgImage = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
-        		restaurant.setDisplayPhoto(bgImage);
-             } catch (Exception ex) {
-                ex.printStackTrace();
-             }
-           } 
-    	}).start();*/
+		for (PlacesPhotoData photo : restaurant.getPhotoReferences()) {
+			AllPhotosAsyncTask allPhotostask = new AllPhotosAsyncTask();
+			allPhotostask.execute(new String[] { photo.reference, Integer.toString(photo.width) });
+		}
 	}
 	
 	@Override
@@ -100,6 +99,10 @@ public class RestaurantDetailFragment extends Fragment {
 		btnDish = (CircleButton) v.findViewById(R.id.btnDishRestaurantDetail);
 		btnMap = (CircleButton) v.findViewById(R.id.btnDirectionsRestaurantDetail);
 		btnBookmark = (CircleButton) v.findViewById(R.id.btnBookmarkRestaurantDetail);
+		gvImages = (GridView) v.findViewById(R.id.gvImages);
+		images = new ArrayList<Bitmap>();
+		aImageResults = new GridImageAdapter(getActivity(), images);
+		gvImages.setAdapter(aImageResults);
 		
 		btnCall.setOnClickListener(new OnClickListener() {
 	        public void onClick(View v) {
@@ -271,8 +274,37 @@ public class RestaurantDetailFragment extends Fragment {
 	      // with access to the result of the long running task
 		  if (result != null) {
 			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
-			  //image.setAlpha(2/10);
+			  image.setAlpha(50);
 			  rlDetail.setBackground(image);
+		  }
+	  }
+	}
+	
+	//The types specified here are the input data type, the progress type, and the result type
+	private class AllPhotosAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+	  protected void onPreExecute() {}
+
+	  protected Bitmap doInBackground(String... strings) {
+	      String reference = strings[0];
+	      int maxWidth = Integer.parseInt(strings[1]);
+	      return placesApi.getRestaurantDisplayPhoto(reference, maxWidth);
+	  }
+
+	  //protected void onProgressUpdate(Progress... values) {
+	     // Executes whenever publishProgress is called from doInBackground
+	     // Used to update the progress indicator
+	    // progressBar.setProgress(values[0]);
+	  //}  
+
+	  @SuppressLint("NewApi")
+	  protected void onPostExecute(Bitmap result) {
+	      // This method is executed in the UIThread
+	      // with access to the result of the long running task
+		  if (result != null) {
+			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
+			  aImageResults.add(result);
+			  aImageResults.notifyDataSetChanged();
 		  }
 	  }
 	}

@@ -134,13 +134,17 @@
 	        </LinearLayout>
 	    </RelativeLayout>
 	
+	    <View
+             android:layout_width="fill_parent"
+             android:layout_height="2dp"
+             android:background="#c0c0c0"/>
 	    <LinearLayout
 	        android:id="@+id/linearLayout1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
 	        android:orientation="vertical"
-        	android:paddingTop="8sp"
+        	android:paddingTop="16sp"
             android:paddingLeft="8sp"
    			android:paddingRight="8sp" >
 	       <TextView
@@ -160,9 +164,27 @@
 		        android:text="TextView" />
 	    </LinearLayout>
 	
-	    <GridLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content">
-	    </GridLayout>
+	        <View
+             android:layout_width="fill_parent"
+             android:layout_height="2dp"
+             android:paddingTop="16sp"
+             android:background="#c0c0c0"/>
+
+	     <TextView
+		        android:id="@+id/tvPhotosRestaurantDetail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Photos"
+		        android:textStyle="bold"
+		        android:paddingLeft="8sp"
+	        	android:paddingTop="16sp" />
+	    <GridView
+	        android:id="@+id/gvImages"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:numColumns="4"
+	        android:paddingLeft="8sp"
+	        android:paddingRight="8sp">
+	    </GridView>
 	</LinearLayout>
 </RelativeLayout>
