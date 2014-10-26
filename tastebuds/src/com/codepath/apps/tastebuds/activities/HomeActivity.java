@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -259,8 +260,11 @@ public class HomeActivity extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-	finish();
-	overridePendingTransition(R.anim.left_in, R.anim.right_out);
+		finish();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
     }
 }
 	

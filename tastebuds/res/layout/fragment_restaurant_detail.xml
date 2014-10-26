@@ -1,81 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"
-    android:layout_alignParentBottom="true" >
+    android:layout_alignParentTop="true" >
 
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"> 
 	    <RelativeLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="200sp"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentTop="true" >
-	
+	        android:id="@+id/rldetailImage"
+	        android:layout_width="match_parent"
+	        android:layout_height="240sp">
+	        <ImageView
+	            android:id="@+id/ivBackground"
+	            android:layout_width="fill_parent"
+	            android:layout_height="match_parent"
+	            android:src="@drawable/res1"
+	            android:alpha=".2" 
+	            android:scaleType="centerCrop"/>
 	        <TextView
-	            android:id="@+id/textView1"
+	            android:id="@+id/tvNameRestaurantDetail"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_alignParentTop="true"
 	            android:text="Medium Text"
-	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	            android:textAppearance="?android:attr/textAppearanceMedium" 
+	            android:paddingTop="8sp"
+	            android:paddingLeft="8sp"
+    			android:paddingRight="8sp"/>
 	
 	        <TextView
-	            android:id="@+id/textView2"
+	            android:id="@+id/tvAddressRestaurantDetail"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignLeft="@+id/textView1"
-	            android:layout_below="@+id/textView1"
-	            android:text="TextView" />
-
-<!--      	   <LinearLayout
-		        android:layout_width="wrap_content"
-		        android:layout_height="32sp"
-		        android:layout_alignParentLeft="true"
-		        android:layout_alignParentRight="true"
-		        android:layout_alignParentBottom="true" 
-		        android:orientation="horizontal">
-
-		       <com.codepath.apps.tastebuds.ui.CircleButton
-		           android:id="@+id/btnCallRestaurantDetail"
-		           android:layout_width="32sp"
-		           android:layout_height="32sp"
-		           android:layout_marginBottom="8sp"
-		           android:layout_marginleft="16sp"
-		           android:src="@drawable/ic_action_egg"
-		           app:cb_color="#99CC00" />
+	            android:layout_alignLeft="@+id/tvNameRestaurantDetail"
+	            android:layout_below="@+id/tvNameRestaurantDetail"
+	            android:text="TextView"
+	            android:paddingLeft="8sp"
+    			android:paddingRight="8sp"
+    			android:maxLines="2"/>
 	
-		       <com.codepath.apps.tastebuds.ui.CircleButton
-		           android:id="@+id/btnDirectionsRestaurantDetail"
-		           android:layout_width="32sp"
-		           android:layout_height="32sp"
-		           android:layout_marginBottom="8sp"
-		           android:layout_marginleft="16sp"
-		           android:src="@drawable/ic_action_egg"
-		           app:cb_color="#99CC00" />
-		       <com.codepath.apps.tastebuds.ui.CircleButton
-		           android:id="@+id/btnReviewRestaurantDetail"
-		           android:layout_width="32dip"
-		           android:layout_height="32dip"
-		           android:layout_marginBottom="8sp"
-		           android:layout_marginleft="16sp"
-		           android:src="@drawable/ic_action_egg"
-		           app:cb_color="#99CC00" />
-		       <com.codepath.apps.tastebuds.ui.CircleButton
-		           android:id="@+id/btnRateRestaurantDetail"
-		           android:layout_width="48dip"
-		           android:layout_height="48dip"
-		           android:layout_alignParentBottom="true"
-		           android:layout_alignParentLeft="true"
-		           android:layout_centerHorizontal="true"
-		           android:layout_marginBottom="8sp"
-		           android:layout_marginleft="8sp"
-		           android:src="@drawable/ic_action_egg"
-		           app:cb_color="#99CC00" />
-		       </LinearLayout> -->
+	        <RatingBar
+	            android:id="@+id/rbRatingRestaurantDetail"
+	            style="?android:attr/ratingBarStyleSmall"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:paddingTop="8sp"
+    			android:paddingRight="-8sp"/>
+	
+	        <TextView
+	            android:id="@+id/tvDollarsRestaurantDetail"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+				android:layout_below="@+id/rbRatingRestaurantDetail"
+	            android:layout_alignParentRight="true"
+	            android:text="TextView"
+    			android:paddingRight="16sp" />
+	
+	        <LinearLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="64sp"
+	            android:layout_alignParentBottom="true"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentRight="true"
+	            android:orientation="horizontal"
+	            android:weightSum="5">
+
+	            <com.codepath.apps.tastebuds.ui.CircleButton
+	                android:id="@+id/btnCallRestaurantDetail"
+	                android:layout_width="56sp"
+	                android:layout_height="56sp"
+	                android:layout_marginBottom="8sp"
+	                android:src="@drawable/ic_call"
+	                app:cb_color="#99CC00"
+	                android:layout_weight="1" />
+	
+	            <com.codepath.apps.tastebuds.ui.CircleButton
+	                android:id="@+id/btnDirectionsRestaurantDetail"
+	                android:layout_width="56sp"
+	                android:layout_height="56sp"
+	                android:layout_marginBottom="8sp"
+	                android:src="@drawable/ic_map"
+	                app:cb_color="#525252"
+	                android:layout_weight="1" />
+	
+	            <com.codepath.apps.tastebuds.ui.CircleButton
+	                android:id="@+id/btnBookmarkRestaurantDetail"
+	                android:layout_width="56sp"
+	                android:layout_height="56sp"
+	                android:layout_marginBottom="8sp"
+	                android:src="@drawable/ic_bookmark"
+	                app:cb_color="#525252"
+	                android:layout_weight="1" />
+	
+	            <com.codepath.apps.tastebuds.ui.CircleButton
+	                android:id="@+id/btnReviewRestaurantDetail"
+	                android:layout_width="56sp"
+	                android:layout_height="56sp"
+	                android:layout_marginBottom="8sp"
+	                android:src="@drawable/ic_pen"
+	                app:cb_color="#525252"
+	                android:layout_weight="1" />
+	            
+	            <com.codepath.apps.tastebuds.ui.CircleButton
+	                android:id="@+id/btnDishRestaurantDetail"
+	                android:layout_width="56sp"
+	                android:layout_height="56sp"
+	                android:layout_marginBottom="8sp"
+	                android:src="@drawable/ic_plus"
+	                app:cb_color="#525252"
+	                android:layout_weight="1" />
+	        </LinearLayout>
 	    </RelativeLayout>
-	</RelativeLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/linearLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:orientation="vertical"
+        	android:paddingTop="8sp"
+            android:paddingLeft="8sp"
+   			android:paddingRight="8sp" >
+	        <!-- TextView
+		        android:id="@+id/tvAddressRestaurantDetail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="TextView" /-->
+	        <TextView
+	            android:id="@+id/tvPhoneRestaurantDetail"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="TextView" />
+	        <TextView
+		        android:id="@+id/tvHoursRestaurantDetail"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="TextView" />
+	    </LinearLayout>
+	
+	    <GridLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	    </GridLayout>
+	</LinearLayout>
+</RelativeLayout>
