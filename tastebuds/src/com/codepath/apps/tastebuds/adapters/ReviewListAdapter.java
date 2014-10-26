@@ -22,6 +22,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 	implements OnItemClickListener {
@@ -65,6 +66,11 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 
 		try {
 			username.setText(review.getUser().fetchIfNeeded().getString("username"));
+			String profImgURL = review.getUser().getString("profileImgURL");
+			if(profImgURL != null){
+				
+				Picasso.with(getContext()).load(profImgURL).resize(90, 90).centerCrop().into(userImage);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
