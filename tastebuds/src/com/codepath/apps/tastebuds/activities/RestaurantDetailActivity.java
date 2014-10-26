@@ -122,23 +122,25 @@ public class RestaurantDetailActivity extends FragmentActivity
 		actionBar.selectTab(tab1);
 		
 		Tab tab2 = actionBar
-			.newTab()
-			.setText("Dishes")
-			.setTag("DishListFragment")
-			.setTabListener(
-			    new FragmentTabListener<DishListFragment>(R.id.ctRestaurantsLists, this, "second",
-								DishListFragment.class, args));
-
-		actionBar.addTab(tab2);
-
-		Tab tab3 = actionBar
 				.newTab()
 				.setText("Reviews")
 				.setTag("RestaurantReviewListFragment")
 				.setTabListener(
-					new FragmentTabListener<RestaurantReviewListFragment>(R.id.ctRestaurantsLists, this, "third",
+					new FragmentTabListener<RestaurantReviewListFragment>(R.id.ctRestaurantsLists, this, "second",
 									RestaurantReviewListFragment.class, args));
+		actionBar.addTab(tab2);
+		
+		Tab tab3 = actionBar
+			.newTab()
+			.setText("Dishes")
+			.setTag("DishListFragment")
+			.setTabListener(
+			    new FragmentTabListener<DishListFragment>(R.id.ctRestaurantsLists, this, "third",
+								DishListFragment.class, args));
+
 		actionBar.addTab(tab3);
+
+
 	}
 
 

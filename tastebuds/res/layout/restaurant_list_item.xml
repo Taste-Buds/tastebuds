@@ -66,14 +66,25 @@
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <ImageView
+        android:id="@+id/ivDishGraphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rbTasteBudsRating"
+        android:layout_below="@+id/rbTasteBudsRating"
+        android:src="@drawable/ic_dish_review" />
+
     <TextView
         android:id="@+id/tvNumberofDishReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rbTasteBudsRating"
-        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/ivDishGraphic"
+        android:layout_alignBaseline="@+id/ivDishGraphic"
         android:layout_below="@+id/rbTasteBudsRating"
-        android:drawableLeft="@drawable/ic_dish_review"
+        android:paddingLeft="3sp"
+        android:paddingRight="6sp"
+        android:paddingTop="6sp"
+        android:paddingBottom="6sp"
         android:text="11" />
     
 </RelativeLayout>
