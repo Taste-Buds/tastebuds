@@ -9,7 +9,6 @@
         android:id="@+id/llsearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 <!--  
     <com.rockerhieu.emojicon.EmojiconTextView
@@ -28,19 +27,18 @@
     <FrameLayout
             android:id="@+id/emojicons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           />
+            android:layout_height="wrap_content"/>
   <!--     <fragment
             android:id="@+id/emojicons"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             class="com.rockerhieu.emojicon.EmojiconsFragment"/>-->
- </LinearLayout>
+</LinearLayout>
     <ListView
         android:id="@+id/lvRestaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       
+        android:layout_below="@+id/llsearch"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"

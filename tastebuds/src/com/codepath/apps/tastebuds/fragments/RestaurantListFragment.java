@@ -311,9 +311,11 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			@Override
 			public boolean onMenuItemActionExpand(MenuItem item) {
 				Log.d("Debug","onMenuItemActionExpand");
+				showSoftKeyBoard();
 				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 				ft.show(nf);
 				ft.commit();
+				
 				return true;
 
 			}
@@ -346,7 +348,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 				ft.show(nf);
 				ft.commit();
-
+				
 			}
 		});
 		// mEditEmojicon.setOnQueryTextListener(queryTextListener);
@@ -371,34 +373,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				return false;
 			}
 		});
-		//    mEditEmojicon.setOnQueryTextListener(new OnQueryTextListener() {
-		//	       @Override
-		//	       public boolean onQueryTextSubmit(String query) {
-		//	            // perform query here
-		//	    		restaurants.clear();
-		//	    		placeIds.clear();
-		//	    		newPlaceIds.clear();
-		//	    		parsingPageToken = 0;
-		//	    	   String search = query;
-		//	    	   String nextPageToken = "None";
-		//	    	   restaurantsFromGooglePlacesApi(search, nextPageToken);
-		//	    	   // Dismiss Keyboard
-		//	    	   hideSoftKeyBoard();	    	   
-		//	            return true;
-		//	       }
-		//
-		//	       @Override
-		//	       public boolean onQueryTextChange(String newText) {
-		//	           return false;
-		//	       }
-		//	   });
-		//	    searchView.setOnCloseListener(new OnCloseListener() {
-		//	        @Override
-		//	        public boolean onClose() {
-		//	            Log.d("Debug","Testing. 1, 2, 3...");
-		//	            return false;
-		//	        }
-		//	    });
+
 	}
 
 	private void hideSoftKeyBoard() {
@@ -406,6 +381,14 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		if(imm.isAcceptingText()) {                      
 			imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+		}
+	}
+	
+	private void showSoftKeyBoard() {
+		Context context = getActivity().getBaseContext();
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(imm != null) {     
+			imm.showSoftInput(mEditEmojicon, InputMethodManager.SHOW_IMPLICIT);
 		}
 	}
 
