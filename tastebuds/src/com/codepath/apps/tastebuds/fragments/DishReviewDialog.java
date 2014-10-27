@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -31,6 +32,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.rockerhieu.emojicon.EmojiconsFragment;
 
 public class DishReviewDialog extends DialogFragment {
 
@@ -57,8 +59,17 @@ public class DishReviewDialog extends DialogFragment {
         args.putString("dish_id", dishId);
         args.putString("dish_name", dishName);
         dialog.setArguments(args);
+   //     setEmojiconFragment(false);
         return dialog;
     }
+//    
+//	private void setEmojiconFragment(boolean useSystemDefault) {
+//		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+//		nf = (EmojiconsFragment) EmojiconsFragment.newInstance(useSystemDefault);
+//		ft.add(R.id.emojicons, nf,"main");
+//		ft.hide(nf);
+//		ft.commit();
+//	}
 
     public interface DishReviewDialogListener {
     	void onFinishReviewComposeDialog(DishReview review);
