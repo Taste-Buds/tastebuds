@@ -50,7 +50,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
         user = ParseUser.getCurrentUser();
         searchType = getArguments().getString("searchType");
         searchTerm = getArguments().getString("searchType");
-        List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
+        //List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
 	}
 
 	@Override
@@ -60,9 +60,8 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 		lvUserReviews = (ListView) view.findViewById(R.id.lvUserReviews);
 		mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
 		mProgress.setVisibility(ProgressBar.VISIBLE);
-		
-		ParseQuery<Tag> tagQuery = Tag.getQuery(tags);
-		
+		/*
+		ParseQuery<Tag> tagQuery = Tag.getQuery(tags);		
 	    if (searchTerm.equals("Tags")) {
 	        tagQuery.findInBackground(new FindCallback<Tag>() {
 				@Override
@@ -79,7 +78,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 							ParseObject friend = (ParseObject) friends.get(i);
 							friendList.add(friend);
 						}
-						/*
+						
 						ParseQuery<RestaurantReview> reviewQuery = RestaurantReview.getQuery(placeIds,
 								friendList);						
 						reviewQuery.findInBackground(new FindCallback<RestaurantReview>() {
@@ -95,13 +94,13 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 							
 							}							
 						}
-						*/
+						
 						
 				}
 
 			});
 	    }
-	    		
+	    */		
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
 	    if (searchTerm.equals("User")) {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
