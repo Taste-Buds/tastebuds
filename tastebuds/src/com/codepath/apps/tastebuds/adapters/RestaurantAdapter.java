@@ -16,7 +16,10 @@ import com.squareup.picasso.Picasso;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +52,13 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		RatingBar rbTasteBudsRating = (RatingBar) v.findViewById(R.id.rbTasteBudsRating);
 		String numberOfReviewString = Integer.toString(restaurant.getNumOfReviews());
 		float friendRating = (restaurant.getFriendRating());
+		
 		rbTasteBudsRating.setRating(friendRating);
+		LayerDrawable stars = (LayerDrawable) rbTasteBudsRating.getProgressDrawable();
+		//stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
 		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
 		tvNumberofReviews.setText(numberOfReviewString);
 		TextView tvDistance = (TextView) v.findViewById(R.id.tvDistance);

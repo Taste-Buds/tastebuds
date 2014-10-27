@@ -29,14 +29,13 @@
 
     <RatingBar
         android:id="@+id/rbTasteBudsRating"
-        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvRestaurantName"
         android:layout_toRightOf="@+id/ivRestaurantImage"
-        android:layout_marginLeft="8sp"
-        android:isIndicator="true" />
-
+        android:layout_marginLeft="8sp" 
+        style="?android:attr/ratingBarStyleSmall" />
+        
     <TextView
         android:id="@+id/tvDistance"
         android:layout_width="wrap_content"
