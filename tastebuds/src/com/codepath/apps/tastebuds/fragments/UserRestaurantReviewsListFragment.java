@@ -102,7 +102,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 	    }
 	    */		
 	    ParseQuery<ParseUser> userQuery = ParseUser.getQuery().whereEqualTo("fbId", userId);
-	    if (searchTerm.equals("User")) {
+	    //if (searchTerm.equals("User")) {
 	        userQuery.findInBackground(new FindCallback<ParseUser>() {
 
 				@Override
@@ -115,7 +115,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
 				}
 
 			});
-	    }
+	    //}
 
 
 		return view;
