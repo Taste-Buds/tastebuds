@@ -79,7 +79,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_user_profile);
-		searchType = getIntent().getStringExtra("SearchType");
+		//searchType = getIntent().getStringExtra("SearchType");
 		userId = getIntent().getStringExtra("user_id");
 		if(userId == null){
 			user = ParseUser.getCurrentUser();
@@ -117,7 +117,7 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(true);
 		Bundle args = new Bundle();
-		args.putString("searchType", searchType);
+		//args.putString("searchType", searchType);
 		args.putString("user_id", userId);
 		Tab tab1 = actionBar
 			.newTab()

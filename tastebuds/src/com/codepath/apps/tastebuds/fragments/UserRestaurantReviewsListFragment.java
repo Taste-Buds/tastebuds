@@ -48,8 +48,8 @@ public class UserRestaurantReviewsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         userId = getArguments().getString("user_id");
         user = ParseUser.getCurrentUser();
-        searchType = getArguments().getString("searchType");
-        searchTerm = getArguments().getString("searchType");
+        //searchType = getArguments().getString("searchType");
+        //searchTerm = getArguments().getString("searchType");
         //List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
 	}
 
