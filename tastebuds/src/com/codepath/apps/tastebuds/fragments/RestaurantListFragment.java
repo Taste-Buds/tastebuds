@@ -91,6 +91,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		restaurantsFromGooglePlacesApi(search, nextPageToken);
 		setHasOptionsMenu(true);
 
+		setEmojiconFragment(false);
 	}
 
 	public interface RestaurantListListener {
@@ -103,7 +104,6 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 		View v = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 
-		setEmojiconFragment(false);
 
 		lvRestaurants = (ListView) v.findViewById(R.id.lvRestaurants);
 		lvRestaurants.setAdapter(restaurantAdapter);
