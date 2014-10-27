@@ -75,15 +75,16 @@ public class RestaurantDetailFragment extends Fragment {
 		placesApi = new GooglePlacesApiClient();
 		PhotosAsyncTask task = new PhotosAsyncTask();
 		if(photoData != null){
-		task.execute(new String[] { 
-				photoData.reference, Integer.toString(photoData.width)
+			task.execute(new String[] { 
+				photoData.reference, Integer.toString(photoData.width > 300 ? 300 : photoData.width)
 				});
 		}
 		if(restaurant.getPhotoReferences() != null){
-		for (PlacesPhotoData photo : restaurant.getPhotoReferences()) {
-			AllPhotosAsyncTask allPhotostask = new AllPhotosAsyncTask();
-			allPhotostask.execute(new String[] { photo.reference, Integer.toString(photo.width) });
-		}
+			for (PlacesPhotoData photo : restaurant.getPhotoReferences()) {
+				AllPhotosAsyncTask allPhotostask = new AllPhotosAsyncTask();
+				allPhotostask.execute(new String[] { photo.reference,
+						Integer.toString(photo.width > 300 ? 300 : photo.width)});
+			}
 		}
 	}
 	
@@ -155,22 +156,6 @@ public class RestaurantDetailFragment extends Fragment {
 	
 	@SuppressLint("NewApi")
 	public void updateDetailFragmentView() {
-
-	    /*new Thread(new Runnable(){
-	        @Override
-	         public void run() {
-	            try {
-        			int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
-            		bgImage = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
-            		if (bgImage != null) {
-            			rlDetail.setBackground(new BitmapDrawable(getResources(), bgImage));
-            		}
-	             } catch (Exception ex) {
-	                ex.printStackTrace();
-	             }
-	           } 
-	    }).start();*/
-
 		//tvGoogleRating.setText(Double.toString(restaurant.getGoogle_rating()));	
 		switch (restaurant.getPrice_level()) {
 			case 0: tvPrice.setText("$"); break;

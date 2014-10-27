@@ -7,10 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -174,27 +177,12 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 					e.printStackTrace();
 				}
 				restaurantAdapter.notifyDataSetChanged();
-			    new Thread(new Runnable(){
-			        @Override
-			         public void run() {
-			            try {
-			            	for (Restaurant rest : newRestaurants) {
-			            		try {
-			            			int maxWidth = rest.getDisplayPhotoReference().width == 0 ? 300 :
-			            				rest.getDisplayPhotoReference().width;
-//				            		Bitmap photo = placesApi.getRestaurantDisplayPhoto(
-//				            				rest.getDisplayPhotoReference().reference, maxWidth);
-//				            		rest.setDisplayPhoto(photo);
-//				    				restaurantAdapter.notifyDataSetChanged();
-			            		} catch (Exception e) {
-			            			continue;
-			            		}
-			            	}
-			             } catch (Exception ex) {
-			                ex.printStackTrace();
-			             }
-			           } 
-			    }).start();
+            	for (Restaurant rest : newRestaurants) {
+            		if (rest.getDisplayPhotoReference() != null) {
+            			PhotosAsyncTask photostask = new PhotosAsyncTask();
+            			photostask.execute(rest);
+            		}
+            	}
 			}
 			@Override
 			public void onFailure(Throwable e, JSONObject errorResponse) {
@@ -454,4 +442,32 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		EmojiconsFragment.backspace(mEditEmojicon);
 	}
 
+	//The types specified here are the input data type, the progress type, and the result type
+	private class PhotosAsyncTask extends AsyncTask<Restaurant, Void, Bitmap> {
+
+	  private Restaurant restaurant;
+	  protected void onPreExecute() {}
+	  
+		@Override
+		protected Bitmap doInBackground(Restaurant... params) {
+			restaurant = params[0];
+			int maxWidth = restaurant.getDisplayPhotoReference().width == 0 ? 300 :
+				restaurant.getDisplayPhotoReference().width;
+			maxWidth = maxWidth > 300 ? 300 : maxWidth;
+			Bitmap photo = placesApi.getRestaurantDisplayPhoto(
+					restaurant.getDisplayPhotoReference().reference, maxWidth);
+			return photo;
+		}
+
+
+	  @SuppressLint("NewApi")
+	  protected void onPostExecute(Bitmap result) {
+	      // This method is executed in the UIThread
+	      // with access to the result of the long running task
+		  if (result != null) {
+				restaurant.setDisplayPhoto(result);
+				restaurantAdapter.notifyDataSetChanged();
+		  }
+	  }
+	}
 }
