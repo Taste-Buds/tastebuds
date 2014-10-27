@@ -75,6 +75,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	private List<Restaurant> newRestaurants;
 	private GooglePlacesApiClient placesApi;
 	private RestaurantListListener listener;
+	private String search;
 
 	EmojiconEditText mEditEmojicon;
 	EmojiconTextView mTxtEmojicon;
@@ -90,10 +91,9 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		friendsFromFacebook();
 		parsingPageToken = 0;
 		nextPageToken = "None";
-		String search = "None";
+		search = "None";
 		restaurantsFromGooglePlacesApi(search, nextPageToken);
 		setHasOptionsMenu(true);
-
 		setEmojiconFragment(false);
 	}
 
@@ -121,7 +121,6 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			public void onLoadMore(int page, int totalItemsCount) {
 				// Triggered only when new data needs to be appended to the list
 				// Add whatever code is needed to append new items to your AdapterView
-				String search = "None";
 				restaurantsFromGooglePlacesApi(search, nextPageToken);
 				restaurantAdapter.notifyDataSetChanged();
 			}
@@ -295,7 +294,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 			@Override
 			public void onClick(View v) {
-				restaurants.clear();
+				restaurantAdapter.clear();
 				placeIds.clear();
 				newPlaceIds.clear();
 				parsingPageToken = 0;
@@ -329,9 +328,9 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				placeIds.clear();
 				newPlaceIds.clear();
 				parsingPageToken = 0;
-				String search = "None";
-				String nextPageToken = "None";
-				restaurantsFromGooglePlacesApi(search, nextPageToken);
+				//String search = "None";
+				//String nextPageToken = "None";
+				//restaurantsFromGooglePlacesApi(search, nextPageToken);
 				return true;
 			}
 		});
