@@ -36,7 +36,7 @@ public class RestaurantReviewDialog extends DialogFragment {
 	private TextView tvRestaurantName;
 	private TextView tvTags;
 	private AutoCompleteTextView etTags;
-	private TextView etWords;
+	//private TextView etWords;
 	private EditText etReview;
 	private RatingBar rbRating;
 	private Button btnTaste;
@@ -78,7 +78,7 @@ public class RestaurantReviewDialog extends DialogFragment {
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
 
 
-        etWords = (TextView) view.findViewById(R.id.etWords);
+        /*etWords = (TextView) view.findViewById(R.id.etWords);
         final TextWatcher txwatcher = new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -95,7 +95,7 @@ public class RestaurantReviewDialog extends DialogFragment {
 			public void afterTextChanged(Editable s) {
 			}
 		};
-		etReview.addTextChangedListener(txwatcher);
+		etReview.addTextChangedListener(txwatcher);*/
 
 		tagStrings = new ArrayList<String>();
 		ParseQuery<Tag> query = Tag.getQuery();
@@ -149,6 +149,6 @@ public class RestaurantReviewDialog extends DialogFragment {
     		return;
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-    			ViewGroup.LayoutParams.MATCH_PARENT);
+    			ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

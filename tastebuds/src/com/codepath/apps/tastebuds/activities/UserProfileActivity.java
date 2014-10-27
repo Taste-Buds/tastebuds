@@ -121,8 +121,8 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 		args.putString("user_id", userId);
 		Tab tab1 = actionBar
 			.newTab()
-			.setText("Restaurant Reviews")
-			.setIcon(R.drawable.ic_launcher)
+			.setText("Restaurants")
+			.setIcon(R.drawable.ic_restaurant)
 			.setTag("UserRestaurantReviewsListFragment")
 			.setTabListener(
 				new FragmentTabListener<UserRestaurantReviewsListFragment>(R.id.flProfile, this, "first",
@@ -133,8 +133,8 @@ public class UserProfileActivity extends SherlockFragmentActivity implements Use
 
 		Tab tab2 = actionBar
 			.newTab()
-			.setText("Dish Reviews")
-			.setIcon(R.drawable.ic_launcher)
+			.setText("Dishes")
+			.setIcon(R.drawable.ic_dish_review)
 			.setTag("UserDishReviewsListFragment")
 			.setTabListener(
 			    new FragmentTabListener<UserDishReviewsListFragment>(R.id.flProfile, this, "second",

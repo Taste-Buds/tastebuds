@@ -3,7 +3,9 @@ package com.codepath.apps.tastebuds.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,7 +43,7 @@ public class DishReviewDialog extends DialogFragment {
 	private TextView tvDish;
 	private TextView tvTags;
 	private AutoCompleteTextView etTags;
-	private TextView etWords;
+	//private TextView etWords;
 	private EditText etReview;
 	private AutoCompleteTextView etDish;
 	private RatingBar rbRating;
@@ -93,8 +96,7 @@ public class DishReviewDialog extends DialogFragment {
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
 
-
-        etWords = (TextView) view.findViewById(R.id.etWords);
+        /*etWords = (TextView) view.findViewById(R.id.etWords);
 
         final TextWatcher txwatcher = new TextWatcher() {
 			@Override
@@ -112,7 +114,7 @@ public class DishReviewDialog extends DialogFragment {
 			public void afterTextChanged(Editable s) {
 			}
 		};
-		etReview.addTextChangedListener(txwatcher);
+		etReview.addTextChangedListener(txwatcher);*/
 
 		tagStrings = new ArrayList<String>();
 		ParseQuery<Tag> query = Tag.getQuery();
@@ -181,6 +183,6 @@ public class DishReviewDialog extends DialogFragment {
     		return;
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-    			ViewGroup.LayoutParams.MATCH_PARENT);
+    		ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

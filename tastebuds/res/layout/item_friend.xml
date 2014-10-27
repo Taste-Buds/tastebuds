@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="96sp"
+    android:layout_height="80sp"
     android:paddingLeft="8sp"
     android:paddingRight="8sp" >
 
@@ -34,24 +34,48 @@
         android:layout_below="@+id/tvFriendName"
         android:text="TextView" />
 
+    <ImageView
+        android:id="@+id/ivRestaurantGraphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLocation"
+        android:layout_below="@+id/tvLocation"
+        android:src="@drawable/ic_restaurant" />
+    
     <TextView
         android:id="@+id/tvRestaurantReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvLocation"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tvFriendName"
-        android:drawableLeft="@drawable/ic_restaurant"
+        android:layout_toRightOf="@+id/ivRestaurantGraphic"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
+        android:layout_below="@+id/tvLocation"
+        android:paddingLeft="1sp"
+        android:paddingRight="6sp"
+        android:paddingTop="6sp"
+        android:paddingBottom="6sp"  
         android:text="11" />
+    
+    <ImageView
+        android:id="@+id/ivDishGraphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6sp"
+        android:layout_toRightOf="@+id/tvRestaurantReviews"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
+        android:layout_below="@+id/tvLocation"
+        android:src="@drawable/ic_dish_review" />    
 
     <TextView
         android:id="@+id/tvDishReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvLocation"
-        android:layout_alignBottom="@+id/tvLocation"
-        android:layout_alignLeft="@+id/tvRestaurantReviews"
-        android:drawableLeft="@drawable/ic_dish_review"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
+        android:layout_toRightOf="@+id/ivDishGraphic"
+        android:layout_below="@+id/tvLocation"
+        android:paddingLeft="1sp"
+        android:paddingRight="6sp"
+        android:paddingTop="6sp"
+        android:paddingBottom="6sp"
         android:text="10" />
 
 </RelativeLayout>

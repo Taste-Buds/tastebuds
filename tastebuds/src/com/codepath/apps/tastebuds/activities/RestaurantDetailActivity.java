@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;

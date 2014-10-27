@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="96sp"
+    android:layout_height="80sp"
     android:paddingLeft="8sp"
     android:paddingRight="8sp" >
 
@@ -55,22 +55,35 @@
         android:text="$"
         android:textAlignment="textEnd" />
 
+
+    <ImageView
+        android:id="@+id/ivRestaurantGraphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rbTasteBudsRating"
+        android:layout_below="@+id/rbTasteBudsRating"
+        android:src="@drawable/ic_restaurant" />
+    
     <TextView
         android:id="@+id/tvNumberofReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvDollars"
-        android:layout_alignBottom="@+id/tvDollars"
-        android:layout_toRightOf="@+id/rbTasteBudsRating"
-        android:layout_marginLeft="8sp"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
+        android:layout_toRightOf="@+id/ivRestaurantGraphic"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
+        android:layout_below="@+id/rbTasteBudsRating"
+        android:paddingLeft="1sp"
+        android:paddingRight="6sp"
+        android:paddingTop="6sp"
+        android:paddingBottom="6sp"
+        android:text="11" />    
+    
     <ImageView
         android:id="@+id/ivDishGraphic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rbTasteBudsRating"
+        android:paddingLeft="6sp"
+        android:layout_toRightOf="@+id/tvNumberofReviews"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
         android:layout_below="@+id/rbTasteBudsRating"
         android:src="@drawable/ic_dish_review" />
 
@@ -79,12 +92,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/ivDishGraphic"
-        android:layout_alignBaseline="@+id/ivDishGraphic"
+        android:layout_alignBaseline="@+id/ivRestaurantGraphic"
         android:layout_below="@+id/rbTasteBudsRating"
-        android:paddingLeft="3sp"
+        android:paddingLeft="1sp"
         android:paddingRight="6sp"
         android:paddingTop="6sp"
         android:paddingBottom="6sp"
         android:text="11" />
+    
+
     
 </RelativeLayout>

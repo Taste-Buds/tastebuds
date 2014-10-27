@@ -24,7 +24,7 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
 	private TextView tvRestaurantName;
 	private TextView tvTags;
 	private TextView etTags;
-	private TextView etWords;
+	//private TextView etWords;
 	private EditText etReview;
 	private RatingBar rbRating;
 	private Button btnTaste;
@@ -79,8 +79,8 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
 
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
         btnTaste.setVisibility(Button.GONE);
-        etWords = (TextView) view.findViewById(R.id.etWords);
-        etWords.setVisibility(Button.GONE);
+        //etWords = (TextView) view.findViewById(R.id.etWords);
+        //etWords.setVisibility(Button.GONE);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -105,6 +105,6 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
     		return;
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-    			ViewGroup.LayoutParams.MATCH_PARENT);
+    			ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }
