@@ -47,7 +47,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		TextView tvRestaurantName = (TextView) v.findViewById(R.id.tvRestaurantName);
 		tvRestaurantName.setText(restaurant.getName());
 		RatingBar rbTasteBudsRating = (RatingBar) v.findViewById(R.id.rbTasteBudsRating);
-		String numberOfReviewString = "Reviews: " + Integer.toString(restaurant.getNumOfReviews());
+		String numberOfReviewString = Integer.toString(restaurant.getNumOfReviews());
 		float friendRating = (restaurant.getFriendRating());
 		rbTasteBudsRating.setRating(friendRating);
 		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
