@@ -105,6 +105,6 @@ public class RestaurantReviewDetailDialog extends DialogFragment {
     		return;
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-    			ViewGroup.LayoutParams.MATCH_PARENT);
+    			ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

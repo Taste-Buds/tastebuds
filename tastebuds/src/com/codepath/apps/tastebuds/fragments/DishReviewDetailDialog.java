@@ -29,7 +29,7 @@ public class DishReviewDetailDialog extends DialogFragment {
 	private TextView tvRestaurantName;
 	private TextView tvTags;
 	private TextView etTags;
-	private TextView etWords;
+	//private TextView etWords;
 	private EditText etReview;
 	private EditText etDish;
 	private RatingBar rbRating;
@@ -68,7 +68,7 @@ public class DishReviewDetailDialog extends DialogFragment {
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
 
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
-        etWords = (TextView) view.findViewById(R.id.etWords);
+ //       etWords = (TextView) view.findViewById(R.id.etWords);
 
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
         btnTaste.setEnabled(false);
@@ -87,8 +87,8 @@ public class DishReviewDetailDialog extends DialogFragment {
 		try {
 			review = query.get(reviewId).fetchIfNeeded();
 			dishName = review.getRestaurantName();
-	        etWords.setText(review.getText());
-	        etWords.setEnabled(false);
+	//        etWords.setText(review.getText());
+	  //      etWords.setEnabled(false);
 	        etDish.setText(dishName);
 	        etDish.setEnabled(false);
 	        etTags.setText(review.getTags());
@@ -113,6 +113,6 @@ public class DishReviewDetailDialog extends DialogFragment {
     		return;
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-    			ViewGroup.LayoutParams.MATCH_PARENT);
+    			ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }
