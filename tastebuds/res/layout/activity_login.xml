@@ -1,27 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"  >
+    android:orientation="vertical"
+    android:layout_gravity="center">
     
 
-    <android.support.v4.view.ViewPager
+    <!-- android.support.v4.view.ViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pager"
     android:layout_width="match_parent"
-    android:layout_height="300dp" />
+    android:layout_height="300dp" /-->
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:onClick="onLoginButtonClicked"
-        android:text="@string/title_facebook_login"
-        android:paddingLeft="8sp"
-        android:paddingRight="8sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/com_facebook_button_blue"
+        android:onClick="onLoginButtonClicked"
+        android:paddingBottom="16sp"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"
+        android:text="@string/title_facebook_login"
         android:textColor="#fff"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:text="Discover great places to eat \n             around you"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
-</LinearLayout>
+</RelativeLayout>

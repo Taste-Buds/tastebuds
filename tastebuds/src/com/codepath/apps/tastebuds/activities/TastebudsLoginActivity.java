@@ -50,16 +50,17 @@ public class TastebudsLoginActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		getActionBar().hide();
 		session = Session.getActiveSession();
 		if (session !=null && session.isOpened()) {
 			//Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
 			goToHomeActivity();
 		}else{
 			setContentView(R.layout.activity_login);
-			loginPagerAdapter =
-	                new LoginPagerAdapter(getSupportFragmentManager());
-			viewPager = (ViewPager) findViewById(R.id.pager);
-			viewPager.setAdapter(loginPagerAdapter);
+			//loginPagerAdapter =
+	         //       new LoginPagerAdapter(getSupportFragmentManager());
+			///viewPager = (ViewPager) findViewById(R.id.pager);
+			//viewPager.setAdapter(loginPagerAdapter);
 			
 
 			loginButton = (Button) findViewById(R.id.loginButton);
