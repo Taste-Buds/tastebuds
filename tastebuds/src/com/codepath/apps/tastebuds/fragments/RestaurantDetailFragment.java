@@ -264,7 +264,7 @@ public class RestaurantDetailFragment extends Fragment {
 	      // This method is executed in the UIThread
 	      // with access to the result of the long running task
 		  if (result != null) {
-			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
+			  BitmapDrawable image = new BitmapDrawable(getActivity().getResources(), result);
 			  image.setAlpha(50);
 			  rlDetail.setBackground(image);
 		  }
@@ -293,9 +293,11 @@ public class RestaurantDetailFragment extends Fragment {
 	      // This method is executed in the UIThread
 	      // with access to the result of the long running task
 		  if (result != null) {
-			  BitmapDrawable image = new BitmapDrawable(getResources(), result);
-			  aImageResults.add(result);
-			  aImageResults.notifyDataSetChanged();
+			  if(getActivity().getResources() != null){
+				  BitmapDrawable image = new BitmapDrawable(getActivity().getResources(), result);
+				  aImageResults.add(result);
+				  aImageResults.notifyDataSetChanged();
+			  }
 		  }
 	  }
 	}
