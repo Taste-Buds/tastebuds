@@ -311,11 +311,12 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			@Override
 			public boolean onMenuItemActionExpand(MenuItem item) {
 				Log.d("Debug","onMenuItemActionExpand");
-				showSoftKeyBoard();
+				
+				mEditEmojicon.requestFocus();
 				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 				ft.show(nf);
 				ft.commit();
-				
+				showSoftKeyBoard();
 				return true;
 
 			}
@@ -348,12 +349,19 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 				FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 				ft.show(nf);
 				ft.commit();
-				
+			
 			}
 		});
 		// mEditEmojicon.setOnQueryTextListener(queryTextListener);
 		//searchView = (SearchView) searchItem.
-
+//		mEditEmojicon.setOnFocusChangeListener(
+//	            new View.OnFocusChangeListener() {
+//	                @Override
+//	                public void onFocusChange(View v, boolean hasFocus) {
+//	                    if (hasFocus)
+//	                             showSoftKeyBoard();
+//	                }
+//	            });
 
 		mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
@@ -376,12 +384,29 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	}
 
+//	private void hideSoftKeyBoard() {
+//		Context context = getActivity().getBaseContext();
+//		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//		if(imm.isAcceptingText()) {                      
+//			imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+//		}
+//	}
+//	
+//	private void showSoftKeyBoard() {
+//		Context context = getActivity().getBaseContext();
+//		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//		if(imm != null) {     
+//			imm.showSoftInput(mEditEmojicon, InputMethodManager.SHOW_IMPLICIT);
+//		}
+//	}
 	private void hideSoftKeyBoard() {
 		Context context = getActivity().getBaseContext();
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		if(imm.isAcceptingText()) {                      
-			imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-		}
+	//	if(imm.isAcceptingText()) {      
+		imm.hideSoftInputFromWindow(mEditEmojicon.getWindowToken(), 0);
+			//imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+	//	}
+		
 	}
 	
 	private void showSoftKeyBoard() {

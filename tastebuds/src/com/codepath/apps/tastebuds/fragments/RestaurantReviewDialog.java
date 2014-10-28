@@ -3,23 +3,34 @@ package com.codepath.apps.tastebuds.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -30,12 +41,25 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment.OnEmojiconClickedListener;
+import com.rockerhieu.emojicon.EmojiconsDialogFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
-public class RestaurantReviewDialog extends DialogFragment {
+public class RestaurantReviewDialog extends DialogFragment implements OnEmojiconClickedListener, EmojiconsDialogFragment.OnEmojiconBackspaceClickedListener{
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		  setEmojiconFragment(false);
+	}
 
 	private TextView tvRestaurantName;
 	private TextView tvTags;
-	private AutoCompleteTextView etTags;
+	//private AutoCompleteTextView etTags;
+	EmojiconEditText mEditEmojicon;
+	EmojiconsDialogFragment nf;
 	//private TextView etWords;
 	private EditText etReview;
 	private RatingBar rbRating;
@@ -45,6 +69,8 @@ public class RestaurantReviewDialog extends DialogFragment {
 	private String restaurantId;
 	public RestaurantReviewDialogListener listener;
 	private List<String> tagStrings;
+	private ImageView ivKeyboard;
+	
 
     public static RestaurantReviewDialog newInstance(String placesId, String restaurantName) {
     	RestaurantReviewDialog dialog = new RestaurantReviewDialog();
@@ -52,8 +78,17 @@ public class RestaurantReviewDialog extends DialogFragment {
         args.putString("restaurant_id", placesId);
         args.putString("restaurant_name", restaurantName);
         dialog.setArguments(args);
+        
         return dialog;
     }
+
+	private void setEmojiconFragment(boolean useSystemDefault) {
+		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		nf = (EmojiconsDialogFragment) EmojiconsDialogFragment.newInstance(useSystemDefault);
+		ft.add(R.id.restEmojicons, nf,"main");
+		ft.hide(nf);
+		ft.commit();
+	}
 
     public interface RestaurantReviewDialogListener {
     	void onFinishReviewComposeDialog(RestaurantReview review);
@@ -63,20 +98,21 @@ public class RestaurantReviewDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_compose, container);
+      
         restaurantName = getArguments().getString("restaurant_name");
         restaurantId = getArguments().getString("restaurant_id");
 
         tvRestaurantName = (TextView) view.findViewById(R.id.tvRestaurantNameCompose);
         tvRestaurantName.setText(restaurantName);
         tvTags = (TextView) view.findViewById(R.id.tvComposeTags);
-        etTags = (AutoCompleteTextView) view.findViewById(R.id.etComposeTags);
+        mEditEmojicon = (EmojiconEditText) view.findViewById(R.id.etComposeTags);
         etReview = (EditText) view.findViewById(R.id.etComposeReview);
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
 
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
-
+        ivKeyboard = (ImageView) view.findViewById(R.id.ivKeyboard);
 
         /*etWords = (TextView) view.findViewById(R.id.etWords);
         final TextWatcher txwatcher = new TextWatcher() {
@@ -96,7 +132,47 @@ public class RestaurantReviewDialog extends DialogFragment {
 			}
 		};
 		etReview.addTextChangedListener(txwatcher);*/
+       ivKeyboard.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			toggleEmojiKeyboard();
+			
+		}
+	});
 
+        OnTouchListener otl = new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				showEmojis();
+				return true;
+			}
+        };
+        mEditEmojicon.setOnTouchListener(otl);
+		mEditEmojicon.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				showEmojis();
+				hideSoftKeyBoard();
+			}
+		});
+
+		mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					// Dismiss Keyboard
+					hideSoftKeyBoard();	    	   
+					return true;
+				}
+				return false;
+			}
+		});
+
+
+        
 		tagStrings = new ArrayList<String>();
 		ParseQuery<Tag> query = Tag.getQuery();
 		query.findInBackground(new FindCallback<Tag>() {
@@ -107,7 +183,7 @@ public class RestaurantReviewDialog extends DialogFragment {
 				}
 				ArrayAdapter<String> tagsAdapter = new ArrayAdapter<String>(getActivity(),
 						android.R.layout.simple_list_item_1, tagStrings);
-				etTags.setAdapter(tagsAdapter);
+				//mEditEmojicon.setAdapter(tagsAdapter);
 			}
 		});
 
@@ -119,7 +195,7 @@ public class RestaurantReviewDialog extends DialogFragment {
         		review.setRating(rbRating.getRating());
         		review.setGooglePlacesId(restaurantId);
         		review.setUser(ParseUser.getCurrentUser());
-        		review.setTags(restaurantId, etTags.getText().toString());
+        		review.setTags(restaurantId, mEditEmojicon.getText().toString());
         		review.setRestaurantName(restaurantName);
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
@@ -140,7 +216,41 @@ public class RestaurantReviewDialog extends DialogFragment {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return view;
     }
+    private void toggleEmojiKeyboard(){
+    	if(nf.isHidden()){
+    		showEmojis();
+    	}else{
+    		hideEmojis();
+    	}
+    }
+    private void hideEmojis(){
+		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		ft.hide(nf);
+		ft.commit();
+    }
 
+    private void showEmojis(){
+		FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+		ft.show(nf);
+		ft.commit();
+    }
+	private void hideSoftKeyBoard() {
+		Context context = getActivity().getBaseContext();
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+	//	if(imm.isAcceptingText()) {      
+		imm.hideSoftInputFromWindow(mEditEmojicon.getWindowToken(), 0);
+			//imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+	//	}
+		
+	}
+	
+	private void showSoftKeyBoard() {
+		Context context = getActivity().getBaseContext();
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if(imm != null) {     
+			imm.showSoftInput(mEditEmojicon, InputMethodManager.SHOW_IMPLICIT);
+		}
+	}
     @Override
     public void onStart() {
     	super.onStart();
@@ -150,5 +260,16 @@ public class RestaurantReviewDialog extends DialogFragment {
     	}
     	getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
     			ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+    
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        EmojiconsDialogFragment.input(mEditEmojicon, emojicon);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View v) {
+        EmojiconsDialogFragment.backspace(mEditEmojicon);
     }
 }

@@ -73,7 +73,8 @@
         <activity
             android:name=".activities.RestaurantDetailActivity"
             android:label="@string/title_activity_restaurant_detail"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activities.UserProfileActivity"
