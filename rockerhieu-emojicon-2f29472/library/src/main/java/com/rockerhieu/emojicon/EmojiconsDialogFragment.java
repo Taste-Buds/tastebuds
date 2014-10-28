@@ -145,10 +145,10 @@ public class EmojiconsDialogFragment extends DialogFragment implements ViewPager
         int start = editText.getSelectionStart();
         int end = editText.getSelectionEnd();
         if (start < 0) {
-            editText.append(emojicon.getEmojiVal() +", ");
+            editText.append(emojicon.getEmoji() +", ");
         	//editText.append("coffee");
         } else {
-            editText.getText().replace(Math.min(start, end), Math.max(start, end),emojicon.getEmojiVal() +", ", 0, emojicon.getEmojiVal().length()+2);
+            editText.getText().replace(Math.min(start, end), Math.max(start, end),emojicon.getEmoji() +", ", 0, emojicon.getEmoji().length()+2);
         }
     }
 
