@@ -197,6 +197,7 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnTaste.setOnClickListener(new View.OnClickListener() {
         	@Override
             public void onClick(View v) {
+        		hideSoftKeyBoard();
         		RestaurantReview review = new RestaurantReview();
         		review.setText(etReview.getText().toString());
         		review.setRating(rbRating.getRating());
@@ -204,6 +205,7 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         		review.setUser(ParseUser.getCurrentUser());
         		review.setTags(restaurantId, mEditEmojicon.getText().toString());
         		review.setRestaurantName(restaurantName);
+        		
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }
