@@ -53,6 +53,14 @@ public class DishListAdapter extends ArrayAdapter<Dish> {
 		}
 
 		ImageView userImage = (ImageView) view.findViewById(R.id.ivReviewUser);
+		switch (position % 4) {
+		case 0: userImage.setImageResource(R.drawable.pizza); break;
+		case 1: userImage.setImageResource(R.drawable.beer); break;
+		case 2: userImage.setImageResource(R.drawable.ceasarsalad); break;
+		case 3: userImage.setImageResource(R.drawable.papdi); break;
+		default: userImage.setImageResource(R.drawable.pizza); break;
+		}
+		
 
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
