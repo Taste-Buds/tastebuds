@@ -15,7 +15,8 @@
         android:layout_marginTop="8sp"
         android:layout_marginBottom="8sp"
         android:contentDescription="@string/review_user_desc"
-        android:src="@drawable/ic_action_restaurant" />
+        android:src="@drawable/ic_action_restaurant"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvReviewUsername"

@@ -74,7 +74,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/composeDishReviewTopBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="8sp" />
+    
+     <View
+         android:layout_width="fill_parent"
+         android:layout_height="0.5dp"
+         android:layout_marginTop="8sp"
+         android:layout_below="@+id/rbComposeReviewRatings"
+         android:background="#c0c0c0"/>
 
     <EditText
         android:id="@+id/etComposeReview"
@@ -89,8 +96,14 @@
         android:isScrollContainer="true"
         android:minHeight="120sp"
         android:minLines="7"
-        android:paddingBottom="16sp"
+        android:paddingBottom="8sp"
         android:paddingTop="16sp" />
+     <View
+         android:layout_width="fill_parent"
+         android:layout_height="0.5dp"
+         android:layout_marginTop="8sp"
+         android:layout_below="@+id/rbComposeReviewRatings"
+         android:background="#c0c0c0"/>
 
     <TextView
         android:id="@+id/tvComposeTags"
