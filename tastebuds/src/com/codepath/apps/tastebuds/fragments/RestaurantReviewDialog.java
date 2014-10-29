@@ -121,14 +121,14 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
 
-       ivKeyboard.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			toggleEmojiKeyboard();
-			
-		}
-	});
+//       ivKeyboard.setOnClickListener(new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			toggleEmojiKeyboard();
+//			
+//		}
+//	});
         /*etWords = (TextView) view.findViewById(R.id.etWords);
         final TextWatcher txwatcher = new TextWatcher() {
 			@Override
