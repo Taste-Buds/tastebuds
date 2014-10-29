@@ -42,6 +42,7 @@ public class DishListFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		googlePlacesId = getArguments().getString("placeId");
         List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
+        friends.add(ParseUser.getCurrentUser());
         ParseQuery<DishReview> query = DishReview.getQuery(googlePlacesId, friends);
         dishes = new ArrayList<Dish>();
 		HashMap<String, Dish> reviewMap = new HashMap<String, Dish>();
