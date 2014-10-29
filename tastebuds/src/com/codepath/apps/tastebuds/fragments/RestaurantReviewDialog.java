@@ -139,14 +139,14 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
 			}
 		};
 		etReview.addTextChangedListener(txwatcher);*/
-       ivKeyboard.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			toggleEmojiKeyboard();
-			
-		}
-	});
+//       ivKeyboard.setOnClickListener(new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			toggleEmojiKeyboard();
+//			
+//		}
+//	});
 
         OnTouchListener otl = new OnTouchListener() {
 
