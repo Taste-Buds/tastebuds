@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +68,11 @@ public class DishListAdapter extends ArrayAdapter<Dish> {
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
+		LayerDrawable stars = (LayerDrawable) rating.getProgressDrawable();
+		stars.getDrawable(0).setColorFilter(Color.argb(255, 255, 153, 51), PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(1).setColorFilter(Color.argb(255, 255, 153, 51), PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
+				PorterDuff.Mode.SRC_ATOP);
 		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
 		time.setVisibility(TextView.GONE);
 

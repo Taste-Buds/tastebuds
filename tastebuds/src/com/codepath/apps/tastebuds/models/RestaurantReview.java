@@ -40,14 +40,14 @@ public class RestaurantReview extends ParseObject implements Review {
 	public static ParseQuery<RestaurantReview> getQuery(String ownerId){
 		ParseQuery<RestaurantReview> restQuery = ParseQuery.getQuery(
 	    		RestaurantReview.class).whereEqualTo("owner", ownerId);
-		restQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		//restQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 		return restQuery;
 	}
 	public static ParseQuery<RestaurantReview> getQuery(long googlePlacesId) {
 		ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("placesId", googlePlacesId)
 	    		.orderByDescending("createdAt");
-	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    //query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
@@ -55,7 +55,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	    ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
 	    		.whereEqualTo("owner", owner)
 	    		.orderByDescending("createdAt");
-	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    //query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
@@ -70,7 +70,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	    if (googlePlacesId != null) {
 	    	query.whereEqualTo("placesId", googlePlacesId);
 	    }
-	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    //query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
