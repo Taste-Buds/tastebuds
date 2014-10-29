@@ -236,7 +236,7 @@ public class Objects {
             Emojicon.fromChars("\ud83c\udde8\ud83c\uddf3", "turkish"),
             Emojicon.fromChars("\ud83c\uddfa\ud83c\uddf8", "american"),
             Emojicon.fromChars("\ud83c\uddeb\ud83c\uddf7", "french"),
-            Emojicon.fromChars("\ud83c\uddea\ud83c\uddf8", "spainish"),
+            Emojicon.fromChars("\ud83c\uddea\ud83c\uddf8", "spanish"),
             Emojicon.fromChars("\ud83c\uddee\ud83c\uddf9", "italian"),
            // Emojicon.fromChars("\ud83c\uddf7\ud83c\uddfa", ""),
             Emojicon.fromChars("\ud83c\uddec\ud83c\udde7", "english")
