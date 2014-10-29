@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -189,18 +190,20 @@ public class RestaurantDetailFragment extends Fragment {
 		if (restaurant.getOpenHours() != null) {
 			tvHours.setText(Html.fromHtml("<b>Hours: </b><span>" + restaurant.getOpenHours()));
 		} else {
-			tvWebsite.setVisibility(TextView.GONE);
+			tvHours.setVisibility(TextView.GONE);
 		}		
 		
 		if (restaurant.isOpen_now()) {
 			tvOpenNow.setText(Html.fromHtml("<font color=\"green\"> Open Now </font>"));
+			tvOpenNow.setTextColor(Color.GREEN);
 		} else {
 			tvOpenNow.setText(Html.fromHtml("<font color=\"red\"> Closed </font>"));
+			tvOpenNow.setTextColor(Color.RED);
 		}
 		if (restaurant.getPhone() != null) {
 			tvPhone.setText(Html.fromHtml("<b>Phone: </b><span>" + restaurant.getPhone()));
 		} else {
-			tvWebsite.setVisibility(TextView.GONE);
+			tvPhone.setVisibility(TextView.GONE);
 		}
 		if (restaurant.getDisplayPhoto() != null) {
 			rlDetail.setBackground(new BitmapDrawable(getResources(), restaurant.getDisplayPhoto()));

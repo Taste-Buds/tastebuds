@@ -136,7 +136,7 @@
 	
 	    <View
              android:layout_width="fill_parent"
-             android:layout_height="2dp"
+             android:layout_height="0.5dp"
              android:background="#c0c0c0"/>
 	    <LinearLayout
 	        android:id="@+id/linearLayout1"
@@ -166,8 +166,8 @@
 	
 	        <View
              android:layout_width="fill_parent"
-             android:layout_height="2dp"
-             android:paddingTop="16sp"
+             android:layout_height="0.5dp"
+             android:layout_marginTop="8sp"
              android:background="#c0c0c0"/>
 
 	     <TextView
