@@ -95,7 +95,7 @@
         android:inputType="textMultiLine"
         android:isScrollContainer="true"
         android:minHeight="120sp"
-        android:minLines="7"
+        android:minLines="4"
         android:paddingBottom="8sp"
         android:paddingTop="16sp" />
      <View
@@ -105,16 +105,7 @@
          android:layout_below="@+id/rbComposeReviewRatings"
          android:background="#c0c0c0"/>
 
-    <TextView
-        android:id="@+id/tvComposeTags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etComposeReview"
-        android:layout_marginTop="24sp"
-        android:paddingLeft="8sp"
-        android:text="@string/tags_text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
     <!--
            <AutoCompleteTextView
@@ -134,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvComposeTags" >
+        android:layout_below="@+id/etComposeReview" >
 
 
 
@@ -146,11 +137,19 @@
             android:orientation="horizontal"
             android:weightSum="10" >
 
+        <TextView
+	        android:id="@+id/tvComposeTags"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="8sp"
+	        android:layout_weight="3"
+	        android:text="@string/tags_text"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
             <com.rockerhieu.emojicon.EmojiconEditText
                 android:id="@+id/etComposeTags"
-                android:layout_width="300sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="7"
                 android:contentDescription="@string/tags_text"
                 android:ems="10"
                 android:text=""
