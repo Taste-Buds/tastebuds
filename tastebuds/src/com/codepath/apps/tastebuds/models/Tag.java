@@ -38,6 +38,13 @@ public class Tag extends ParseObject {
 		return query;
 	}
 
+	public static ParseQuery<Tag> getQuery(String googlePlacesId) {
+		ParseQuery<Tag> query = ParseQuery.getQuery(Tag.class);
+		query.whereEqualTo("googlePlacesId", googlePlacesId);
+		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+		return query;
+	}
+	
 	public String getGooglePlacesId() {
 		return getString("googlePlacesId");
 	}

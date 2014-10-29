@@ -2,6 +2,7 @@ package com.codepath.apps.tastebuds.adapters;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 
 import android.content.Context;
 import android.text.format.DateFormat;
@@ -77,6 +78,15 @@ public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> imp
 		super.getItemView(review, view, parent);
 
 		ImageView userImage = (ImageView) view.findViewById(R.id.ivReviewUser);
+		Random r = new Random();
+		int position = r.nextInt(4);
+		switch (position % 4) {
+		case 0: userImage.setImageResource(R.drawable.pizza); break;
+		case 1: userImage.setImageResource(R.drawable.beer); break;
+		case 2: userImage.setImageResource(R.drawable.ceasarsalad); break;
+		case 3: userImage.setImageResource(R.drawable.papdi); break;
+		default: userImage.setImageResource(R.drawable.pizza); break;
+		}
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
