@@ -85,7 +85,7 @@ public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> imp
 		case 1: userImage.setImageResource(R.drawable.beer); break;
 		case 2: userImage.setImageResource(R.drawable.ceasarsalad); break;
 		case 3: userImage.setImageResource(R.drawable.papdi); break;
-		default: userImage.setImageResource(R.drawable.pizza); break;
+		default: userImage.setImageResource(R.drawable.pizza);
 		}
 		TextView username = (TextView) view.findViewById(R.id.tvReviewUsername);
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
