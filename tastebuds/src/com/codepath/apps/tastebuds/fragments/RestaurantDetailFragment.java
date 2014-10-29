@@ -79,7 +79,8 @@ public class RestaurantDetailFragment extends Fragment {
 		PhotosAsyncTask task = new PhotosAsyncTask();
 		if(photoData != null){
 			task.execute(new String[] { 
-				photoData.reference, Integer.toString(photoData.width > 300 ? 300 : photoData.width)
+				photoData.reference, Integer.toString(
+						photoData.width > 300 ? 300 : photoData.width)
 				});
 		}
 		if(restaurant.getPhotoReferences() != null){
@@ -119,6 +120,7 @@ public class RestaurantDetailFragment extends Fragment {
 		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
 				PorterDuff.Mode.SRC_ATOP);
+		rbRating.setRating(restaurant.getFriendRating());
 
 		btnCall.setOnClickListener(new OnClickListener() {
 	        public void onClick(View v) {
@@ -177,7 +179,6 @@ public class RestaurantDetailFragment extends Fragment {
 
 		tvName.setText(Html.fromHtml("<b>" + restaurant.getName() + "</b>"));
 		tvAddress.setText(restaurant.getAddress().replace(",", "\n"));
-		rbRating.setRating(5);
 		if (restaurant.getWebsite() != null) {
 			tvWebsite.setText(Html.fromHtml("<b>Website: </b><span>" +
 					"<font color=\"blue\">" + restaurant.getWebsite() + "</font>"));

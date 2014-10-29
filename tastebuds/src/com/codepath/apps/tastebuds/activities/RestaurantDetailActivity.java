@@ -5,12 +5,8 @@ import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.FragmentManager;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +15,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 
 import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
@@ -47,6 +42,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	
 	private String placeId;
 	private PlacesPhotoData photoData;
+	private float rating;
 	private Restaurant restaurant;
 	private	GooglePlacesApiClient placesApi = new GooglePlacesApiClient();		
 
@@ -56,6 +52,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 		setContentView(R.layout.activity_restaurant_detail);
 		placeId = getIntent().getStringExtra("place_id");
 		photoData = getIntent().getParcelableExtra("photo_data");
+		rating = getIntent().getLongExtra("rating", 0);
 		restaurantDetailFromGooglePlacesApi();	
 	}
 
@@ -74,7 +71,8 @@ public class RestaurantDetailActivity extends FragmentActivity
         		try {
         			restaurantDetailJson = response.getJSONObject("result");
         			restaurant = Restaurant.fromJSONDetail(restaurantDetailJson);
-	       			 setupTabs();
+        		    restaurant.setFriendRating(rating);
+	       			setupTabs();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

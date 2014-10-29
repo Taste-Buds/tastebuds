@@ -439,10 +439,12 @@ public class HomeActivity extends FragmentActivity implements
     }
 
 	@Override
-	public void onRestaurantSelected(String place_id, PlacesPhotoData image) {
+	public void onRestaurantSelected(String place_id, float rating, 
+			PlacesPhotoData image) {
 		Intent i = new Intent(this, RestaurantDetailActivity.class);
 		i.putExtra("place_id", place_id);
 		i.putExtra("photo_data", image);
+		i.putExtra("rating", rating);
 		startActivity(i);
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
 	}
