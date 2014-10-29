@@ -56,9 +56,11 @@ public class RestaurantReviewListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_user_restaurant_review_list, container, false);
 		lvReviews = (ListView) view.findViewById(R.id.lvUserReviews);
 		lvReviews.setAdapter(adapter);
+		if (adapter.isEmpty()) {
+			mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
+			mProgress.setVisibility(ProgressBar.VISIBLE);
+		}
 		adapter.notifyDataSetChanged();
-		mProgress = (ProgressBar) view.findViewById(R.id.pbReviewList);
-		mProgress.setVisibility(ProgressBar.VISIBLE);
 
 		lvReviews.setOnItemClickListener(adapter);
 		return view;
