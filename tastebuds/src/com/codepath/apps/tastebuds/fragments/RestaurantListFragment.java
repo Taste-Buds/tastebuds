@@ -99,7 +99,8 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	}
 
 	public interface RestaurantListListener {
-		void onRestaurantSelected(String place_id, PlacesPhotoData photoData);
+		void onRestaurantSelected(String place_id, float rating,
+				PlacesPhotoData photoData);
 	}
 
 	@Override
@@ -114,6 +115,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView parentView, View childView, int position, long id) {
 				listener.onRestaurantSelected(restaurants.get(position).getPlace_id(),
+						restaurants.get(position).getFriendRating(),
 						restaurants.get(position).getDisplayPhotoReference());
 			} 
 		});		
