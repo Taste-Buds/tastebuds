@@ -102,6 +102,7 @@ public class DishReviewDetailDialog extends DialogFragment {
 	        etTags.setEnabled(false);
 	        rbRating.setRating(review.getRating());
 	        rbRating.setEnabled(false);
+	        etReview.setText(review.getText());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
