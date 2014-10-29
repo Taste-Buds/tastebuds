@@ -349,14 +349,7 @@ public class HomeActivity extends FragmentActivity implements
 				review.saveInBackground(new SaveCallback() {
 					@Override
 					public void done(ParseException arg0) {
-						if (arg0 == null) {
-							Toast.makeText(HomeActivity.this, "Saved Review", Toast.LENGTH_LONG).show();
-						} else {
-							Toast.makeText(HomeActivity.this, "Saved Review FAiled" + arg0.toString(), Toast.LENGTH_LONG).show();
-						}
 					}
-
-
 				});
 			}
 		};
@@ -372,8 +365,6 @@ public class HomeActivity extends FragmentActivity implements
     	if(!mLocationClient.isConnected()){
     		 mLocationClient.connect();
     	}
-        // Display the connection status
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         Log.d("Debug", "onConnected");
         if(mCurrentLocation == null){
         	mCurrentLocation = getLocation(mLocationClient);

@@ -74,18 +74,6 @@ public class RestaurantDetailActivity extends FragmentActivity
         		try {
         			restaurantDetailJson = response.getJSONObject("result");
         			restaurant = Restaurant.fromJSONDetail(restaurantDetailJson);
-	       			 /*new Thread(new Runnable(){
-	        	        @Override
-	        	         public void run() {
-	        	            try {
-	        	            	int maxWidth = photoData.width == 0 ? 300 : photoData.width;    				
-	                			Bitmap photo = placesApi.getRestaurantDisplayPhoto(photoData.reference, maxWidth);
-	                			restaurant.setDisplayPhoto(photo);
-	        	            } catch (Exception e) {
-	        	        	  e.printStackTrace();
-	        	            }
-	        	        }  
-	        	     }).start();*/
 	       			 setupTabs();
 				} catch (JSONException e) {
 					e.printStackTrace();
