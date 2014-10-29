@@ -3,22 +3,16 @@ package com.codepath.apps.tastebuds.activities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.json.JSONArray;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.LoginPagerAdapter;
@@ -53,7 +47,6 @@ public class TastebudsLoginActivity extends FragmentActivity {
 		getActionBar().hide();
 		session = Session.getActiveSession();
 		if (session !=null && session.isOpened()) {
-			//Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
 			goToHomeActivity();
 		}else{
 			setContentView(R.layout.activity_login);
@@ -93,7 +86,6 @@ public class TastebudsLoginActivity extends FragmentActivity {
 	private void onLoginButtonClicked() {
 		session = Session.getActiveSession();
 		if (session !=null && session.isOpened()) {
-			//Toast.makeText(this, session.getAccessToken(), Toast.LENGTH_LONG).show();
 			goToHomeActivity();
 		}else{
 			TastebudsLoginActivity.this.progressDialog = ProgressDialog.show(
@@ -112,7 +104,6 @@ public class TastebudsLoginActivity extends FragmentActivity {
 						Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 						startActivity(i);
 						overridePendingTransition(R.anim.right_in, R.anim.left_out);
-						Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
@@ -185,7 +176,6 @@ public class TastebudsLoginActivity extends FragmentActivity {
 		Intent i = new Intent(TastebudsLoginActivity.this, HomeActivity.class);
 		startActivity(i);
 		overridePendingTransition(R.anim.right_in, R.anim.left_out);
-		Toast.makeText(getApplicationContext(), "User logged in" + ParseUser.getCurrentUser().getUsername(), Toast.LENGTH_SHORT).show();
 	}
 
     @Override
