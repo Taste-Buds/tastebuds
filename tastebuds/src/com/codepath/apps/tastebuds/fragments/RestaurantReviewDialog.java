@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -72,7 +73,6 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
 	private String restaurantId;
 	public RestaurantReviewDialogListener listener;
 	private List<String> tagStrings;
-	private ImageView ivKeyboard;
 	
 
     public static RestaurantReviewDialog newInstance(String placesId, String restaurantName) {
@@ -127,16 +127,15 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
-        ivKeyboard = (ImageView) view.findViewById(R.id.ivKeyboard);
 
-       ivKeyboard.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			toggleEmojiKeyboard();
-			
-		}
-	});
+//       ivKeyboard.setOnClickListener(new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			toggleEmojiKeyboard();
+//			
+//		}
+//	});
         /*etWords = (TextView) view.findViewById(R.id.etWords);
         final TextWatcher txwatcher = new TextWatcher() {
 			@Override
@@ -164,11 +163,30 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
 //		}
 //	});
 
+        rbRating.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				hideEmojis();
+				return false;
+			}
+		});
+        
+        etReview.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				hideEmojis();
+				return false;
+			}
+		});
         OnTouchListener otl = new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				hideSoftKeyBoard();	 
 				showEmojis();
+			//	mEditEmojicon.requestFocus();
 				return true;
 			}
         };
