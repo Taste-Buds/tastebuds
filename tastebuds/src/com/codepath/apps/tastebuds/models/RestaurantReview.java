@@ -77,8 +77,8 @@ public class RestaurantReview extends ParseObject implements Review {
 	public static ParseQuery<RestaurantReview> getQuery(List<String> googlePlacesIds,
 			List<ParseObject> owners) {
 	    ParseQuery query = ParseQuery.getQuery(RestaurantReview.class)
-	    		//.whereContainedIn("owner", owners)
-	    		//.whereContainedIn("placesId", googlePlacesIds)
+	    		.whereContainedIn("owner", owners)
+	    		.whereContainedIn("placesId", googlePlacesIds)
 	    		.orderByDescending("createdAt");
 	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;

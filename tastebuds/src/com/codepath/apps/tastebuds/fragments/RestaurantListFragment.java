@@ -140,8 +140,8 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		//double latitude = 37.764046; // Static for 700 Illinois
 		//double longitude = -122.387863; // Static for 700 Illinois
 
-		double latitude = mCurrentLocation.getLatitude();
-		double longitude = mCurrentLocation.getLongitude();
+		double latitude = 37.770525; // mCurrentLocation.getLatitude();
+		double longitude = -122.4043456; //mCurrentLocation.getLongitude();
 
 		placesApi.getRestaurantListfromGooglePlaces(search, nextPageToken, latitude, longitude,
 				new JsonHttpResponseHandler() {
