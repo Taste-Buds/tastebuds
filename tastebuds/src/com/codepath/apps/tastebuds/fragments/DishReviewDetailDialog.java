@@ -93,12 +93,12 @@ public class DishReviewDetailDialog extends DialogFragment {
         DishReview review;
 		try {
 			review = query.get(reviewId).fetchIfNeeded();
-			dishName = review.getRestaurantName();
+			dishName = review.getDishName();
 	//        etWords.setText(review.getText());
 	  //      etWords.setEnabled(false);
 	        etDish.setText(dishName);
 	        etDish.setEnabled(false);
-	        etTags.setText(review.getTags());
+	        //etTags.setText(review.getTags());
 	        etTags.setEnabled(false);
 	        rbRating.setRating(review.getRating());
 	        rbRating.setEnabled(false);

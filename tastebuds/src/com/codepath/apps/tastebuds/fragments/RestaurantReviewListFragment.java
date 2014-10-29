@@ -59,7 +59,10 @@ public class RestaurantReviewListFragment extends Fragment {
 		super.onAttach(activity);
 		if (activity instanceof RestaurantReviewListListener) {
 			listener = (RestaurantReviewListListener) activity;
-			adapter = new ReviewListAdapter(getActivity(), googlePlacesId, friends, listener);
+			googlePlacesId = getArguments().getString("placeId");
+		    friends = ParseUser.getCurrentUser().getList("userFriends");
+			adapter = new ReviewListAdapter(getActivity(),
+					googlePlacesId, friends, listener);
 			adapter.addOnQueryLoadListener(new OnQueryLoadListener<RestaurantReview>() {
 				@Override
 				public void onLoaded(List<RestaurantReview> arg0, Exception arg1) {
