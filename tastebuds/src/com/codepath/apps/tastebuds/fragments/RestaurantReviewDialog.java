@@ -81,6 +81,13 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         
         return dialog;
     }
+    
+    @Override
+    public void onActivityCreated(Bundle arg0) {
+        super.onActivityCreated(arg0);
+        getDialog().getWindow()
+        .getAttributes().windowAnimations = R.style.DialogAnimationTop;
+    }
 
 	private void setEmojiconFragment(boolean useSystemDefault) {
 		FragmentTransaction ft = getChildFragmentManager().beginTransaction();

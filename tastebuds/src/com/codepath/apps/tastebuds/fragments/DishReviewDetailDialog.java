@@ -48,6 +48,13 @@ public class DishReviewDetailDialog extends DialogFragment {
         dialog.setArguments(args);
         return dialog;
     }
+    
+    @Override
+    public void onActivityCreated(Bundle arg0) {
+        super.onActivityCreated(arg0);
+        getDialog().getWindow()
+        .getAttributes().windowAnimations = R.style.DialogAnimationBottom;
+    }
 
     public interface DishReviewDetailDialogListener {
     	void onFinishReviewDialog(DishReview review);

@@ -76,5 +76,14 @@
         <item name="android:popupMenuStyle">@style/PopupMenu.Tastebuds</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Tastebuds</item>
     </style>
+    <!-- Top In/Out Animation Style for Dialogue Fragments -->
+    <style name="DialogAnimationTop">
+    	<item name="android:windowEnterAnimation">@anim/top_in</item>
+    	<item name="android:windowExitAnimation">@anim/top_out</item>
+	</style>
+	    <style name="DialogAnimationBottom">
+    	<item name="android:windowEnterAnimation">@anim/bottom_in</item>
+    	<item name="android:windowExitAnimation">@anim/bottom_out</item>
+	</style>
 
 </resources>
