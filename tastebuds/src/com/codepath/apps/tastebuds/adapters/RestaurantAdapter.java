@@ -11,6 +11,7 @@ import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.rockerhieu.emojicon.EmojiconTextView;
 import com.squareup.picasso.Picasso;
 
 import android.content.Context;
@@ -86,6 +87,11 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 			dollar_string += "$";
 		}
 		tvDollars.setText(dollar_string);
+		
+		EmojiconTextView mTxtEmojicon = (EmojiconTextView) v.findViewById(R.id.txtEmojicon);
+		if(restaurant.getTagString() != null){
+			mTxtEmojicon.setText(restaurant.getTagString());
+		}
 		return v;
 	}
 }

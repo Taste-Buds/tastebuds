@@ -63,7 +63,7 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
-
+		if(review != null){
 		try {
 			username.setText(review.getUser().fetchIfNeeded().getString("username"));
 			String profImgURL = review.getUser().getString("profileImgURL");
@@ -79,6 +79,7 @@ public class ReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		rating.setEnabled(false);
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		time.setText(df.format(review.getCreatedAt()));
+		}
 		return view;
 	}
 

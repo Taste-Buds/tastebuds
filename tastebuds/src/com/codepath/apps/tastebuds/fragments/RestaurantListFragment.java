@@ -44,6 +44,7 @@ import com.codepath.apps.tastebuds.listeners.EndlessScrollListener;
 import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
+import com.codepath.apps.tastebuds.models.Tag;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -166,6 +167,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 						String placeId = restaurant.getPlace_id();
 						newPlaceIds.add(placeId);
 						calcuateDistancetoUser(restaurant);
+						restaurantTags(placeId , i);
 					}
 					placeIds.addAll(newPlaceIds);
 					restaurants.addAll(newRestaurants);
@@ -238,6 +240,30 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 		
 	}
 
+	private void restaurantTags(String googlePlacesId, final int restaurantPos) {
+
+		ParseQuery<Tag> query = Tag.getQuery(googlePlacesId);
+		query.findInBackground(new FindCallback<Tag>() {
+			@Override
+			public void done(List<Tag> results, ParseException e) {
+				// results has the list of user reviews from Parse
+				String tagString ="";
+				for(int i=0;i<results.size();i++){
+					tagString += results.get(i).getTag() +" ";
+				}
+				storeTagString(restaurantPos, tagString);
+			}
+		});
+		
+	}
+	
+	private void storeTagString(int pos, String tagString){
+
+	//	int restaurantArrayPosition = (parsingPageToken*20)+pos;
+		Restaurant restaurant = newRestaurants.get(pos);
+		restaurant.setTagString(tagString);
+		restaurantAdapter.notifyDataSetChanged();
+	}
 	private void parseReviews(List<RestaurantReview> newReviews) {
 		for(int i=0; i<newPlaceIds.size();i++) {
 			String placeId = newPlaceIds.get(i);

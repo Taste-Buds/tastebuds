@@ -39,6 +39,7 @@ public class Restaurant implements Parcelable {
 	private ArrayList<PlacesPhotoData> photoReferences;
 	private PlacesPhotoData displayPhotoReference;
 	private Bitmap displayPhoto;
+	private String tagString;
 	
 	public Restaurant() {
 		super();
@@ -420,7 +421,15 @@ public class Restaurant implements Parcelable {
         }
     }
 
-    @SuppressWarnings("unused")
+    public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
+	}
+
+	@SuppressWarnings("unused")
     public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
         @Override
         public Restaurant createFromParcel(Parcel in) {
