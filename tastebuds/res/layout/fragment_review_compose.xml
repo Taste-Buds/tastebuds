@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/llRestTags"
+        android:layout_below="@+id/rbComposeReviewRatings"
         android:background="@android:color/transparent"
         android:hint="@string/compose_review_hint"
         android:inputType="textMultiLine"
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/rbComposeReviewRatings"
+        android:layout_below="@+id/etComposeReview"
         android:layout_marginTop="24sp"
         android:paddingLeft="8sp"
         android:text="@string/tags_text"
@@ -117,20 +117,14 @@
         android:ems="10" />
     -->
 
-    <RelativeLayout
+   <RelativeLayout
         android:id="@+id/llRestTags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvComposeTags" >
 
-        <!--
-    <com.rockerhieu.emojicon.EmojiconTextView
-            android:id="@+id/txtEmojicon"
-            android:text="I \ue32d emojicon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        -->
+
 
         <LinearLayout
             android:id="@+id/llEmojiRow"
@@ -150,12 +144,6 @@
                 android:text=""
                 emojicon:emojiconSize="28sp" />
 
-           <!--  <ImageView
-                android:id="@+id/ivKeyboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_keyboard" /> -->
         </LinearLayout>
 
         <FrameLayout

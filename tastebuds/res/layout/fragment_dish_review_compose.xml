@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+      xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutSetting"
     android:layout_width="fill_parent"
     android:layout_height="150dp">
@@ -68,7 +69,7 @@
           android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>
-
+<!-- 
     <AutoCompleteTextView
         android:id="@+id/etComposeTags"
         android:layout_width="wrap_content"
@@ -78,7 +79,7 @@
         android:layout_alignParentRight="true"
         android:contentDescription="@string/tags_text"
         android:ems="10" />
-
+ -->
     <TextView
         android:id="@+id/tvDish"
         android:layout_width="wrap_content"
@@ -95,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:paddingLeft="8sp"
-        android:layout_below="@+id/rbComposeReviewRatings"
+        android:layout_below="@+id/etComposeReview"
         android:text="@string/tags_text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -104,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etComposeTags"
+        android:layout_below="@+id/rbComposeReviewRatings"
         android:paddingRight="8sp"
         android:background="@android:color/transparent"
         android:paddingTop="16sp"
@@ -140,4 +141,44 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/etDishName" />
 
+    
+    
+   <RelativeLayout
+        android:id="@+id/llDishTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvComposeTags" >
+
+
+
+        <LinearLayout
+            android:id="@+id/llEmojiRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal"
+            android:weightSum="10" >
+
+            <com.rockerhieu.emojicon.EmojiconEditText
+                android:id="@+id/etComposeTags"
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:contentDescription="@string/tags_text"
+                android:ems="10"
+                android:text=""
+                emojicon:emojiconSize="28sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/dishEmojicons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llEmojiRow" >
+        </FrameLayout>
+    </RelativeLayout>
+    
+    
 </RelativeLayout>
