@@ -78,6 +78,8 @@ public class RestaurantDetailFragment extends Fragment {
 		photoData = (PlacesPhotoData) getArguments().getParcelable("photo_data");
 		placesApi = new GooglePlacesApiClient();
 		PhotosAsyncTask task = new PhotosAsyncTask();
+		images = new ArrayList<Bitmap>();
+		aImageResults = new GridImageAdapter(getActivity(), images);
 		if(photoData != null){
 			task.execute(new String[] { 
 				photoData.reference, Integer.toString(
@@ -112,8 +114,6 @@ public class RestaurantDetailFragment extends Fragment {
 		btnMap = (CircleButton) v.findViewById(R.id.btnDirectionsRestaurantDetail);
 		btnBookmark = (CircleButton) v.findViewById(R.id.btnBookmarkRestaurantDetail);
 		gvImages = (GridView) v.findViewById(R.id.gvImages);
-		images = new ArrayList<Bitmap>();
-		aImageResults = new GridImageAdapter(getActivity(), images);
 		gvImages.setAdapter(aImageResults);
 		
 		LayerDrawable stars = (LayerDrawable) rbRating.getProgressDrawable();
@@ -161,7 +161,6 @@ public class RestaurantDetailFragment extends Fragment {
 		
 		wvGoogleMap = (WebView) v.findViewById(R.id.wvGoogleMap);*/
 		updateDetailFragmentView();
-
 		return v;		
 	}
 
@@ -209,6 +208,7 @@ public class RestaurantDetailFragment extends Fragment {
 			rlDetail.setBackground(new BitmapDrawable(getResources(), restaurant.getDisplayPhoto()));
 			//rlDetail.setAlpha(2/10);
 		}
+		
 		
 		/*int imageResource = getResources().getIdentifier("res1", "drawable",
 				"com.codepath.apps.tastebuds.fragments");

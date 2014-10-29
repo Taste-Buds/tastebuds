@@ -68,5 +68,4 @@ public class Tag extends ParseObject {
 	public void setUser(ParseUser user) {
 		put("owner", user);
 	}
-
 }

@@ -80,7 +80,7 @@ public class RestaurantReview extends ParseObject implements Review {
 	    		.whereContainedIn("owner", owners)
 	    		.whereContainedIn("placesId", googlePlacesIds)
 	    		.orderByDescending("createdAt");
-	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    //query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
 
