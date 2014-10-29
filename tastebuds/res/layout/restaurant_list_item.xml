@@ -97,7 +97,7 @@
         android:paddingRight="6sp"
         android:paddingTop="6sp"
         android:paddingBottom="6sp"
-        android:text="11" />
+        android:text="0" /> 
 
     <com.rockerhieu.emojicon.EmojiconTextView
         android:id="@+id/txtEmojicon"

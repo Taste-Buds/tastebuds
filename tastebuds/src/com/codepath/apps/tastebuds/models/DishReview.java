@@ -46,7 +46,7 @@ public class DishReview extends ParseObject implements Review {
 	    	query.whereContainedIn("owner", owners);
 	    }
 	    if (googlePlacesId != null) {
-	    	query.whereEqualTo("placesId", googlePlacesId);
+	    	query.whereEqualTo("googlePlacesId", googlePlacesId);
 	    }
 	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
@@ -57,15 +57,15 @@ public class DishReview extends ParseObject implements Review {
 	    ParseQuery<DishReview> query = ParseQuery.getQuery(
 	    		DishReview.class)
 	    		.orderByDescending("createdAt");
-	    /*if (owners != null) {
+	    if (owners != null) {
 	    	query.whereContainedIn("owner", owners);
 	    }
 	    if (googlePlacesId != null) {
-	    	query.whereEqualTo("placesId", googlePlacesId);
+	    	query.whereEqualTo("googlePlacesId", googlePlacesId);
 	    }
 	    if (dishName != null) {
 	    	query.whereEqualTo("dishName", dishName);
-	    }*/
+	    }
 	    query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 	    return query;
 	}
@@ -119,7 +119,7 @@ public class DishReview extends ParseObject implements Review {
 	}
 
 	public String getText() {
-		return getString("text");
+		return getString("comment");
 	}
 
 	public void setText(String text) {

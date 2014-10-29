@@ -74,7 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/composeDishReviewTopBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        style="?android:attr/ratingBarStyleSmall" />
 
     <EditText
         android:id="@+id/etComposeReview"

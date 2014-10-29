@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -120,6 +121,14 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnTaste.setGravity(android.view.Gravity.CENTER);
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
 
+       ivKeyboard.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			toggleEmojiKeyboard();
+			
+		}
+	});
         /*etWords = (TextView) view.findViewById(R.id.etWords);
         final TextWatcher txwatcher = new TextWatcher() {
 			@Override
