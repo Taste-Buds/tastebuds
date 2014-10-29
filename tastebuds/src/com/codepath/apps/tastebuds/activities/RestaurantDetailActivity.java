@@ -52,7 +52,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 		setContentView(R.layout.activity_restaurant_detail);
 		placeId = getIntent().getStringExtra("place_id");
 		photoData = getIntent().getParcelableExtra("photo_data");
-		rating = getIntent().getLongExtra("rating", 0);
+		rating = getIntent().getFloatExtra("rating", 0);
 		restaurantDetailFromGooglePlacesApi();	
 	}
 
