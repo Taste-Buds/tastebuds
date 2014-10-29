@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -111,6 +114,12 @@ public class RestaurantDetailFragment extends Fragment {
 		aImageResults = new GridImageAdapter(getActivity(), images);
 		gvImages.setAdapter(aImageResults);
 		
+		LayerDrawable stars = (LayerDrawable) rbRating.getProgressDrawable();
+		//stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
+				PorterDuff.Mode.SRC_ATOP);
+
 		btnCall.setOnClickListener(new OnClickListener() {
 	        public void onClick(View v) {
 	        	listener.onCallRestaurant(restaurant.getPhone());

@@ -58,7 +58,8 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		LayerDrawable stars = (LayerDrawable) rbTasteBudsRating.getProgressDrawable();
 		//stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
-		stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
+				PorterDuff.Mode.SRC_ATOP);
 
 		TextView tvNumberofReviews = (TextView) v.findViewById(R.id.tvNumberofReviews);
 		tvNumberofReviews.setText(numberOfReviewString);

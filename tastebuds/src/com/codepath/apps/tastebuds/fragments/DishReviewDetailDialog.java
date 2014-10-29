@@ -2,6 +2,8 @@ package com.codepath.apps.tastebuds.fragments;
 
 import android.app.DialogFragment;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -73,6 +75,11 @@ public class DishReviewDetailDialog extends DialogFragment {
         etTags = (EditText) view.findViewById(R.id.etComposeTags);
         etReview = (EditText) view.findViewById(R.id.etComposeReview);
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
+		LayerDrawable stars = (LayerDrawable) rbRating.getProgressDrawable();
+		//stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
+				PorterDuff.Mode.SRC_ATOP);
 
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
  //       etWords = (TextView) view.findViewById(R.id.etWords);

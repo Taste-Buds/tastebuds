@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -99,6 +101,11 @@ public class DishReviewDialog extends DialogFragment {
         etTags = (AutoCompleteTextView) view.findViewById(R.id.etComposeTags);
         etReview = (EditText) view.findViewById(R.id.etComposeReview);
         rbRating = (RatingBar) view.findViewById(R.id.rbComposeReviewRatings);
+		LayerDrawable stars = (LayerDrawable) rbRating.getProgressDrawable();
+		//stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		//stars.getDrawable(1).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+		stars.getDrawable(2).setColorFilter(Color.argb(255, 255, 153, 51),
+				PorterDuff.Mode.SRC_ATOP);
 
         btnTaste = (Button) view.findViewById(R.id.btnComposeReview);
         btnTaste.setGravity(android.view.Gravity.CENTER);
