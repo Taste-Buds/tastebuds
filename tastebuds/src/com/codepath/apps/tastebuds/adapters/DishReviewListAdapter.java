@@ -20,6 +20,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 
@@ -70,6 +71,11 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		try {
 			reviewer = review.getUser().fetchIfNeeded();
 			username.setText(reviewer.getUsername());
+			String profImgURL = reviewer.getString("profileImgURL");
+			if(profImgURL != null){
+				
+				Picasso.with(getContext()).load(profImgURL).resize(70, 70).centerCrop().into(userImage);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -2,6 +2,7 @@ package com.codepath.apps.tastebuds.activities;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -33,15 +34,14 @@ public class DishDetailActivity extends Activity {
 		setContentView(R.layout.activity_dish_detail);
 		restaurantName = getIntent().getStringExtra("restaurant_name");
 		dishName = getIntent().getStringExtra("dish_name");
+		String actionBarTitle = dishName + " Reviews";
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(actionBarTitle);
 		placesId = getIntent().getStringExtra("placesId");
 		ListView lvReviews = (ListView) findViewById(R.id.lvDishReview);
 		List<ParseObject> friends = ParseUser.getCurrentUser().getList("userFriends");
 		adapter = new DishReviewListAdapter(this, placesId, friends, dishName);
 		lvReviews.setAdapter(adapter);
-		TextView tvDishName = (TextView) findViewById(R.id.tvDishName);
-		TextView tvDishTitle = (TextView) findViewById(R.id.tvDishTitle);
-		tvDishTitle.setText("Dish:");
-		tvDishName.setText(dishName);
 
 		lvReviews.setOnItemClickListener(new OnItemClickListener() {
 
