@@ -61,7 +61,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.review, menu);
+		//getMenuInflater().inflate(R.menu.review, menu);
 		return true;
 	}
 

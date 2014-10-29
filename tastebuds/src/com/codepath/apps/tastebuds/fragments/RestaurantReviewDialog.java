@@ -130,6 +130,32 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
 			
 		}
 	});
+        /*etWords = (TextView) view.findViewById(R.id.etWords);
+        final TextWatcher txwatcher = new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				etWords.setText(Html.fromHtml("<font color=\"#FFFFFF\" type=\"roboto\">" + 
+						String.valueOf(420 - s.length()) + " | </font>"));
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				etWords.setText(Html.fromHtml("<font color=\"#606060\" type=\"roboto\">420 | </font>"));
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		};
+		etReview.addTextChangedListener(txwatcher);*/
+//       ivKeyboard.setOnClickListener(new OnClickListener() {
+//		
+//		@Override
+//		public void onClick(View v) {
+//			toggleEmojiKeyboard();
+//			
+//		}
+//	});
 
         OnTouchListener otl = new OnTouchListener() {
 
@@ -180,6 +206,7 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnTaste.setOnClickListener(new View.OnClickListener() {
         	@Override
             public void onClick(View v) {
+        		hideSoftKeyBoard();
         		RestaurantReview review = new RestaurantReview();
         		review.setText(etReview.getText().toString());
         		review.setRating(rbRating.getRating());
@@ -187,6 +214,7 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         		review.setUser(ParseUser.getCurrentUser());
         		review.setTags(restaurantId, mEditEmojicon.getText().toString());
         		review.setRestaurantName(restaurantName);
+        		
         		listener.onFinishReviewComposeDialog(review);
         		getDialog().dismiss();
             }

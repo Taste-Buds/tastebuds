@@ -150,12 +150,12 @@
                 android:text=""
                 emojicon:emojiconSize="28sp" />
 
-            <ImageView
+           <!--  <ImageView
                 android:id="@+id/ivKeyboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_action_keyboard" />
+                android:src="@drawable/ic_action_keyboard" /> -->
         </LinearLayout>
 
         <FrameLayout

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.codepath.apps.tastebuds.GooglePlacesApiClient;
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.adapters.FriendsListAdapter;
 import com.codepath.apps.tastebuds.adapters.UserReviewListAdapter;
+import com.codepath.apps.tastebuds.models.PlacesPhotoData;
 import com.codepath.apps.tastebuds.models.Restaurant;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.codepath.apps.tastebuds.models.Tag;
@@ -51,6 +57,7 @@ public class UserRestaurantReviewsListFragment extends Fragment {
         //searchType = getArguments().getString("searchType");
         //searchTerm = getArguments().getString("searchType");
         //List<String> tags = Arrays.asList(searchTerm.split("\\s+"));
+        
 	}
 
 	@Override

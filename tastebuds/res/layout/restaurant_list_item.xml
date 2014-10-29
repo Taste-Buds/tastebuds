@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80sp"
+    android:layout_height="88sp"
     android:paddingLeft="8sp"
     android:paddingRight="8sp" >
 
@@ -98,4 +98,14 @@
         android:paddingTop="6sp"
         android:paddingBottom="6sp"
         android:text="0" /> 
+
+    <com.rockerhieu.emojicon.EmojiconTextView
+        android:id="@+id/txtEmojicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvDollars"
+        android:textSize="24sp"
+        android:text="" />
+    
 </RelativeLayout>
