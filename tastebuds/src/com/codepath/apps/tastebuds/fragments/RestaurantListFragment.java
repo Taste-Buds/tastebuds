@@ -134,6 +134,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 	private void friendsFromFacebook() {
 		// Get array of friends from Facebook API
 		friends = ParseUser.getCurrentUser().getList("userFriends");
+		friends.add(ParseUser.getCurrentUser());
 	}
 
 	private void restaurantsFromGooglePlacesApi(String search, String nextPageToken) {
@@ -382,17 +383,7 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 			
 			}
 		});
-		// mEditEmojicon.setOnQueryTextListener(queryTextListener);
-		//searchView = (SearchView) searchItem.
-//		mEditEmojicon.setOnFocusChangeListener(
-//	            new View.OnFocusChangeListener() {
-//	                @Override
-//	                public void onFocusChange(View v, boolean hasFocus) {
-//	                    if (hasFocus)
-//	                             showSoftKeyBoard();
-//	                }
-//	            });
-
+	
 		mEditEmojicon.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
