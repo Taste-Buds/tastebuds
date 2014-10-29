@@ -305,9 +305,11 @@ public class RestaurantListFragment extends Fragment implements OnEmojiconClicke
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		
+		if (menu.size() == 0){
+			inflater.inflate(R.menu.search, menu);
+		}
 		super.onCreateOptionsMenu(menu, inflater);
-
-		inflater.inflate(R.menu.search, menu);
 		final MenuItem searchItem = menu.findItem(R.id.action_search);
 		/** Get the action view of the menu item whose id is search */
 		View v = (View) searchItem.getActionView();

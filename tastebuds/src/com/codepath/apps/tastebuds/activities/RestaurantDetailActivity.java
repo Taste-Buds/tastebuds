@@ -157,7 +157,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	    } else {
 			DishReviewDialog dialog = DishReviewDialog.newInstance(
 					restaurant.getName(), restaurant.getPlace_id());
-			dialog.show(getFragmentManager(), "compose");
+			dialog.show(ft, "compose");
 			dialog.listener = new DishReviewDialogListener() {
 				@Override
 				public void onFinishReviewComposeDialog(DishReview review) {
@@ -251,7 +251,7 @@ public class RestaurantDetailActivity extends FragmentActivity
 	    ft.addToBackStack(null);
 		DishReviewDialog dialog = DishReviewDialog.newInstance(
 				restaurant.getName(), restaurant.getPlace_id());
-		dialog.show(getFragmentManager(), "compose");
+		dialog.show(ft, "compose");
 		dialog.listener = new DishReviewDialogListener() {
 			@Override
 			public void onFinishReviewComposeDialog(DishReview review) {
