@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -121,24 +122,6 @@ public class RestaurantReviewDialog extends DialogFragment implements OnEmojicon
         btnCancel = (ImageButton) view.findViewById(R.id.btnComposeBack);
         ivKeyboard = (ImageView) view.findViewById(R.id.ivKeyboard);
 
-        /*etWords = (TextView) view.findViewById(R.id.etWords);
-        final TextWatcher txwatcher = new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				etWords.setText(Html.fromHtml("<font color=\"#FFFFFF\" type=\"roboto\">" + 
-						String.valueOf(420 - s.length()) + " | </font>"));
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				etWords.setText(Html.fromHtml("<font color=\"#606060\" type=\"roboto\">420 | </font>"));
-			}
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		};
-		etReview.addTextChangedListener(txwatcher);*/
        ivKeyboard.setOnClickListener(new OnClickListener() {
 		
 		@Override

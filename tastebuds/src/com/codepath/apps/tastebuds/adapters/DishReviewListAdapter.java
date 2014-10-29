@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,9 +12,7 @@ import android.widget.TextView;
 
 import com.codepath.apps.tastebuds.R;
 import com.codepath.apps.tastebuds.models.DishReview;
-import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.ParseException;
-
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;

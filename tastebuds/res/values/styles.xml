@@ -18,7 +18,6 @@
 -->
 
 <resources>
-
     <style name="Theme.Tastebuds" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_tastebuds</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Tastebuds</item>
@@ -29,17 +28,13 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_tastebuds</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_tastebuds</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Tastebuds</item>
-        
-        
-    </style>
-
+    </style>    
     <style name="ActionBar.Solid.Tastebuds" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_tastebuds</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_tastebuds</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_tastebuds</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Tastebuds</item>
     </style>
-
     <style name="ActionBar.Transparent.Tastebuds" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@drawable/ab_transparent_tastebuds</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Tastebuds</item>
@@ -85,5 +80,4 @@
     	<item name="android:windowEnterAnimation">@anim/bottom_in</item>
     	<item name="android:windowExitAnimation">@anim/bottom_out</item>
 	</style>
-
 </resources>

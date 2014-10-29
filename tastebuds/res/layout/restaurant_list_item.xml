@@ -97,8 +97,5 @@
         android:paddingRight="6sp"
         android:paddingTop="6sp"
         android:paddingBottom="6sp"
-        android:text="0" />
-    
-
-    
+        android:text="0" /> 
 </RelativeLayout>
