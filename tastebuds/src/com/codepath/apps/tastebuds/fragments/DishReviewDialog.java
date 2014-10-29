@@ -276,8 +276,10 @@ public class DishReviewDialog extends DialogFragment implements OnEmojiconClicke
 				review.setGooglePlacesId(restaurantId);
 				review.setUser(ParseUser.getCurrentUser());
 				review.setDishName(etDish.getText().toString());
-				review.setTags(restaurantId, mEditEmojicon.getText().toString());
+				review.setTags( mEditEmojicon.getText().toString(),restaurantId);
 				review.setRestaurantName(restaurantName);
+				hideEmojis();
+				hideSoftKeyBoard();
 				listener.onFinishReviewComposeDialog(review);
 				getDialog().dismiss();
 			}

@@ -17,6 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.rockerhieu.emojicon.EmojiconTextView;
 import com.squareup.picasso.Picasso;
 
 public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
@@ -63,7 +64,8 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 		TextView content = (TextView) view.findViewById(R.id.tvReviewContent);
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
-
+		EmojiconTextView mTxtEmojicon = (EmojiconTextView) view.findViewById(R.id.txtEmojicon);
+		
 		ParseUser reviewer;
 		try {
 			reviewer = review.getUser().fetchIfNeeded();
@@ -77,6 +79,9 @@ public class DishReviewListAdapter extends ParseQueryAdapter<DishReview> {
 			e.printStackTrace();
 		}
 
+		if(review.getTags() != null){
+			mTxtEmojicon.setText(review.getTags());
+		}
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		

@@ -89,9 +89,9 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		}
 		tvDollars.setText(dollar_string);
 		
-		//EmojiconTextView mTxtEmojicon = (EmojiconTextView) v.findViewById(R.id.txtEmojicon);
+		EmojiconTextView mTxtEmojicon = (EmojiconTextView) v.findViewById(R.id.txtEmojicon);
 		if(restaurant.getTagString() != null){
-			//mTxtEmojicon.setText(restaurant.getTagString());
+			mTxtEmojicon.setText(restaurant.getTagString());
 		}
 		return v;
 	}
