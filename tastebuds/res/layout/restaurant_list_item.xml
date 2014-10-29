@@ -23,6 +23,7 @@
         android:layout_toRightOf="@+id/ivRestaurantImage"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8sp"
+        
         android:layout_marginLeft="8sp"
         android:text="Restaurant Name" 
         android:textAppearance="?android:attr/textAppearanceMedium"/>

@@ -101,13 +101,13 @@ public class HomeActivity extends FragmentActivity implements
 	        navDrawerItems = new ArrayList<NavDrawerItem>();
 	 
 	        // adding nav drawer items to array
-	        // Home
+	        // profile
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-	        //profile
+	        //logout
 	        
 	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1],navMenuIcons.getResourceId(1, -1)));
-	        //logout
-	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+//	        //logout
+//	        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 	         
 	 
 	        // Recycle the typed array
@@ -173,18 +173,18 @@ public class HomeActivity extends FragmentActivity implements
         // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
-        case 0: 
-        	this.setupTabs(mCurrentLocation);
-        	View decorView = getWindow().getDecorView();
-        	int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        	              | View.SYSTEM_UI_FLAG_FULLSCREEN;
-        	decorView.setSystemUiVisibility(uiOptions);
-        	break;
-        case 1:
+//        case 0: 
+//        	this.setupTabs(mCurrentLocation);
+//        	View decorView = getWindow().getDecorView();
+//        	int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//        	              | View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        	decorView.setSystemUiVisibility(uiOptions);
+//        	break;
+        case 0:
            // fragment = new HomeFragment();
         	this.onProfileClick(null);
             break;
-        case 2:
+        case 1:
         	this.onLogoutAction(null);
            // fragment = new FindPeopleFragment();
             break;

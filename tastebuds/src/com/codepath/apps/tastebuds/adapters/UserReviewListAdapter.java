@@ -23,6 +23,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.rockerhieu.emojicon.EmojiconTextView;
 
 public class UserReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 	implements OnItemClickListener {
@@ -80,6 +81,11 @@ public class UserReviewListAdapter extends ParseQueryAdapter<RestaurantReview>
 		rating.setEnabled(false);
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		time.setText(df.format(review.getCreatedAt()));
+		
+		EmojiconTextView mTxtEmojicon = (EmojiconTextView) view.findViewById(R.id.txtEmojicon);
+		if(review.getTags() != null){
+			mTxtEmojicon.setText(review.getTags());
+		}
 		return view;
 	}
 

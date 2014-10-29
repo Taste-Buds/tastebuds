@@ -93,9 +93,11 @@ public class DishReview extends ParseObject implements Review {
 	}
 
 	public static ParseQuery<DishReview> getQuery(ParseObject owner) {
-	    return ParseQuery.getQuery(DishReview.class)
+	    ParseQuery dishQuery = ParseQuery.getQuery(DishReview.class)
 	    		.whereEqualTo("owner", owner)
 	    		.orderByDescending("createdAt");
+	    dishQuery.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+	    return dishQuery;
 	}
 	
 	public ParseUser getUser() {

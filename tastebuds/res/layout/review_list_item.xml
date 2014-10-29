@@ -21,6 +21,9 @@
         android:id="@+id/tvReviewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="240sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:paddingLeft="8sp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivReviewUser"
@@ -62,7 +65,7 @@
         android:layout_height="28sp"
         android:layout_alignLeft="@+id/tvReviewUsername"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/rbReviewRating"
+        android:layout_below="@+id/txtEmojicon"
         android:paddingLeft="8sp"
         android:paddingBottom="8sp"
         android:text="@string/review_text" />

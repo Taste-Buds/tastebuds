@@ -276,7 +276,7 @@ public class RestaurantDetailFragment extends Fragment {
 	  protected void onPostExecute(Bitmap result) {
 	      // This method is executed in the UIThread
 	      // with access to the result of the long running task
-		  if (result != null) {
+		  if (result != null && getActivity() != null) {
 			  BitmapDrawable image = new BitmapDrawable(getActivity().getResources(), result);
 			  image.setAlpha(50);
 			  rlDetail.setBackground(image);

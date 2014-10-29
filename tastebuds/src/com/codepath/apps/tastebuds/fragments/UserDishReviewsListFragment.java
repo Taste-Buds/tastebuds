@@ -19,6 +19,7 @@ import com.codepath.apps.tastebuds.adapters.DishListAdapter;
 import com.codepath.apps.tastebuds.adapters.DishReviewListAdapter;
 import com.codepath.apps.tastebuds.adapters.ReviewListAdapter;
 import com.codepath.apps.tastebuds.adapters.UserDishReviewListAdapter;
+import com.codepath.apps.tastebuds.adapters.UserReviewListAdapter;
 import com.codepath.apps.tastebuds.fragments.UserRestaurantReviewsListFragment.UserRestaurantReviewListListener;
 import com.codepath.apps.tastebuds.models.RestaurantReview;
 import com.parse.FindCallback;

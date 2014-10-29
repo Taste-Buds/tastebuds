@@ -26,6 +26,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+import com.rockerhieu.emojicon.EmojiconTextView;
 
 public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> implements OnItemClickListener{
 	private UserDishReviewListListener uListener;
@@ -92,19 +93,25 @@ public class UserDishReviewListAdapter extends ParseQueryAdapter<DishReview> imp
 		RatingBar rating = (RatingBar) view.findViewById(R.id.rbReviewRating);
 		TextView time = (TextView) view.findViewById(R.id.tvReviewTime);
 
-		ParseUser reviewer;
-		try {
-			reviewer = review.getUser().fetchIfNeeded();
-		
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		ParseUser reviewer;
+//		try {
+//			reviewer = review.getUser().fetchIfNeeded();
+//		
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 
 		content.setText(review.getText());
 		rating.setRating(review.getRating());
 		username.setText(review.getDishName());
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		time.setText(df.format(review.getCreatedAt()));
+		
+		
+		EmojiconTextView mTxtEmojicon = (EmojiconTextView) view.findViewById(R.id.txtEmojicon);
+		if(review.getTags() != null){
+			mTxtEmojicon.setText(review.getTags());
+		}
 		return view;
 	}
 
